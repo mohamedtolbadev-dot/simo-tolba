@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Mail, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
-import { LongContext } from './ContextProvider';
+import { Mail, MapPin, Github, Linkedin, Facebook } from 'lucide-react';
+import { LongContext } from '../components/ContextProvider';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +8,8 @@ const Contact = () => {
     message: ''
   });
 
-const {language} = useContext(LongContext)
+  const { language } = useContext(LongContext);
+  const isArabic = language === 'ar';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,14 +46,16 @@ const {language} = useContext(LongContext)
   const t = translations[language];
 
   return (
-    <section className="min-h-screen  py-16 px-4 sm:px-6">
+    <section className="min-h-screen py-16 px-4 sm:px-6" dir={isArabic ? 'rtl' : 'ltr'}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h4 className="text-blue-400 font-mono text-lg mb-3">{t.getInTouch}</h4>
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h4 className={`text-blue-400 font-mono text-lg mb-3 ${isArabic ? 'font-arabic' : ''}`}>
+            {t.getInTouch}
+          </h4>
+          <h2 className={`text-4xl font-bold text-white mb-4 ${isArabic ? 'font-arabic' : ''}`}>
             {t.letsWorkTogether}
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className={`text-gray-400 max-w-2xl mx-auto ${isArabic ? 'font-arabic' : ''}`}>
             {t.feelFree}
           </p>
         </div>
@@ -62,28 +65,30 @@ const {language} = useContext(LongContext)
             <div className="rounded-2xl p-8 border border-gray-700">
               <div className="space-y-6">
                 <a href="mailto:your.email@example.com" 
-                   className="flex items-center space-x-4 text-gray-400 hover:text-blue-400 transition-colors group"
+                   className={`flex items-center ${isArabic ? 'space-x-reverse' : 'space-x-4'} text-gray-400 hover:text-blue-400 transition-colors group`}
                 >
                   <div className="w-12 h-12 rounded-full bg-gray-900 flex items-center justify-center group-hover:bg-blue-400/10">
                     <Mail className="h-5 w-5 text-blue-400" />
                   </div>
-                  <span>your.email@example.com</span>
+                  <span className={isArabic ? 'font-arabic' : ''}>your.email@example.com</span>
                 </a>
 
-                <div className="flex items-center space-x-4 text-gray-400">
+                <div className={`flex items-center ${isArabic ? 'space-x-reverse' : 'space-x-4'} text-gray-400`}>
                   <div className="w-12 h-12 rounded-full bg-gray-900 flex items-center justify-center">
                     <MapPin className="h-5 w-5 text-blue-400" />
                   </div>
-                  <span>{t.yourLocation}</span>
+                  <span className={isArabic ? 'font-arabic' : ''}>{t.yourLocation}</span>
                 </div>
 
                 <div className="pt-6 border-t border-gray-700">
-                  <h4 className="text-gray-400 font-semibold mb-4">{t.connectWithMe}</h4>
-                  <div className="flex space-x-4">
+                  <h4 className={`text-gray-400 font-semibold mb-4 ${isArabic ? 'font-arabic' : ''}`}>
+                    {t.connectWithMe}
+                  </h4>
+                  <div className={`flex ${isArabic ? 'space-x-reverse' : 'space-x-4'}`}>
                     {[
-                      { Icon: Github, href: "https://github.com/yourusername" },
-                      { Icon: Linkedin, href: "https://linkedin.com/in/yourusername" },
-                      { Icon: Twitter, href: "https://twitter.com/yourusername" }
+                      { Icon: Github, href: "https://github.com/Mohahamed99-by" },
+                      { Icon: Linkedin, href: "https://www.linkedin.com/in/mohamed-tolba-div/" },
+                      { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=61567673134521" }
                     ].map((social, index) => (
                       <a
                         key={index}
@@ -105,7 +110,7 @@ const {language} = useContext(LongContext)
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 gap-6">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">
+                  <label htmlFor="email" className={`block text-sm font-medium text-gray-400 mb-2 ${isArabic ? 'font-arabic text-right' : ''}`}>
                     {t.email}
                   </label>
                   <input
@@ -114,13 +119,13 @@ const {language} = useContext(LongContext)
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-400 text-gray-300"
+                    className={`w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-400 text-gray-300 ${isArabic ? 'text-right font-arabic' : ''}`}
                     required
                   />
                 </div>
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">
+                <label htmlFor="message" className={`block text-sm font-medium text-gray-400 mb-2 ${isArabic ? 'font-arabic text-right' : ''}`}>
                   {t.message}
                 </label>
                 <textarea
@@ -129,13 +134,13 @@ const {language} = useContext(LongContext)
                   rows="6"
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-400 text-gray-300 resize-none"
+                  className={`w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-400 text-gray-300 resize-none ${isArabic ? 'text-right font-arabic' : ''}`}
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 font-medium"
+                className={`w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 font-medium ${isArabic ? 'font-arabic' : ''}`}
               >
                 {t.sendMessage}
               </button>

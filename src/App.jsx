@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import Loading from './components/Loading';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import Contact from './components/Contact';
+import About from './view/About';
+import Projects from './view/Projects';
+import Skills from './view/Skills';
+import Contact from './view/Contact';
 import Footer from './components/Footer';
 import { motion } from 'framer-motion';
 const AnimatedBackground = () => {

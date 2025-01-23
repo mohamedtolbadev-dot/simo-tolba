@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
 import { DiReact, DiNodejs, DiGit, DiMysql, DiLaravel, DiHtml5, DiCss3 } from 'react-icons/di';
 import { SiExpress, SiMongodb, SiRedux, SiPostman, SiGithub } from 'react-icons/si';
-import { LongContext } from './ContextProvider';
+import { LongContext } from '../components/ContextProvider';
 import { useContext } from 'react';
 
 const Skills = () => {
-
-
-  const {language, setLanguage, tSkills} = useContext(LongContext)
+  const {language, setLanguage, tSkills} = useContext(LongContext);
+  const isArabic = language === 'ar';
 
   const skills = [
     {
@@ -102,15 +101,15 @@ const Skills = () => {
   };
 
   return (
-    <div name="skills" className="w-full min-h-screen bg-primary">
+    <div name="skills" className="w-full min-h-screen bg-primary" dir={isArabic ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         {/* Section Title */}
-        <div className="pb-8">
+        <div className={`pb-8 ${isArabic ? 'text-right' : 'text-left'}`}>
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold inline border-b-4 border-secondary text-textPrimary"
+            className={`text-4xl font-bold inline border-b-4 border-secondary text-textPrimary ${isArabic ? 'font-arabic' : ''}`}
           >
             {tSkills.title}
           </motion.h2>
@@ -118,7 +117,7 @@ const Skills = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="py-6 text-gray-400"
+            className={`py-6 text-gray-400 ${isArabic ? 'font-arabic' : ''}`}
           >
             {tSkills.description}
           </motion.p>
@@ -141,7 +140,7 @@ const Skills = () => {
               <div className="w-20 mx-auto text-secondary group-hover:text-white transition-colors duration-300">
                 {icon}
               </div>
-              <p className="mt-4 text-textPrimary">{title}</p>
+              <p className={`mt-4 text-textPrimary ${isArabic ? 'font-arabic' : ''}`}>{title}</p>
               {/* Skill Level Bar */}
               <div className="mt-3 px-4">
                 <div className="w-full bg-gray-700 rounded-full h-1.5">
@@ -149,7 +148,7 @@ const Skills = () => {
                     initial={{ width: 0 }}
                     whileInView={{ width: level }}
                     transition={{ duration: 1, delay: 0.3 }}
-                    className="bg-secondary h-1.5 rounded-full"
+                    className={`bg-secondary h-1.5 rounded-full ${isArabic ? 'float-right' : 'float-left'}`}
                   />
                 </div>
               </div>
@@ -158,14 +157,14 @@ const Skills = () => {
         </motion.div>
 
         {/* Experience Categories */}
-        <div className="mt-20">
-          <h3 className="text-2xl font-bold text-textPrimary mb-6">
+        <div className={`mt-20 ${isArabic ? 'text-right' : 'text-left'}`}>
+          <h3 className={`text-2xl font-bold text-textPrimary mb-6 ${isArabic ? 'font-arabic' : ''}`}>
             {tSkills.developmentCategories}
           </h3>
           <div className="space-y-6">
             <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-400">{tSkills.frontend}</span>
+              <div className={`flex ${isArabic ? 'flex-row-reverse' : ''} justify-between mb-1`}>
+                <span className={`text-gray-400 ${isArabic ? 'font-arabic' : ''}`}>{tSkills.frontend}</span>
                 <span className="text-secondary">90%</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
@@ -173,13 +172,13 @@ const Skills = () => {
                   initial={{ width: 0 }}
                   whileInView={{ width: "90%" }}
                   transition={{ duration: 1, delay: 0.3 }}
-                  className="bg-secondary h-2 rounded-full"
+                  className={`bg-secondary h-2 rounded-full ${isArabic ? 'float-right' : 'float-left'}`}
                 />
               </div>
             </div>
             <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-400">{tSkills.backend}</span>
+              <div className={`flex ${isArabic ? 'flex-row-reverse' : ''} justify-between mb-1`}>
+                <span className={`text-gray-400 ${isArabic ? 'font-arabic' : ''}`}>{tSkills.backend}</span>
                 <span className="text-secondary">85%</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
@@ -187,13 +186,13 @@ const Skills = () => {
                   initial={{ width: 0 }}
                   whileInView={{ width: "85%" }}
                   transition={{ duration: 1, delay: 0.3 }}
-                  className="bg-secondary h-2 rounded-full"
+                  className={`bg-secondary h-2 rounded-full ${isArabic ? 'float-right' : 'float-left'}`}
                 />
               </div>
             </div>
             <div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-400">{tSkills.database}</span>
+              <div className={`flex ${isArabic ? 'flex-row-reverse' : ''} justify-between mb-1`}>
+                <span className={`text-gray-400 ${isArabic ? 'font-arabic' : ''}`}>{tSkills.database}</span>
                 <span className="text-secondary">85%</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
@@ -201,7 +200,7 @@ const Skills = () => {
                   initial={{ width: 0 }}
                   whileInView={{ width: "85%" }}
                   transition={{ duration: 1, delay: 0.3 }}
-                  className="bg-secondary h-2 rounded-full"
+                  className={`bg-secondary h-2 rounded-full ${isArabic ? 'float-right' : 'float-left'}`}
                 />
               </div>
             </div>

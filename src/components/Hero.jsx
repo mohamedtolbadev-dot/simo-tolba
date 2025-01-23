@@ -1,17 +1,19 @@
 import { motion } from 'framer-motion';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { HiDownload } from 'react-icons/hi';
 import cv from '../assets/CV-Mohamed-Tolba.pdf';
 import { useContext } from 'react';
 import { LongContext } from './ContextProvider';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
-  const { language, translationsHero } = useContext(LongContext); // Access the context
+  const { language, translationsHero } = useContext(LongContext);
+  const isArabic = language === 'ar';
 
-  const { greeting, description, viewProjects, downloadCV, name } = translationsHero[language]; // Get translations based on the current language
+  const { greeting, description, viewProjects, downloadCV, name } = translationsHero[language];
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-center px-4 sm:px-10 py-16 sm:py-30 max-w-7xl mx-auto">
+    <div className="relative min-h-screen flex flex-col justify-center px-4 sm:px-10 py-16 sm:py-30 max-w-7xl mx-auto" dir={isArabic ? 'rtl' : 'ltr'}>
       {/* Animated Background Elements */}
       <motion.div 
         animate={{
@@ -33,15 +35,15 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="space-y-6 sm:space-y-8"
+        className={`space-y-6 sm:space-y-8 ${isArabic ? 'text-right' : 'text-left'}`}
       >
         {/* Intro Section */}
         <div className="space-y-3 sm:space-y-4">
           <motion.h4 
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-secondary font-mono text-base sm:text-lg"
+            className={`text-secondary font-mono text-base sm:text-lg ${isArabic ? 'font-arabic' : ''}`}
           >
             {greeting}
           </motion.h4>
@@ -52,7 +54,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="space-y-2 sm:space-y-3"
           >
-            <h1  className="text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-textPrimary">
+            <h1 className={`text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold text-textPrimary ${isArabic ? 'font-arabic' : ''}`}>
              {name}
             </h1>
           </motion.div>
@@ -61,7 +63,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-gray-400 font-mono text-base sm:text-lg max-w-[600px]"
+            className={`text-gray-400 font-mono text-base sm:text-lg max-w-[600px] ${isArabic ? 'font-arabic mr-0 ml-auto' : ''}`}
           >
             {description}
           </motion.p>
@@ -72,19 +74,23 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="flex flex-col xs:flex-row gap-3 sm:gap-4"
+          className={`flex flex-col xs:flex-row gap-3 sm:gap-4 ${isArabic ? 'items-end' : 'items-start'}`}
         >
-          <a
-            href="#projects"
-            className="group flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 bg-secondary text-primary font-medium rounded-full outline-none focus:scale-110 hover:scale-110 hover:bg-secondary/80 active:scale-105 transition text-sm sm:text-base"
+          <Link
+            href="/projects"
+            className={`group flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 bg-secondary text-primary font-medium rounded-full outline-none focus:scale-110 hover:scale-110 hover:bg-secondary/80 active:scale-105 transition text-sm sm:text-base ${isArabic ? 'font-arabic flex-row-reverse' : ''}`}
           >
             {viewProjects}
-            <FaArrowRight className="group-hover:translate-x-1 transition" />
-          </a>
+            {isArabic ? (
+              <FaArrowLeft className="group-hover:-translate-x-1 transition" />
+            ) : (
+              <FaArrowRight className="group-hover:translate-x-1 transition" />
+            )}
+          </Link>
           <a
             href={cv}
             download
-            className="group flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 bg-white/10 text-textPrimary font-medium rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition border border-white/10 text-sm sm:text-base"
+            className={`group flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 bg-white/10 text-textPrimary font-medium rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition border border-white/10 text-sm sm:text-base ${isArabic ? 'font-arabic flex-row-reverse' : ''}`}
           >
             {downloadCV}
             <HiDownload className="group-hover:translate-y-1 transition" />

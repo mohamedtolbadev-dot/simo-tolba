@@ -13,39 +13,23 @@ const translations = {
       about: "About",
       me: "Me",
       introduction: "Hi! I'm Mohamed Tolba, a dedicated full-stack developer from Fes. I'm passionate about building things for the web, whether it's crafting dynamic websites, interactive applications, or innovative digital solutions.",
-      journey: "My journey in web development started back in [Year] when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!",
-      techStack: "Tech I work with:",
-      technologies: [
-        "JavaScript (ES6+)",
-        "React",
-        "Node.js",
-        "Tailwind CSS",
-        "MongoDB",
-        "TypeScript"
-      ]
+      journey: "I am a graduate of the Office of Vocational Training and Employment (OFPPT), where I obtained a specialized technician diploma in the field of digital development. I have worked on academic and personal projects using a variety of technologies, including React, Vite, and Tailwind CSS for front-end development. For the back-end, I work with Express.js or Laravel 10, and for databases, I handle MySQL or MongoDB.",
+      
     },
     ar: {
       about: "نبذة",
       me: "عني",
       introduction: "مرحبًا! أنا محمد طلبة، مطور متخصص في تطوير البرمجيات الكاملة من فاس. أنا شغوف ببناء الأشياء للويب، سواء كان ذلك إنشاء مواقع ويب ديناميكية أو تطبيقات تفاعلية أو حلول رقمية مبتكرة.",
       journey: "أنا خريج من مؤسسة التكوين المهني OFPPT حيث حصلت على دبلوم تقني متخصص في شعبة تطوير الرقمية. عملت على مشاريع أكاديمية وخاصة باستخدام مجموعة من التقنيات في الواجهة الأمامية مثل React وVite وTailwind CSS. أما في الواجهة الخلفية، فأنا أعمل باستخدام Express.js أو Laravel 10، وفي قواعد البيانات أتعامل مع MySQL أو MongoDB. ",
-      techStack: "التقنيات التي أعمل بها:",
-      technologies: [
-        "جافاسكريبت (ES6+)",
-        "رياكت",
-        "نود جي اس",
-        "تيلويند سي اس اس",
-        "مونجو دي بي",
-        "تايبسكريبت"
-      ]
+     
     }
   };
 
   const projects = [
     {
       title: "Car Dealer",
-      description: "A full-stack e-commerce platform for car dealerships, built with React and Node.js. Features include user authentication, a product catalog, a shopping cart, and payment integration.",
-      descriptionAr: "منصة تجارة إلكترونية متكاملة لوكالات السيارات تم بناؤها باستخدام React وNode.js. تشمل الميزات تسجيل دخول المستخدمين، كتالوج السيارات، سلة التسوق، وتكامل الدفع.",
+      description: "A website that allows customers to search for available rental cars, with the option to book instantly online. The website provides detailed information about the cars, including photos, technical specifications, and prices. Additionally, customers can manage their bookings through the website",
+      descriptionAr: "موقع إلكتروني يتيح للعملاء البحث عن سيارات التأجير المتاحة، مع إمكانية الحجز الفوري عبر الإنترنت. يوفر الموقع معلومات مفصلة عن السيارات، بما في ذلك الصور والتفاصيل الفنية والأسعار. كما يمكن للعملاء إدارة حجوزاتهم عبر الموقع",
       tags: ["React", "Tailwind CSS"],
       imageUrl: project1,
       liveLink: "https://cars-simo.onrender.com/",
@@ -53,8 +37,8 @@ const translations = {
     },
     {
       title: "QR Code Generator",
-      description: "A web application to generate QR codes for various types of data, such as URLs, text, and more. Built using React, Express.js, and MySQL for seamless performance.",
-      descriptionAr: "تطبيق ويب لإنشاء رموز QR لأنواع مختلفة من البيانات، مثل الروابط والنصوص والمزيد. تم بناؤه باستخدام React وExpress.js وMySQL لتحقيق أداء سلس.",
+      description: "A website for creating QR codes for various types of data, such as URLs, email addresses, WhatsApp numbers, phone numbers, Wi-Fi data, and geographic locations. It allows users to easily create customized QR codes in an attractive way, making it suitable for both personal and professional use",
+      descriptionAr: "موقع لإنشاء أكواد QR لأنواع مختلفة من البيانات، مثل عناوين URL والبريد الإلكتروني وأرقام WhatsApp وأرقام الهواتف وبيانات Wi-Fi والموقع الجغرافي. يتيح للمستخدمين إنشاء أكواد QR مخصصة بسهولة وبشكل جذاب، مما يجعله مناسبًا للاستخدام الشخصي والمهني.",
       tags: ["React Vite", "Tailwind CSS", "Express.js", "MySQL"],
       imageUrl: project2,
       liveLink: "https://qr-code-as.onrender.com/",
@@ -62,8 +46,8 @@ const translations = {
     },
     {
       title: "Task Management App",
-      description: "A collaborative task management application featuring real-time updates, drag-and-drop functionality, and team collaboration tools. Built with React and Tailwind CSS.",
-      descriptionAr: "تطبيق إدارة مهام تعاوني يتميز بتحديثات في الوقت الفعلي، وإمكانية السحب والإفلات، وأدوات تعاون الفريق. تم بناؤه باستخدام React وTailwind CSS.",
+      description: "A website that allows customers to search for available rental cars, with the option to book instantly online. The website provides detailed information about the cars, including photos, technical specifications, and prices. Additionally, customers can manage their bookings through the website",
+      descriptionAr: "موقع إلكتروني يتيح للعملاء البحث عن سيارات التأجير المتاحة، مع إمكانية الحجز الفوري عبر الإنترنت. يوفر الموقع معلومات مفصلة عن السيارات، بما في ذلك الصور والتفاصيل الفنية والأسعار. كما يمكن للعملاء إدارة حجوزاتهم عبر الموقع",
       tags: ["React", "Tailwind CSS"],
       imageUrl: project3,
       liveLink: "https://we-car.onrender.com/",

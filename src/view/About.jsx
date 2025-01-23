@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { useContext, useState } from 'react';
 import me from '../assets/img/Mohamed.jpg';
-import { LongContext } from './ContextProvider';
+import { LongContext } from '../components/ContextProvider';
 
 const About = () => {
 
@@ -72,35 +72,7 @@ const About = () => {
               <p className="text-gray-400 text-sm sm:text-base">
                 {t.journey}
               </p>
-            </div>
-
-            <div className="space-y-3 sm:space-y-4">
-              <h3 className="text-lg sm:text-xl font-semibold">{t.techStack}</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 text-gray-400 text-sm sm:text-base">
-                {t.technologies.map((tech, index) => (
-                  <span key={index} className="flex items-center gap-2">
-                    <span className="text-secondary">▹</span> {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className={`flex gap-4 ${language === 'ar' ? 'justify-end' : 'justify-start'}`}>
-              {socialLinks.map(({ id, icon, href }) => (
-                <motion.a
-                  key={id}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-secondary transition-colors duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  {icon}
-                </motion.a>
-              ))}
-            </div>
+            </div>            
           </motion.div>
         </div>
       </div>
