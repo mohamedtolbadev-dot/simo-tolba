@@ -28,7 +28,7 @@ const Contact = () => {
       email: 'Email',
       message: 'Message',
       sendMessage: 'Send Message',
-      yourLocation: 'Your Location',
+      yourLocation: 'Fes',
       connectWithMe: 'Connect With Me'
     },
     ar: {
@@ -38,7 +38,7 @@ const Contact = () => {
       email: 'البريد الإلكتروني',
       message: 'الرسالة',
       sendMessage: 'إرسال الرسالة',
-      yourLocation: 'موقعك',
+      yourLocation: 'فاس',
       connectWithMe: 'تواصل معي'
     }
   };
@@ -70,7 +70,7 @@ const Contact = () => {
                   <div className="w-12 h-12 rounded-full bg-gray-900 flex items-center justify-center group-hover:bg-blue-400/10">
                     <Mail className="h-5 w-5 text-blue-400" />
                   </div>
-                  <span className={isArabic ? 'font-arabic' : ''}>your.email@example.com</span>
+                  <span className={isArabic ? 'font-arabic' : ''}>mohamedtolba161@gmail.com</span>
                 </a>
 
                 <div className={`flex items-center ${isArabic ? 'space-x-reverse' : 'space-x-4'} text-gray-400`}>

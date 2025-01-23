@@ -3,7 +3,6 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 import logoP from '../assets/img/logoP.png';
 import { LongContext } from './ContextProvider';
-import { FaGlobe } from 'react-icons/fa';
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -36,7 +35,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
+    <nav 
       className={`fixed w-full h-[70px] z-50 transition-all duration-300 ${
         scrolled ? 'bg-primary/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
