@@ -105,7 +105,7 @@ function App() {
             <Footer />
             {/* WhatsApp icon */}
             <a
-              href="https://wa.me/+212612455372"
+              href="https://wa.me/+2126124553"
               target="_blank"
               rel="noopener noreferrer"
               className="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full transition-colors duration-300 shadow-lg hover:shadow-green-500/25"
