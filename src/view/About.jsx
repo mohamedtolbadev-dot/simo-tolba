@@ -1,82 +1,106 @@
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import { useContext, useState } from 'react';
-import me from '../assets/img/Mohamed.jpg';
+import { Github, Linkedin, Twitter } from 'lucide-react';
+import { useContext } from 'react';
 import { LongContext } from '../components/ContextProvider';
+import mohamed from '../assets/img/Mohamed.jpg';
 
 const About = () => {
+  const { language, t } = useContext(LongContext);
 
-  const {language, setLanguage, t} = useContext(LongContext)
   const socialLinks = [
     {
       id: 1,
-      icon: <FaGithub size={20} className="sm:w-6 sm:h-6" />,
+      icon: <Github className="w-5 h-5" />,
       href: "https://github.com/yourusername",
+      label: "GitHub"
     },
     {
       id: 2,
-      icon: <FaLinkedin size={20} className="sm:w-6 sm:h-6" />,
+      icon: <Linkedin className="w-5 h-5" />,
       href: "https://linkedin.com/in/yourusername",
+      label: "LinkedIn"
     },
     {
       id: 3,
-      icon: <FaTwitter size={20} className="sm:w-6 sm:h-6" />,
+      icon: <Twitter className="w-5 h-5" />,
       href: "https://twitter.com/yourusername",
+      label: "Twitter"
     },
   ];
 
   return (
-    <div name="about" className="w-full min-h-screen bg-primary text-textPrimary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        {/* Language Switcher */}
-      
+    <section className="relative w-full min-h-screen bg-primary text-textPrimary py-20">
+      {/* Background Design Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-secondary/5 rounded-full filter blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full filter blur-3xl" />
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Image Section */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="order-2 lg:order-1"
+            className="relative"
           >
             <div className="relative group">
-              <div className="w-full max-w-[250px] sm:max-w-[300px] mx-auto">
+              {/* Main Image */}
+              <div className="relative z-10 rounded-2xl overflow-hidden bg-gradient-to-br from-secondary/20 to-secondary/10 p-2">
                 <img
-                  src={me}
+                  src={mohamed}
                   alt="Profile"
-                  className="rounded-2xl filter grayscale hover:grayscale-0 transition-all duration-500"
+                  className="rounded-xl w-full max-w-md mx-auto grayscale hover:grayscale-0 transition-all duration-700 ease-out transform hover:scale-[1.02]"
                 />
-                <div className="absolute -inset-0.5 bg-secondary opacity-20 blur rounded-2xl group-hover:opacity-30 transition duration-500"></div>
               </div>
+              
+              {/* Decorative Elements */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-secondary/0 via-secondary/10 to-secondary/0 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <motion.div 
+                className="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/10 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
             </div>
           </motion.div>
 
           {/* Content Section */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className={`order-1 lg:order-2 space-y-6 sm:space-y-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}
+            className={`space-y-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold">
-              {t.about} <span className="text-secondary">{t.me}</span>
-            </h2>
+            {/* Section Title */}
+            <div className="space-y-4">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "100px" }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="h-1 bg-secondary rounded-full"
+              />
+              <h2 className="text-4xl lg:text-5xl font-bold">
+                {t.about} <span className="text-secondary">{t.me}</span>
+              </h2>
+            </div>
             
-            <div className="space-y-4 sm:space-y-6">
-              <p className="text-gray-400 text-sm sm:text-base">
+            {/* Content */}
+            <div className="space-y-6">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 {t.introduction}
               </p>
-
-              <p className="text-gray-400 text-sm sm:text-base">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 {t.journey}
               </p>
-            </div>            
+            </div>
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
