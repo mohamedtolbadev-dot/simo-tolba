@@ -173,7 +173,7 @@ function App() {
 
                 {/* WhatsApp icon */}
                 <motion.a
-                  href="https://wa.me/+2126124553"
+                  href="https://wa.me/+212612455372"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="fixed bottom-6 right-6 bg-gradient-to-r from-secondary to-secondary/80 text-primary p-3.5 rounded-full shadow-lg hover:shadow-secondary/20 transition-all duration-300 z-40"
