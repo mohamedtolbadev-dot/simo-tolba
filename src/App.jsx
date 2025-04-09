@@ -170,7 +170,7 @@ function App() {
                 <Projects />
                 <Contact />
                 <Footer />
-
+              
                 {/* WhatsApp icon */}
                 <motion.a
                   href="https://wa.me/+212612455372"

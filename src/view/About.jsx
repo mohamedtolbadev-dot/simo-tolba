@@ -21,7 +21,6 @@ const About = () => {
   const { language, t } = useContext(LongContext)
   const isArabic = language === "ar"
 
-
   const skills = [
     { name: "Frontend Development", icon: <Code2 />, level: 90 },
     { name: "UI/UX Design", icon: <Palette />, level: 85 },
@@ -124,7 +123,6 @@ const About = () => {
               </ul>
             </motion.div>
 
-
             {/* Action Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -133,7 +131,7 @@ const About = () => {
               className={`flex flex-col sm:flex-row gap-5 ${isArabic ? "items-end" : "items-start"}`}
             >
               <Link
-                href="contact"
+                to="/contact"
                 className={`group inline-flex items-center gap-3 px-8 py-4 bg-secondary text-primary rounded-lg font-medium shadow-lg shadow-secondary/20 hover:shadow-xl hover:shadow-secondary/30 transition-all duration-300 ${
                   isArabic ? "flex-row-reverse font-arabic" : ""
                 }`}
