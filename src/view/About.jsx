@@ -1,107 +1,289 @@
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter } from 'lucide-react';
-import { useContext } from 'react';
-import { LongContext } from '../components/ContextProvider';
+"use client"
+
+import { motion } from "framer-motion"
+import {
+  ArrowRight,
+  ChevronRight,
+  Code2,
+  Database,
+  Github,
+  Globe,
+  Linkedin,
+  Mail,
+  Palette,
+  Twitter,
+} from "lucide-react"
+import { useContext } from "react"
+import { LongContext } from "./../components/ContextProvider"
+import Link from "react-scroll/modules/components/Link"
 
 const About = () => {
-  const { language, t } = useContext(LongContext);
-  const isArabic = language === 'ar';
+  const { language, t } = useContext(LongContext)
+  const isArabic = language === "ar"
 
-  const socialLinks = [
-    {
-      id: 1,
-      icon: <Github className="w-4 h-4 sm:w-5 sm:h-5" />,
-      href: "https://github.com/yourusername",
-      label: "GitHub"
-    },
-    {
-      id: 2,
-      icon: <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />,
-      href: "https://linkedin.com/in/yourusername",
-      label: "LinkedIn"
-    },
-    {
-      id: 3,
-      icon: <Twitter className="w-4 h-4 sm:w-5 sm:h-5" />,
-      href: "https://twitter.com/yourusername",
-      label: "Twitter"
-    },
-  ];
+
+  const skills = [
+    { name: "Frontend Development", icon: <Code2 />, level: 90 },
+    { name: "UI/UX Design", icon: <Palette />, level: 85 },
+    { name: "Backend Development", icon: <Database />, level: 80 },
+    { name: "Internationalization", icon: <Globe />, level: 75 },
+  ]
 
   return (
-    <section className="relative w-full min-h-[calc(100vh-4rem)] bg-gradient-to-b from-primary to-primary/95 text-textPrimary py-12 sm:py-16 md:py-20 lg:py-24">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px] sm:bg-[size:40px_40px] md:bg-[size:60px_60px]" />
-      
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
-          {/* Logo Section */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="relative order-2 lg:order-1"
-          >
-            <div className="relative w-full max-w-[280px] sm:max-w-sm mx-auto">
-              {/* Logo Container with Glow Effect */}
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-secondary to-blue-600 rounded-full blur-xl sm:blur-2xl opacity-30 group-hover:opacity-50 transition duration-700" />
-                <div className="relative bg-primary rounded-full p-6 sm:p-8">
-                  <svg className="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" className="text-secondary" strokeWidth="2" />
-                    <g fill="none" stroke="currentColor" className="text-secondary" strokeWidth="4" strokeLinecap="round">
-                      <path d="M70 60 L50 100 L70 140" />
-                      <path d="M130 60 L150 100 L130 140" />
-                      <path d="M85 80 L115 80" />
-                      <path d="M80 100 L120 100" />
-                      <path d="M85 120 L115 120" />
-                    </g>
-                  </svg>
-                </div>
-              </div>
+    <section
+      className="relative min-h-screen flex items-center px-6 lg:px-12 py-20 overflow-hidden"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
+      {/* Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        {/* Modern gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
 
-              {/* Social Links */}
-              
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_49%,#ffffff05_50%,transparent_51%)] bg-[length:40px_40px]" />
+
+        {/* Accent color glow */}
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-secondary/20 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-primary/20 rounded-full blur-[100px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className={`space-y-10 ${isArabic ? "text-right" : "text-left"}`}
+          >
+            {/* Header Section */}
+            <div className="space-y-8">
+              <motion.div
+                initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex items-center gap-3"
+              >
+                <div className={`h-px w-12 bg-secondary ${isArabic ? "order-2" : "order-1"}`}></div>
+                <span className={`text-secondary font-mono text-lg ${isArabic ? "order-1 font-arabic" : "order-2"}`}>
+                  {t.aboutMe || "About Me"}
+                </span>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="space-y-6"
+              >
+                <h1 className={`text-5xl lg:text-7xl font-bold text-white ${isArabic ? "font-arabic" : ""}`}>
+                  <span className="inline-block">{t.myStory || "My Story"}</span>
+                  <span className="inline-block ml-3 h-[6px] w-12 bg-secondary"></span>
+                </h1>
+
+                <p
+                  className={`text-slate-300 text-lg lg:text-xl max-w-2xl leading-relaxed ${
+                    isArabic ? "font-arabic mr-0 ml-auto" : ""
+                  }`}
+                >
+                  {t.introduction ||
+                    "I'm a passionate developer with expertise in creating modern web applications. My journey in technology has been driven by curiosity and a desire to build solutions that make a difference."}
+                </p>
+              </motion.div>
             </div>
+
+            {/* Additional Content */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="space-y-6"
+            >
+              <p className="text-slate-300 text-lg leading-relaxed">
+                {t.journey ||
+                  "With several years of experience in both frontend and backend development, I've worked on projects ranging from small business websites to complex enterprise applications."}
+              </p>
+
+              <ul className="space-y-3">
+                {[
+                  t.highlight1 || "Specialized in React and Next.js development",
+                  t.highlight2 || "Experienced with modern UI frameworks and design systems",
+                  t.highlight3 || "Passionate about creating accessible and performant web applications",
+                ].map((item, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7 + index * 0.1 }}
+                    className="flex items-start gap-2"
+                  >
+                    <ChevronRight className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+                    <span className="text-slate-300">{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+
+            {/* Action Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className={`flex flex-col sm:flex-row gap-5 ${isArabic ? "items-end" : "items-start"}`}
+            >
+              <Link
+                href="contact"
+                className={`group inline-flex items-center gap-3 px-8 py-4 bg-secondary text-primary rounded-lg font-medium shadow-lg shadow-secondary/20 hover:shadow-xl hover:shadow-secondary/30 transition-all duration-300 ${
+                  isArabic ? "flex-row-reverse font-arabic" : ""
+                }`}
+              >
+                {t.contactMe || "Get in Touch"}
+                {isArabic ? (
+                  <ArrowRight className="w-5 h-5 group-hover:-translate-x-1 transition-transform rotate-180" />
+                ) : (
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                )}
+              </Link>
+            </motion.div>
           </motion.div>
 
-          {/* Content Section */}
+          {/* Right Content - Skills Visual */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className={`space-y-6 sm:space-y-8 order-1 lg:order-2 ${isArabic ? 'text-right' : 'text-left'}`}
+            className="relative hidden lg:block"
           >
-            {/* Section Title */}
-            <div className="space-y-3 sm:space-y-4">
+            <div className="relative w-full h-[500px] flex items-center justify-center">
+              {/* Main circular element */}
+              <div className="relative w-80 h-80">
+                {/* Outer ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  className="absolute inset-0 rounded-full border border-white/10"
+                />
+
+                {/* Middle ring */}
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  className="absolute inset-4 rounded-full border border-dashed border-secondary/30"
+                />
+
+                {/* Inner ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  className="absolute inset-10 rounded-full border border-white/10"
+                />
+
+                {/* Center Icon */}
+                <motion.div
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-gradient-to-br from-secondary/20 to-primary/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10"
+                >
+                  <Code2 className="w-12 h-12 text-white" />
+                </motion.div>
+
+                {/* Skills as Orbiting Elements */}
+                {skills.map((skill, index) => {
+                  const angle = (index * Math.PI * 2) / skills.length
+                  const x = Math.cos(angle) * 150
+                  const y = Math.sin(angle) * 150
+
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.8 + index * 0.2 }}
+                      className="absolute w-16 h-16 bg-slate-800/80 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10"
+                      style={{
+                        left: `calc(50% + ${x}px - 32px)`,
+                        top: `calc(50% + ${y}px - 32px)`,
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      {skill.icon}
+                    </motion.div>
+                  )
+                })}
+              </div>
+
+              {/* Floating skill info */}
               <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: "80px", sm: "100px" }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="h-1 bg-secondary rounded-full"
-              />
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-                {t.about} <span className="text-secondary">{t.me}</span>
-              </h2>
-            </div>
-            
-            {/* Content */}
-            <div className="space-y-4 sm:space-y-6">
-              <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
-                {t.introduction}
-              </p>
-              <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
-                {t.journey}
-              </p>
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="absolute top-1/4 -left-10 p-4 bg-slate-900/80 backdrop-blur-md rounded-lg border border-white/10 shadow-xl"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Code2 className="w-5 h-5 text-secondary" />
+                    <span className="text-white font-medium">Frontend</span>
+                  </div>
+                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "90%" }}
+                      transition={{ duration: 1, delay: 1 }}
+                      className="h-full bg-gradient-to-r from-secondary to-blue-500 rounded-full"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="absolute bottom-1/4 -right-10 p-4 bg-slate-900/80 backdrop-blur-md rounded-lg border border-white/10 shadow-xl"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Database className="w-5 h-5 text-secondary" />
+                    <span className="text-white font-medium">Backend</span>
+                  </div>
+                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "80%" }}
+                      transition={{ duration: 1, delay: 1.2 }}
+                      className="h-full bg-gradient-to-r from-secondary to-blue-500 rounded-full"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Floating Particles */}
+              {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{
+                    y: [0, -10, 0],
+                    opacity: [0.3, 0.8, 0.3],
+                  }}
+                  transition={{
+                    duration: Math.random() * 2 + 2,
+                    delay: i * 0.1,
+                    repeat: Number.POSITIVE_INFINITY,
+                  }}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-secondary"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                />
+              ))}
             </div>
           </motion.div>
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default About;
+export default About

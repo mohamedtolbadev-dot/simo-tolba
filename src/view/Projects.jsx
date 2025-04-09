@@ -1,90 +1,130 @@
-import React, { useContext } from 'react';
-import { LongContext } from '../components/ContextProvider';
-import { ExternalLink, Github } from 'lucide-react';
+import React, { useContext } from "react";
+import { motion } from "framer-motion";
+import { LongContext } from "../components/ContextProvider";
+import { ExternalLink, Github } from "lucide-react";
 
 const Projects = () => {
   const { language, projects } = useContext(LongContext);
-  const isArabic = language === 'ar';
+  const isArabic = language === "ar";
 
   return (
-    <section className="relative bg-gradient-to-b from-gray-900 to-gray-950 py-24 px-4 sm:px-6 lg:px-8" dir={isArabic ? 'rtl' : 'ltr'}>
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/5 to-blue-500/5"></div>
+    <section
+      className="relative min-h-screen flex items-center px-6 lg:px-12 py-24 overflow-hidden"
+      dir={isArabic ? "rtl" : "ltr"}
+    >
+      {/* Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_49%,#ffffff05_50%,transparent_51%)] bg-[length:40px_40px]" />
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-secondary/20 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-primary/20 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className={`text-4xl sm:text-5xl font-bold text-white mb-6 ${isArabic ? 'font-arabic' : ''}`}>
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+      <div className="relative max-w-7xl mx-auto w-full">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
+        >
+          <h2
+            className={`text-4xl sm:text-5xl font-bold text-white mb-6 ${
+              isArabic ? "font-arabic" : ""
+            }`}
+          >
+            <span className="inline-block bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
               {isArabic ? "مشاريعي المميزة" : "Featured Projects"}
             </span>
+            <span className="inline-block ml-3 h-[6px] w-12 bg-secondary"></span>
           </h2>
-          <p className={`text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed ${isArabic ? 'font-arabic' : ''}`}>
-            {isArabic 
+          <p
+            className={`text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed ${
+              isArabic ? "font-arabic" : ""
+            }`}
+          >
+            {isArabic
               ? "مجموعة من المشاريع التي تعكس مهاراتي وإبداعي في تطوير تطبيقات الويب المتقدمة."
               : "A curated collection of projects that demonstrate my skills and creativity in building advanced web applications."}
           </p>
-        </div>
+        </motion.div>
 
+        {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
           {projects.map((project, index) => (
-            <div 
-              key={index} 
-              className="group bg-gray-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10"
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="group bg-slate-800/30 backdrop-blur-md rounded-xl overflow-hidden border border-white/10 hover:border-secondary/50 transition-all duration-500 hover:shadow-xl hover:shadow-secondary/10"
             >
               <div className="relative aspect-video overflow-hidden">
-                <img 
-                  src={project.imageUrl} 
-                  alt={project.title}
+                <img
+                  src={project.imageUrl}
+                  alt={`Project ${index + 1}`}
                   className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-70">
-                  <div className={`absolute bottom-4 ${isArabic ? 'left-4' : 'right-4'} flex ${isArabic ? 'flex-row-reverse' : ''} space-x-3 ${isArabic ? 'space-x-reverse' : ''}`}>
-                    <a 
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <div
+                    className={`flex items-center gap-4 ${isArabic ? "flex-row-reverse" : ""}`}
+                  >
+                    <a
                       href={project.liveLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-blue-500 hover:bg-blue-600 text-white p-2.5 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-white rounded-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg"
                       aria-label={isArabic ? "عرض المشروع مباشرة" : "View Live Project"}
                     >
                       <ExternalLink size={18} />
+                      {isArabic ? "المشروع" : "Live"}
                     </a>
-                    <a 
+                    <a
                       href={project.githubLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-gray-700 hover:bg-gray-600 text-white p-2.5 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg"
                       aria-label={isArabic ? "عرض مستودع GitHub" : "View GitHub Repository"}
                     >
                       <Github size={18} />
+                      {isArabic ? "الكود" : "Code"}
                     </a>
                   </div>
-                </div>
+                </motion.div>
               </div>
-              
-              <div className="p-6">
-                <h3 className={`text-xl font-bold text-white mb-3 ${isArabic ? 'font-arabic' : ''}`}>
-                  {project.title}
-                </h3>
-                <p className={`text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed ${isArabic ? 'font-arabic' : ''}`}>
-                  {isArabic ? project.descriptionAr : project.description}
-                </p>
-                <div className={`flex flex-wrap gap-2 ${isArabic ? 'justify-end' : ''}`}>
-                  {project.tags.map((tag, tagIndex) => (
-                    <span 
-                      key={tagIndex}
-                      className={`px-3 py-1 bg-blue-500/10 text-blue-300 rounded-md text-xs font-medium ${isArabic ? 'font-arabic' : ''}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-slate-400 text-sm font-mono">
+            {isArabic ? "تمرير" : "Scroll"}
+          </span>
+          <motion.div
+            animate={{
+              y: [0, 8, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-1 h-10 rounded-full bg-gradient-to-b from-secondary to-transparent"
+          />
+        </div>
+      </motion.div>
     </section>
   );
 };

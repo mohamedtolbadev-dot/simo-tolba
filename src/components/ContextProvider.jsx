@@ -2,8 +2,13 @@ import React, { useState, createContext } from 'react';
 import project1 from '../assets/projects/project1.png';
 import project2 from '../assets/projects/project2.png';
 import project3 from '../assets/projects/project3.png';
-import project4 from '../assets/img/iptv11.png';
-
+import project4 from '../assets/projects/project4.png';
+import project5 from '../assets/projects/project5.png';
+import project6 from '../assets/projects/project6.png';
+import project7 from '../assets/projects/project7.png';
+import project8 from '../assets/projects/project8.png';
+import project9 from '../assets/projects/project9.png';
+import project10 from '../assets/projects/project10.png';
 
 
 // Create the context
@@ -28,28 +33,16 @@ const translations = {
 
 const projects = [
   {
-    title: "Car Dealer",
-    description: "A website that allows customers to search for available rental cars, with the option to book instantly online. The website provides detailed information about the cars, including photos, technical specifications, and prices. Additionally, customers can manage their bookings through the website",
-    descriptionAr: "موقع إلكتروني يتيح للعملاء البحث عن سيارات التأجير المتاحة، مع إمكانية الحجز الفوري عبر الإنترنت. يوفر الموقع معلومات مفصلة عن السيارات، بما في ذلك الصور والتفاصيل الفنية والأسعار. كما يمكن للعملاء إدارة حجوزاتهم عبر الموقع",
-    tags: ["React", "Tailwind CSS"],
     imageUrl: project1,
     liveLink: "https://cars-simo.onrender.com/",
     githubLink: "https://github.com/Mohahamed99-by/web-cars"
   },
   {
-    title: "QR Code Generator",
-    description: "A website for creating QR codes for various types of data, such as URLs, email addresses, WhatsApp numbers, phone numbers, Wi-Fi data, and geographic locations. It allows users to easily create customized QR codes in an attractive way, making it suitable for both personal and professional use",
-    descriptionAr: "موقع لإنشاء أكواد QR لأنواع مختلفة من البيانات، مثل عناوين URL والبريد الإلكتروني وأرقام WhatsApp وأرقام الهواتف وبيانات Wi-Fi والموقع الجغرافي. يتيح للمستخدمين إنشاء أكواد QR مخصصة بسهولة وبشكل جذاب، مما يجعله مناسبًا للاستخدام الشخصي والمهني.",
-    tags: ["React Vite", "Tailwind CSS", "Express.js", "MySQL"],
     imageUrl: project2,
     liveLink: "https://qr-code-as.onrender.com/",
     githubLink: "https://github.com/Mohahamed99-by/qr-code/"
   },
   {
-    title: "Task Management App",
-    description: "A website that allows customers to search for available rental cars, with the option to book instantly online. The website provides detailed information about the cars, including photos, technical specifications, and prices. Additionally, customers can manage their bookings through the website",
-    descriptionAr: "موقع إلكتروني يتيح للعملاء البحث عن سيارات التأجير المتاحة، مع إمكانية الحجز الفوري عبر الإنترنت. يوفر الموقع معلومات مفصلة عن السيارات، بما في ذلك الصور والتفاصيل الفنية والأسعار. كما يمكن للعملاء إدارة حجوزاتهم عبر الموقع",
-    tags: ["React", "Tailwind CSS"],
     imageUrl: project3,
     liveLink: "https://we-car.onrender.com/",
     githubLink: "https://github.com/Mohahamed99-by/web-cars"
@@ -57,13 +50,35 @@ const projects = [
   ,
   {
 
-    title: "IPTV Service",
-    description: "A website that provides IPTV services, allowing users to stream their favorite TV channels and movies online.",
-    descriptionAr: "موقع إلكتروني يقدم خدمات IPTV، مما يسمح للمستخدمين ببث قنوات التلفزيون والأفلام المفضلة لديهم عبر الإنترنت.",
-    tags: ["React", "Tailwind CSS"],
-    imageUrl: project4,
+    imageUrl: project5,
     liveLink: "https://service-iptv.onrender.com/",
     githubLink: "https://github.com/Mohahamed99-by/IPTV"
+  },
+  { 
+    imageUrl: project4,
+    liveLink: "https://texturnhub-cw6f.vercel.app/",
+    githubLink: ""
+  },
+  {
+    imageUrl: project6,
+    liveLink: "https://shoe-store-c0pj.onrender.com/",
+
+  },
+  {
+    imageUrl: project7,
+    liveLink: "https://riad-oasis.vercel.app/"
+  },
+  {
+    imageUrl: project8,
+    liveLink: "https://ecomwes.vercel.app/",
+  },
+  {
+    imageUrl: project9,
+    liveLink: "https://olive-oil-store.vercel.app/",
+  },
+  {
+    imageUrl: project10,
+    liveLink: "https://v0-social-link-manager.vercel.app/",
   }
 ];
 
