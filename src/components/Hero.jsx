@@ -98,10 +98,9 @@ const Hero = () => {
               </Link>
 
               <a
-    href="public/MohamedTolba_CV.pdf"
+    href="assets/MohamedTolba_CV"
    
-    download="MohamedTolba_CV.pdf"
-    target="_blank"
+    download
     className={`group inline-flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-lg font-medium backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 ${
       isArabic ? "flex-row-reverse font-arabic" : ""
     }`}
