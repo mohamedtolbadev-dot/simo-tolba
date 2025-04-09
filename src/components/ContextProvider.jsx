@@ -11,6 +11,8 @@ import project9 from '../assets/projects/project9.png';
 import project10 from '../assets/projects/project10.png';
 
 
+
+
 // Create the context
 const LongContext = createContext();
 

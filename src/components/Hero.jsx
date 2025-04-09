@@ -98,15 +98,18 @@ const Hero = () => {
               </Link>
 
               <a
-                href={"/assets/MohamedTolbaCV.pdf"}
-                download
-                className={`group inline-flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-lg font-medium backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 ${
-                  isArabic ? "flex-row-reverse font-arabic" : ""
-                }`}
-              >
-                {downloadCV}
-                <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-              </a>
+    href="public/MohamedTolba_CV.pdf"
+   
+    download="MohamedTolba_CV.pdf"
+    target="_blank"
+    className={`group inline-flex items-center gap-3 px-8 py-4 bg-white/5 text-white rounded-lg font-medium backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 ${
+      isArabic ? "flex-row-reverse font-arabic" : ""
+    }`}
+    aria-label={translationsHero[language]?.downloadCV || translationsHero.en.downloadCV}
+  >
+    {translationsHero[language]?.downloadCV || translationsHero.en.downloadCV}
+    <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+  </a>
             </motion.div>
           </motion.div>
 
