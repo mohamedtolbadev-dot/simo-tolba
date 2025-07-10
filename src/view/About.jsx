@@ -1,287 +1,446 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import {
   ArrowRight,
-  ChevronRight,
+  
   Code2,
   Database,
-  Github,
   Globe,
-  Linkedin,
-  Mail,
   Palette,
-  Twitter,
-} from "lucide-react"
-import { useContext } from "react"
-import { LongContext } from "./../components/ContextProvider"
-import Link from "react-scroll/modules/components/Link"
+  User,
+  MapPin,
+  Zap,
+  Target,
+  Lightbulb,
+} from "lucide-react";
+import React, { useContext, useState } from "react";
+import { LongContext } from "./../components/ContextProvider";
+import { Link } from "react-scroll";
 
 const About = () => {
-  const { language, t } = useContext(LongContext)
-  const isArabic = language === "ar"
+  const { language, t } = useContext(LongContext);
+  const isArabic = language === "ar";
+  const [hoveredSkill, setHoveredSkill] = useState(null);
 
   const skills = [
-    { name: "Frontend Development", icon: <Code2 />, level: 90 },
-    { name: "UI/UX Design", icon: <Palette />, level: 85 },
-    { name: "Backend Development", icon: <Database />, level: 80 },
-    { name: "Internationalization", icon: <Globe />, level: 75 },
-  ]
+    {
+      name: "Frontend Development",
+      icon: <Code2 />,
+      level: 90,
+      color: "from-blue-500 to-cyan-400",
+    },
+    {
+      name: "UI/UX Design",
+      icon: <Palette />,
+      level: 85,
+      color: "from-purple-500 to-pink-400",
+    },
+    {
+      name: "Backend Development",
+      icon: <Database />,
+      level: 80,
+      color: "from-green-500 to-emerald-400",
+    },
+    {
+      name: "Web Technologies",
+      icon: <Globe />,
+      level: 88,
+      color: "from-orange-500 to-yellow-400",
+    },
+  ];
+
+  
+
+  const personalValues = [
+    {
+      icon: <Lightbulb />,
+      title: "Innovation",
+      description: "Always exploring new technologies",
+    },
+    {
+      icon: <Target />,
+      title: "Precision",
+      description: "Attention to detail in every project",
+    },
+    {
+      icon: <Zap />,
+      title: "Performance",
+      description: "Optimized and fast solutions",
+    },
+  ];
 
   return (
     <section
-      className="relative min-h-screen flex items-center px-6 lg:px-12 py-20 overflow-hidden"
+      className="relative min-h-screen flex items-center px-4 lg:px-8 py-12 overflow-hidden"
       dir={isArabic ? "rtl" : "ltr"}
     >
-      {/* Background Elements */}
+      {/* Enhanced Background Elements */}
       <div className="absolute inset-0 -z-10">
-        {/* Modern gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+        {/* Dynamic gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+          <div className="absolute inset-0 bg-gradient-to-tr from-secondary/5 via-transparent to-primary/5" />
+        </div>
 
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_49%,#ffffff05_50%,transparent_51%)] bg-[length:40px_40px]" />
+        {/* Animated background pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_49%,#ffffff03_50%,transparent_51%)] bg-[length:60px_60px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(0deg,transparent_49%,#ffffff03_50%,transparent_51%)] bg-[length:60px_60px]" />
+        </div>
 
-        {/* Accent color glow */}
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-secondary/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-primary/20 rounded-full blur-[100px]" />
+        {/* Floating geometric shapes */}
+        <motion.div
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            rotate: { duration: 30, repeat: Infinity, ease: "linear" },
+            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="absolute top-1/4 left-1/4 w-32 h-32 border border-secondary/20 rotate-45"
+        />
+
+        {/* Dynamic accent glows */}
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.1, 0.3, 0.1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-1/4 -left-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 5,
+          }}
+          className="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className={`space-y-10 ${isArabic ? "text-right" : "text-left"}`}
-          >
-            {/* Header Section */}
-            <div className="space-y-8">
-              <motion.div
-                initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-3"
-              >
-                <div className={`h-px w-12 bg-secondary ${isArabic ? "order-2" : "order-1"}`}></div>
-                <span className={`text-secondary font-mono text-lg ${isArabic ? "order-1 font-arabic" : "order-2"}`}>
-                  {t.aboutMe || "About Me"}
-                </span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="space-y-6"
-              >
-                <h1 className={`text-5xl lg:text-7xl font-bold text-white ${isArabic ? "font-arabic" : ""}`}>
-                  <span className="inline-block">{t.myStory || "My Story"}</span>
-                  <span className="inline-block ml-3 h-[6px] w-12 bg-secondary"></span>
-                </h1>
-
-                <p
-                  className={`text-slate-300 text-lg lg:text-xl max-w-2xl leading-relaxed ${
-                    isArabic ? "font-arabic mr-0 ml-auto" : ""
-                  }`}
-                >
-                  {t.introduction ||
-                    "I'm a passionate developer with expertise in creating modern web applications. My journey in technology has been driven by curiosity and a desire to build solutions that make a difference."}
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Additional Content */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="space-y-6"
-            >
-              <p className="text-slate-300 text-lg leading-relaxed">
-                {t.journey ||
-                  "With several years of experience in both frontend and backend development, I've worked on projects ranging from small business websites to complex enterprise applications."}
-              </p>
-
-              <ul className="space-y-3">
-                {[
-                  t.highlight1 || "Specialized in React and Next.js development",
-                  t.highlight2 || "Experienced with modern UI frameworks and design systems",
-                  t.highlight3 || "Passionate about creating accessible and performant web applications",
-                ].map((item, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 + index * 0.1 }}
-                    className="flex items-start gap-2"
-                  >
-                    <ChevronRight className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
-                    <span className="text-slate-300">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Action Button */}
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="space-y-12">
+          {/* Hero Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className={`flex flex-col sm:flex-row gap-5 ${isArabic ? "items-end" : "items-start"}`}
+              transition={{ duration: 0.8 }}
+              className={`space-y-8 ${isArabic ? "text-right" : "text-left"}`}
             >
-              <Link
-                to="/contact"
-                className={`group inline-flex items-center gap-3 px-8 py-4 bg-secondary text-primary rounded-lg font-medium shadow-lg shadow-secondary/20 hover:shadow-xl hover:shadow-secondary/30 transition-all duration-300 ${
-                  isArabic ? "flex-row-reverse font-arabic" : ""
-                }`}
+              {/* Status Badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full"
               >
-                {t.contactMe || "Get in Touch"}
-                {isArabic ? (
-                  <ArrowRight className="w-5 h-5 group-hover:-translate-x-1 transition-transform rotate-180" />
-                ) : (
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                )}
-              </Link>
-            </motion.div>
-          </motion.div>
+                <User className="w-3.5 h-3.5 text-secondary" />
+                <span className="text-xs text-slate-300 font-mono">
+                  About Me
+                </span>
+              </motion.div>
 
-          {/* Right Content - Skills Visual */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative hidden lg:block"
-          >
-            <div className="relative w-full h-[500px] flex items-center justify-center">
-              {/* Main circular element */}
-              <div className="relative w-80 h-80">
-                {/* Outer ring */}
+              {/* Header Section */}
+              <div className="space-y-6">
                 <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  className="absolute inset-0 rounded-full border border-white/10"
-                />
-
-                {/* Middle ring */}
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  className="absolute inset-4 rounded-full border border-dashed border-secondary/30"
-                />
-
-                {/* Inner ring */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  className="absolute inset-10 rounded-full border border-white/10"
-                />
-
-                {/* Center Icon */}
-                <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-gradient-to-br from-secondary/20 to-primary/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10"
+                  initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex items-center gap-3"
                 >
-                  <Code2 className="w-12 h-12 text-white" />
+                  <div
+                    className={`h-px w-16 bg-gradient-to-r from-secondary to-transparent ${isArabic ? "order-2" : "order-1"}`}
+                  ></div>
+                  <span
+                    className={`text-secondary font-mono text-lg tracking-wider ${isArabic ? "order-1 font-arabic" : "order-2"}`}
+                  >
+                    {t.about || "About"} {t.me || "Me"}
+                  </span>
                 </motion.div>
 
-                {/* Skills as Orbiting Elements */}
-                {skills.map((skill, index) => {
-                  const angle = (index * Math.PI * 2) / skills.length
-                  const x = Math.cos(angle) * 150
-                  const y = Math.sin(angle) * 150
-
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.8 + index * 0.2 }}
-                      className="absolute w-16 h-16 bg-slate-800/80 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10"
-                      style={{
-                        left: `calc(50% + ${x}px - 32px)`,
-                        top: `calc(50% + ${y}px - 32px)`,
-                      }}
-                      whileHover={{ scale: 1.1 }}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="space-y-4"
+                >
+                  <h1
+                    className={`text-4xl lg:text-6xl font-bold text-white leading-tight ${isArabic ? "font-arabic" : ""}`}
+                  >
+                    <motion.span
+                      className="inline-block"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
                     >
-                      {skill.icon}
-                    </motion.div>
-                  )
-                })}
+                      My
+                    </motion.span>
+                    <br />
+                    <motion.span
+                      className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-secondary via-white to-secondary bg-size-200 animate-gradient"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 }}
+                    >
+                      Story
+                    </motion.span>
+                  </h1>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 }}
+                    className="space-y-3"
+                  >
+                    <div className="flex items-center gap-2 text-secondary font-mono text-base">
+                      <MapPin className="w-4 h-4" />
+                      <span>Fes, Morocco</span>
+                    </div>
+                    <p
+                      className={`text-slate-300 text-base lg:text-lg max-w-2xl leading-relaxed ${isArabic ? "font-arabic mr-0 ml-auto" : ""}`}
+                    >
+                      {t.introduction ||
+                        "Hi! I'm Mohamed Tolba, a dedicated full-stack developer from Fes. I'm passionate about building things for the web, whether it's crafting dynamic websites, interactive applications, or innovative digital solutions."}
+                    </p>
+                  </motion.div>
+                </motion.div>
               </div>
 
-              {/* Floating skill info */}
+              {/* Journey Description */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="absolute top-1/4 -left-10 p-4 bg-slate-900/80 backdrop-blur-md rounded-lg border border-white/10 shadow-xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2 }}
+                className="space-y-4"
               >
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Code2 className="w-5 h-5 text-secondary" />
-                    <span className="text-white font-medium">Frontend</span>
-                  </div>
-                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                <p
+                  className={`text-slate-300 text-base leading-relaxed ${isArabic ? "font-arabic" : ""}`}
+                >
+                  {t.journey ||
+                    "I am a graduate of the Office of Vocational Training and Employment (OFPPT), where I obtained a specialized technician diploma in the field of digital development. I have worked on academic and personal projects using a variety of technologies."}
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {personalValues.map((value, index) => (
                     <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: "90%" }}
-                      transition={{ duration: 1, delay: 1 }}
-                      className="h-full bg-gradient-to-r from-secondary to-blue-500 rounded-full"
-                    />
-                  </div>
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.3 + index * 0.1 }}
+                      className="p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg group hover:bg-white/10 transition-all duration-300"
+                    >
+                      <div className="space-y-1.5">
+                        <div className="text-secondary group-hover:scale-110 transition-transform">
+                          {React.cloneElement(value.icon, { size: 16 })}
+                        </div>
+                        <h3 className="text-white font-semibold text-sm">
+                          {value.title}
+                        </h3>
+                        <p className="text-slate-400 text-xs">
+                          {value.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
 
+              {/* Enhanced Action Button */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                className="absolute bottom-1/4 -right-10 p-4 bg-slate-900/80 backdrop-blur-md rounded-lg border border-white/10 shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.5 }}
+                className={`flex flex-col sm:flex-row gap-4 ${isArabic ? "items-end" : "items-start"}`}
               >
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Database className="w-5 h-5 text-secondary" />
-                    <span className="text-white font-medium">Backend</span>
-                  </div>
-                  <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: "80%" }}
-                      transition={{ duration: 1, delay: 1.2 }}
-                      className="h-full bg-gradient-to-r from-secondary to-blue-500 rounded-full"
-                    />
-                  </div>
-                </div>
+                <Link
+                  to="contact"
+                  smooth={true}
+                  duration={500}
+                  className={`group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-secondary to-secondary/80 text-primary rounded-lg font-semibold text-base shadow-xl shadow-secondary/25 hover:shadow-secondary/40 transition-all duration-300 overflow-hidden cursor-pointer ${isArabic ? "flex-row-reverse font-arabic" : ""}`}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10">Get in Touch</span>
+                  {isArabic ? (
+                    <ArrowRight className="w-6 h-6 group-hover:-translate-x-2 transition-transform relative z-10 rotate-180" />
+                  ) : (
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+                  )}
+                </Link>
               </motion.div>
+            </motion.div>
 
-              {/* Floating Particles */}
-              {[...Array(12)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    y: [0, -10, 0],
-                    opacity: [0.3, 0.8, 0.3],
-                  }}
-                  transition={{
-                    duration: Math.random() * 2 + 2,
-                    delay: i * 0.1,
-                    repeat: Number.POSITIVE_INFINITY,
-                  }}
-                  className="absolute w-1.5 h-1.5 rounded-full bg-secondary"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
+            {/* Right Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative w-full h-[500px] flex items-center justify-center">
+                <div className="relative w-80 h-80">
+                  {/* Outer rotating rings */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 40,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-0 rounded-full border-2 border-dashed border-white/10"
+                  />
+
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{
+                      duration: 30,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-8 rounded-full border border-secondary/30"
+                  />
+
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 25,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-16 rounded-full border border-white/20"
+                  />
+
+                  {/* Center interactive element */}
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.05, 1],
+                      rotateY: [0, 180, 360],
+                    }}
+                    transition={{
+                      scale: { duration: 4, repeat: Number.POSITIVE_INFINITY },
+                      rotateY: {
+                        duration: 8,
+                        repeat: Number.POSITIVE_INFINITY,
+                      },
+                    }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-secondary/30 via-primary/20 to-secondary/30 backdrop-blur-xl rounded-full flex items-center justify-center border-2 border-white/20 shadow-2xl"
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 3,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "linear",
+                      }}
+                    >
+                      <User className="w-16 h-16 text-white drop-shadow-lg" />
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Orbiting skills */}
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{
+                      duration: 25,
+                      repeat: Number.POSITIVE_INFINITY,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-0"
+                  >
+                    {skills.map((skill, index) => {
+                      const angle = (index * Math.PI * 2) / skills.length;
+                      const x = Math.cos(angle) * 120; // Réduit le rayon de 150 à 120
+                      const y = Math.sin(angle) * 120;
+
+                      return (
+                        <motion.div
+                          key={index}
+                          className="absolute w-16 h-16 bg-slate-800/90 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/20 shadow-xl cursor-pointer"
+                          style={{
+                            left: `calc(50% + ${x}px - 32px)`,
+                            top: `calc(50% + ${y}px - 32px)`,
+                          }}
+                          whileHover={{ scale: 1.2, y: -5 }}
+                          onHoverStart={() => setHoveredSkill(skill)}
+                          onHoverEnd={() => setHoveredSkill(null)}
+                        >
+                          <div className="text-secondary w-6 h-6">
+                            {React.cloneElement(skill.icon, { size: 20 })}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+
+                  {/* Skill tooltip */}
+                  {hoveredSkill && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-4 left-1/2 -translate-x-1/2 p-3 bg-slate-900/95 backdrop-blur-xl rounded-lg border border-white/20 shadow-xl"
+                    >
+                      <div className="space-y-1.5 text-center">
+                        <h3 className="text-white font-semibold text-sm">
+                          {hoveredSkill.name}
+                        </h3>
+                        <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${hoveredSkill.level}%` }}
+                            className={`h-full bg-gradient-to-r ${hoveredSkill.color} rounded-full`}
+                          />
+                        </div>
+                        <span className="text-secondary text-xs font-medium">
+                          {hoveredSkill.level}%
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Enhanced floating particles */}
+                  {[...Array(20)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{
+                        y: [0, -20, 0],
+                        opacity: [0.2, 1, 0.2],
+                        scale: [1, 1.2, 1],
+                      }}
+                      transition={{
+                        duration: Math.random() * 3 + 2,
+                        delay: i * 0.1,
+                        repeat: Number.POSITIVE_INFINITY,
+                      }}
+                      className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-secondary to-primary"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+        
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default About
+export default About;

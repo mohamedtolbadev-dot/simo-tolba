@@ -9,6 +9,8 @@ import project7 from '../assets/projects/project7.png';
 import project8 from '../assets/projects/project8.png';
 import project9 from '../assets/projects/project9.png';
 import project10 from '../assets/projects/project10.png';
+import project11 from '../assets/projects/project11.png';
+
 
 
 
@@ -81,6 +83,10 @@ const projects = [
   {
     imageUrl: project10,
     liveLink: "https://v0-social-link-manager.vercel.app/",
+  },
+  {
+    imageUrl: project11,
+  liveLink: "https://abd-el-moughit-portfolio.vercel.app/"
   }
 ];
 

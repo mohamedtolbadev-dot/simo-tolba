@@ -44,45 +44,55 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        scrolled ? "py-3 bg-slate-950/90 backdrop-blur-md border-b border-white/5 shadow-lg" : "py-5 bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        scrolled
+          ? "py-3 bg-slate-950/95 backdrop-blur-md border-b border-white/5 shadow-xl"
+          : "py-4 bg-transparent"
       }`}
       dir={isArabic ? "rtl" : "ltr"}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-full">
           {/* Logo */}
-          <Link to="home" smooth duration={500} offset={-70} className="cursor-pointer group">
+          <Link
+            to="home"
+            smooth
+            duration={500}
+            spy={true}
+            offset={-100}
+            className="cursor-pointer group"
+          >
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-secondary to-secondary/60 group-hover:shadow-lg group-hover:shadow-secondary/20 transition-all duration-300">
-                <div className="absolute inset-0 flex items-center justify-center text-primary font-bold text-xl">
-                  M
+              <div className="relative w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-secondary to-secondary/60 group-hover:shadow-lg group-hover:shadow-secondary/20 transition-all duration-300">
+                <div className="absolute inset-0 flex items-center justify-center text-primary font-bold text-lg">
+                  M.T
                 </div>
               </div>
               <motion.span
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: "auto", opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="text-white font-bold text-xl hidden sm:block"
+                className="text-white font-bold text-lg hidden sm:block"
               >
-                Mohamed
+                Developer
               </motion.span>
             </div>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            <ul className={`flex ${isArabic ? "space-x-reverse" : ""} gap-8`}>
+          <div className="hidden md:flex items-center gap-6">
+            <ul className={`flex ${isArabic ? "space-x-reverse" : ""} gap-6`}>
               {links.map(({ id, link, label }) => (
                 <li key={id}>
                   <Link
                     to={link}
                     smooth
                     duration={500}
-                    offset={-70}
+                    spy={true}
+                    offset={-100}
                     className="relative text-slate-300 hover:text-white transition-colors group cursor-pointer"
                   >
-                    <span className={`${isArabic ? "font-arabic" : ""}`}>{label}</span>
+                    <span className={`text-sm ${isArabic ? "font-arabic" : ""}`}>{label}</span>
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 </li>
@@ -93,14 +103,14 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setLanguageOpen(!languageOpen)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:border-secondary/50 transition-all duration-300 ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:border-secondary/50 transition-all duration-300 ${
                   languageOpen ? "border-secondary/50" : ""
                 }`}
               >
-                <Globe className="w-4 h-4 text-secondary" />
-                <span className={isArabic ? "font-arabic" : ""}>{language === "en" ? "EN" : "ع"}</span>
+                <Globe className="w-3.5 h-3.5 text-secondary" />
+                <span className={`text-sm ${isArabic ? "font-arabic" : ""}`}>{language === "en" ? "EN" : "ع"}</span>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-300 ${languageOpen ? "rotate-180" : ""}`}
+                  className={`w-3.5 h-3.5 transition-transform duration-300 ${languageOpen ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -111,7 +121,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2 w-40 rounded-lg bg-slate-900 border border-white/10 shadow-lg overflow-hidden z-50"
+                    className="absolute right-0 mt-2 w-36 rounded-lg bg-slate-900/95 backdrop-blur-md border border-white/10 shadow-xl overflow-hidden z-50"
                   >
                     {languages.map((lang) => (
                       <button
@@ -120,7 +130,7 @@ const Navbar = () => {
                           setLanguage(lang.code)
                           setLanguageOpen(false)
                         }}
-                        className={`w-full text-left px-4 py-3 text-slate-300 hover:bg-white/5 transition-colors flex items-center gap-2 ${
+                        className={`w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 transition-colors flex items-center gap-2 ${
                           language === lang.code ? "bg-white/5 text-secondary" : ""
                         } ${lang.isArabic ? "font-arabic" : ""}`}
                       >
@@ -144,8 +154,9 @@ const Navbar = () => {
               to="contact"
               smooth
               duration={500}
-              offset={-70}
-              className="px-5 py-2 bg-gradient-to-r from-secondary to-secondary/80 text-primary rounded-full font-medium hover:shadow-lg hover:shadow-secondary/20 transition-all duration-300 cursor-pointer"
+              spy={true}
+              offset={-100}
+              className="px-4 py-2 bg-gradient-to-r from-secondary to-secondary/80 text-primary rounded-full text-sm font-medium hover:shadow-lg hover:shadow-secondary/20 transition-all duration-300 cursor-pointer"
             >
               {isArabic ? "تواصل معي" : "Contact Me"}
             </Link>
