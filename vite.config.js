@@ -10,7 +10,13 @@ export default defineConfig({
       project: "javascript-react",
     }),
   ],
+  base: '/',
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
 });
