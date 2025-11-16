@@ -403,7 +403,7 @@ const Skills = () => {
                 className="group space-y-3 p-4 border border-slate-800 hover:border-slate-700 transition-all duration-300 cursor-default"
               >
                 {/* Icon */}
-                <div className="text-slate-600 group-hover:text-slate-400 transition-colors">
+                <div className={`${skill.style} transition-all duration-300 group-hover:scale-110`}>
                   {React.cloneElement(skill.icon, { size: 32 })}
                 </div>
 
