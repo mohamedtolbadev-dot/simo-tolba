@@ -1,204 +1,131 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
-import { Code2 } from "lucide-react"
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const Loading = () => {
-  const [progress, setProgress] = useState(0)
-  const name = "MOHAMED TOLBA"
-  const nameArray = name.split("")
-  const role = "FULL-STACK DEVELOPER"
-  const roleArray = role.split("")
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(timer)
-          return 100
+          clearInterval(timer);
+          return 100;
         }
-        return prev + 1
-      })
-    }, 20)
+        return prev + 5;
+      });
+    }, 100);
 
-    return () => clearInterval(timer)
-  }, [])
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-slate-950 z-[200]">
-      {/* Modern Background */}
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 z-[200]">
+      {/* Minimalist Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_100%)]" />
-
-        {/* Animated Grid */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_49%,#ffffff03_50%,transparent_51%)] bg-[length:30px_30px]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,transparent_49%,#ffffff03_50%,transparent_51%)] bg-[length:30px_30px]" />
-        </div>
-
-        {/* Dynamic Glows */}
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.3, 0.1],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.2, 0.1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"
-        />
+        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/3 left-0 w-[400px] h-[400px] bg-slate-800/30 rounded-full blur-[100px]" />
       </div>
 
-      <div className="text-center space-y-8 max-w-xl mx-auto px-4 relative z-10">
-        {/* Animated Logo */}
-        <div className="relative">
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 360],
+      {/* Main Content */}
+      <div className="text-center space-y-10 max-w-md mx-auto px-6 relative z-10">
+        {/* Logo */}
+        <motion.div
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", duration: 0.8 }}
+          className="mx-auto"
+        >
+          <div className="w-20 h-20 bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center border border-red-500/50 shadow-2xl shadow-red-600/30 mx-auto">
+            <span className="text-white font-black text-3xl">MT</span>
+          </div>
+        </motion.div>
+
+        {/* Main Message with 3D Effect */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="space-y-3"
+          style={{ perspective: "1000px" }}
+        >
+          <motion.h1 
+            className="text-4xl sm:text-5xl font-black text-white tracking-tight"
+            style={{
+              textShadow: `
+                2px 2px 0px rgba(220, 38, 38, 0.3),
+                4px 4px 0px rgba(220, 38, 38, 0.2),
+                6px 6px 0px rgba(220, 38, 38, 0.1),
+                8px 8px 20px rgba(0, 0, 0, 0.5)
+              `
             }}
-            transition={{
-              scale: { duration: 2, repeat: Infinity },
-              rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-            }}
-            className="w-24 h-24 rounded-full bg-gradient-to-br from-secondary via-primary to-secondary mx-auto flex items-center justify-center"
           >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            >
-              <Code2 className="w-12 h-12 text-slate-900" />
-            </motion.div>
-          </motion.div>
-
-          {/* Rotating Border */}
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute inset-0 rounded-full border-2 border-dashed border-secondary/30"
-          />
-        </div>
-
-        {/* Name Animation */}
-        <div className="flex justify-center items-center gap-2 flex-wrap my-8">
-          {nameArray.map((letter, index) => (
-            <motion.span
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.3,
-                delay: index * 0.1,
-                ease: "easeOut",
-              }}
-              className={`text-3xl sm:text-4xl font-bold ${
-                letter === " " ? "mr-2" : "bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent"
-              }`}
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </div>
-
-        {/* Role Animation */}
-        <div className="flex justify-center items-center gap-1 flex-wrap">
-          {roleArray.map((letter, index) => (
-            <motion.span
-              key={index}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: 0.3,
-                delay: nameArray.length * 0.1 + index * 0.05,
-                ease: "easeOut",
-              }}
-              className={`text-sm tracking-wider font-mono ${
-                letter === " " ? "mr-1" : "text-secondary"
-              }`}
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </div>
+            MOHAMED TOLBA
+          </motion.h1>
+          <p className="text-slate-400 font-medium text-sm tracking-[0.2em] uppercase">
+            Full-Stack Developer
+          </p>
+        </motion.div>
 
         {/* Progress Bar */}
-        <div className="relative w-full max-w-md mx-auto mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="absolute -top-6 left-0 text-sm text-slate-400 font-mono"
-          >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+          className="space-y-3"
+        >
+          <div className="text-slate-400 text-sm font-mono font-bold">
             Loading... {progress}%
-          </motion.div>
+          </div>
 
-          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div className="w-full bg-slate-800/50 rounded-full h-1.5 overflow-hidden border border-slate-700/50">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.1 }}
-              className="h-full bg-gradient-to-r from-secondary via-primary to-secondary bg-size-200 animate-gradient rounded-full"
+              className="h-full bg-gradient-to-r from-red-600 to-red-500 rounded-full shadow-lg shadow-red-600/50"
             />
           </div>
 
-          {/* Loading Messages */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="absolute -bottom-6 left-0 right-0 text-xs text-slate-500 font-mono"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+            className="text-slate-500 text-xs font-mono"
           >
-            {progress < 33 && "Initializing..."}
-            {progress >= 33 && progress < 66 && "Loading assets..."}
-            {progress >= 66 && progress < 100 && "Preparing content..."}
-            {progress === 100 && "Ready!"}
+            {progress < 25 && "Initializing..."}
+            {progress >= 25 && progress < 50 && "Loading assets..."}
+            {progress >= 50 && progress < 75 && "Preparing content..."}
+            {progress >= 75 && progress < 100 && "Almost ready..."}
+            {progress === 100 && "Welcome!"}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Floating Particles */}
-      {[...Array(20)].map((_, i) => (
+      {/* Minimal Floating Dots */}
+      {[...Array(5)].map((_, i) => (
         <motion.div
           key={i}
           animate={{
-            y: [0, -20, 0],
-            opacity: [0.2, 1, 0.2],
+            opacity: [0.1, 0.3, 0.1],
             scale: [1, 1.2, 1],
           }}
           transition={{
-            duration: Math.random() * 3 + 2,
-            delay: i * 0.1,
+            duration: 3,
+            delay: i * 0.5,
             repeat: Infinity,
+            ease: "easeInOut",
           }}
-          className="absolute w-1 h-1 rounded-full bg-gradient-to-r from-secondary to-primary"
+          className="absolute w-1 h-1 rounded-full bg-red-600/40"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${10 + i * 20}%`,
+            top: `${15 + i * 15}%`,
           }}
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

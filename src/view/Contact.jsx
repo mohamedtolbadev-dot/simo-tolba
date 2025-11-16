@@ -14,7 +14,7 @@ import {
   Linkedin,
   Facebook,
   Download,
-  Calendar
+  Calendar,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext, useState } from "react";
@@ -79,28 +79,40 @@ const Contact = () => {
       scheduleCall: "Schedule a Call",
     },
     ar: {
-      getInTouch: "ابق على تواصل",
-      letsWorkTogether: "دعنا نبني شيئًا مذهلاً معًا",
+      getInTouch: "تواصل معي",
+      getInTitle: "",
+      touchTitle: "تواصل معي",
+      letsWorkTogether: "لنبني شيئًا مذهلاً معًا",
       feelFree:
-        "مستعد لتحويل أفكارك إلى حقيقة؟ دعنا نناقش مشروعك القادم ونصنع شيئًا استثنائيًا.",
+        "مستعد لتحويل أفكارك إلى واقع؟ دعنا نناقش مشروعك القادم ونصنع شيئًا استثنائيًا معًا.",
       name: "الاسم الكامل",
       email: "البريد الإلكتروني",
+      emailLabel: "البريد الإلكتروني",
       subject: "الموضوع",
       message: "رسالتك",
       sendMessage: "إرسال الرسالة",
       sending: "جارٍ الإرسال...",
       yourLocation: "فاس، المغرب",
       connectWithMe: "تواصل معي",
-      responseTime: "عادة ما يجيب خلال 24 ساعة",
-      availability: "متاح للعمل الحر",
+      responseTime: "عادةً أرد خلال 24 ساعة",
+      availability: "متاح للعمل الحر والمشاريع",
       successMessage: "شكرًا لك! تم إرسال رسالتك بنجاح.",
       errorMessage: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
       namePlaceholder: "أدخل اسمك الكامل",
       emailPlaceholder: "أدخل بريدك الإلكتروني",
-      subjectPlaceholder: "ما هو الموضوع؟",
+      subjectPlaceholder: "ما هو موضوع رسالتك؟",
       messagePlaceholder: "أخبرني عن مشروعك أو استفسارك...",
       downloadCV: "تحميل السيرة الذاتية",
       scheduleCall: "جدولة مكالمة",
+      locationLabel: "الموقع",
+      responseTimeLabel: "وقت الرد",
+      availabilityLabel: "التوفر",
+      sendEmailAnytime: "راسلني عبر البريد في أي وقت",
+      remoteWorkAvailable: "متاح للعمل عن بُعد في جميع أنحاء العالم",
+      openToWork: "متاح للعمل",
+      hours24: "24 ساعة",
+      sendMessageTitle: "أرسل رسالة",
+      respondWithin24: "سأرد خلال 24 ساعة",
     },
   };
 
@@ -109,27 +121,27 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: <Mail />,
-      label: "Email",
-      value: "mohamedtolba161@gmail.com",
-      href: "mailto:mohamedtolba161@gmail.com",
-      description: "Send me an email anytime",
+      label: isArabic ? t.emailLabel : "Email",
+      value: "mohamedtolba.dev@gmail.com",
+      href: "mailto:mohamedtolba.dev@gmail.com",
+      description: isArabic ? t.sendEmailAnytime : "Send me an email anytime",
     },
     {
       icon: <MapPin />,
-      label: "Location",
+      label: isArabic ? t.locationLabel : "Location",
       value: t.yourLocation,
-      description: "Available for remote work worldwide",
+      description: isArabic ? t.remoteWorkAvailable : "Available for remote work worldwide",
     },
     {
       icon: <Clock />,
-      label: "Response Time",
-      value: "24 hours",
+      label: isArabic ? t.responseTimeLabel : "Response Time",
+      value: isArabic ? t.hours24 : "24 hours",
       description: t.responseTime,
     },
     {
       icon: <Coffee />,
-      label: "Availability",
-      value: "Open to work",
+      label: isArabic ? t.availabilityLabel : "Availability",
+      value: isArabic ? t.openToWork : "Open to work",
       description: t.availability,
     },
   ];
@@ -161,172 +173,162 @@ const Contact = () => {
       label: t.downloadCV,
       href: "/assets/MohamedTolbaCV.pdf",
       download: "MohamedTolbaCV.pdf",
-      color: "bg-secondary text-primary hover:bg-secondary/90",
+      color: "bg-secondary text-light hover:bg-secondary/90",
     },
     {
       icon: <Calendar />,
       label: t.scheduleCall,
-      href: "mailto:mohamedtolba161@gmail.com?subject=Schedule a Call",
+      href: "mailto:mohamedtolba.dev@gmail.com?subject=Schedule a Call",
       color: "bg-white/10 text-white hover:bg-white/20 border border-white/20",
     },
   ];
 
   return (
     <section
-      className="relative min-h-screen flex items-center px-6 lg:px-12 py-20 overflow-hidden"
+      id="contact"
+      name="contact"
+      className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-12 py-20 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
       dir={isArabic ? "rtl" : "ltr"}
     >
-      {/* Enhanced Background Elements */}
+      {/* Minimal Background */}
       <div className="absolute inset-0 -z-10">
-        {/* Dynamic gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-          <div className="absolute inset-0 bg-gradient-to-tr from-secondary/5 via-transparent to-primary/5" />
-        </div>
-
-        {/* Animated mesh background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_49%,#ffffff02_50%,transparent_51%)] bg-[length:80px_80px]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,transparent_49%,#ffffff02_50%,transparent_51%)] bg-[length:80px_80px]" />
-        </div>
-
-        {/* Floating communication icons */}
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 left-1/6 text-secondary/20"
-        >
-          <MessageCircle size={35} />
-        </motion.div>
-
-        <motion.div
-          animate={{
-            y: [0, 12, 0],
-            rotate: [0, -3, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-          className="absolute bottom-1/3 right-1/6 text-secondary/20"
-        >
-          <Mail size={30} />
-        </motion.div>
-
-        {/* Dynamic accent glows */}
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.25, 0.1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/4 -left-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px]"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.1, 0.2, 0.1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 5,
-          }}
-          className="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"
-        />
+        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-slate-800/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-slate-700/15 rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto w-full">
-        <div className="space-y-8">
-          {/* Header Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-4"
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
-              <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-xs text-slate-300 font-mono">
-                Available for work
-              </span>
-            </div>
-
-            <div
-              className={`flex items-center gap-3 ${
-                isArabic ? "flex-row-reverse" : ""
-              }`}
+        <div className="space-y-12">
+          {/* Minimalist Header */}
+          <div className="space-y-10">
+            {/* Status */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="inline-flex items-center gap-2"
             >
-              <div className="h-px w-12 bg-gradient-to-r from-secondary to-transparent"></div>
-              <span
-                className={`text-secondary font-mono text-base ${
+              <div className="w-2 h-2 bg-red-600 rounded-full" />
+              <span className="text-slate-400 text-sm font-medium tracking-wider uppercase">
+                {t.availability || "Available for work"}
+              </span>
+            </motion.div>
+
+            {/* Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              <h1
+                className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight ${
                   isArabic ? "font-arabic" : ""
                 }`}
+                style={{ perspective: "1000px" }}
               >
-                {t.getInTouch}
-              </span>
-            </div>
-
-            <h1
-              className={`text-4xl lg:text-6xl font-bold text-white leading-tight ${
-                isArabic ? "font-arabic" : ""
-              }`}
-            >
-              Let&apos;s{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">
-                Connect
-              </span>
-            </h1>
-
-            <p
-              className={`text-slate-300 text-lg max-w-2xl leading-relaxed ${
-                isArabic ? "font-arabic mr-0 ml-auto" : ""
-              }`}
-            >
-              {t.feelFree}
-            </p>
-
-            {/* Quick Actions */}
-            <div className="flex flex-wrap gap-3">
-              {quickActions.map((action, index) => (
-                <motion.a
-                  key={index}
-                  href={action.href}
-                  download={action.download}
-                  whileHover={{ scale: 1.02 }}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${action.color}`}
+                {!isArabic && (
+                  <motion.span 
+                    initial={{ opacity: 0, x: -30, rotateX: -15 }}
+                    whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="block text-white mb-2"
+                    style={{
+                      textShadow: `
+                        2px 2px 0px rgba(220, 38, 38, 0.3),
+                        4px 4px 0px rgba(220, 38, 38, 0.2),
+                        6px 6px 0px rgba(220, 38, 38, 0.1),
+                        8px 8px 20px rgba(0, 0, 0, 0.5)
+                      `,
+                      transform: "translateZ(50px)",
+                      transformStyle: "preserve-3d"
+                    }}
+                  >
+                    Get In
+                  </motion.span>
+                )}
+                <motion.span 
+                  initial={{ opacity: 0, x: -30, rotateX: 15 }}
+                  whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className={`block ${isArabic ? "text-white" : "text-slate-500"}`}
+                  style={{
+                    textShadow: isArabic ? `
+                      2px 2px 0px rgba(220, 38, 38, 0.3),
+                      4px 4px 0px rgba(220, 38, 38, 0.2),
+                      6px 6px 0px rgba(220, 38, 38, 0.1),
+                      8px 8px 20px rgba(0, 0, 0, 0.5)
+                    ` : `
+                      2px 2px 0px rgba(100, 116, 139, 0.4),
+                      4px 4px 0px rgba(100, 116, 139, 0.3),
+                      6px 6px 0px rgba(100, 116, 139, 0.2),
+                      8px 8px 20px rgba(0, 0, 0, 0.5)
+                    `,
+                    transform: "translateZ(30px)",
+                    transformStyle: "preserve-3d"
+                  }}
                 >
-                  {action.icon}
-                  <span>{action.label}</span>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+                  {isArabic ? "تواصل معي" : "Touch"}
+                </motion.span>
+              </h1>
+            </motion.div>
+
+            {/* Description */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+              className="space-y-6"
+            >
+              <p className={`text-slate-400 text-lg max-w-2xl leading-relaxed ${isArabic ? "font-arabic" : ""}`}>
+                {t.feelFree}
+              </p>
+
+              {/* Quick Actions */}
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="/assets/MohamedTolbaCV.pdf"
+                  download="MohamedTolbaCV.pdf"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{t.downloadCV}</span>
+                </a>
+                <a
+                  href="mailto:mohamedtolba.dev@gmail.com?subject=Schedule a Call"
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-red-600/30 text-slate-400 font-semibold hover:border-red-600/50 hover:text-slate-300 transition-all"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>{t.scheduleCall}</span>
+                </a>
+              </div>
+            </motion.div>
+          </div>
 
           {/* Main Contact Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="grid grid-cols-1 lg:grid-cols-5 gap-8"
+          >
             {/* Contact Info */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="lg:col-span-2 space-y-6">
               {/* Contact Information Cards */}
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.div
                     key={index}
-                    whileHover={{ scale: 1.01 }}
-                    className={`p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-white/10 transition-all duration-300 ${
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                    whileHover={{ x: 4 }}
+                    className={`p-4 border border-slate-800 hover:border-slate-700 transition-all cursor-default ${
                       info.href ? "cursor-pointer" : ""
                     }`}
                     onClick={
@@ -335,166 +337,118 @@ const Contact = () => {
                         : undefined
                     }
                   >
-                    <div
-                      className={`flex items-start gap-3 ${
-                        isArabic ? "flex-row-reverse text-right" : ""
-                      }`}
-                    >
-                      <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
-                        <div className="text-secondary">{info.icon}</div>
+                    <div className={`space-y-1 ${isArabic ? "text-right" : ""}`}>
+                      <div className="flex items-center gap-2 text-slate-600">
+                        {info.icon}
+                        <span className="text-xs uppercase tracking-wider">{info.label}</span>
                       </div>
-                      <div className="space-y-0.5">
-                        <h3 className="text-white text-sm font-medium">
-                          {info.label}
-                        </h3>
-                        <p className="text-secondary text-sm">
-                          {info.value}
-                        </p>
-                      </div>
+                      <p className="text-white text-sm font-medium">{info.value}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
 
               {/* Social Links */}
-              <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
-                <h4
-                  className={`text-white text-sm font-medium mb-3 ${
-                    isArabic ? "font-arabic text-right" : ""
-                  }`}
-                >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7, duration: 0.5 }}
+                className="border-t border-slate-800 pt-6"
+              >
+                <h4 className={`text-slate-500 text-xs uppercase tracking-wider mb-4 ${isArabic ? "text-right" : ""}`}>
                   {t.connectWithMe}
                 </h4>
-                <div
-                  className={`flex ${isArabic ? "justify-end" : "justify-start"} gap-3`}
-                >
+                <div className={`flex ${isArabic ? "justify-end" : "justify-start"} gap-3`}>
                   {socialLinks.map((social, index) => (
-                    <motion.a
+                    <a
                       key={index}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      className={`w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 transition-all duration-300 ${social.color}`}
+                      className="w-10 h-10 border border-slate-800 flex items-center justify-center text-slate-600 hover:text-white hover:border-red-600 transition-all"
                       aria-label={social.label}
                     >
-                      <social.Icon size={20} />
-                    </motion.a>
+                      <social.Icon size={18} />
+                    </a>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Contact Form */}
             <div className="lg:col-span-3">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <h2
-                    className={`text-2xl font-bold text-white ${
-                      isArabic ? "font-arabic text-right" : ""
-                    }`}
-                  >
-                    Send me a message
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-1">
+                  <h2 className={`text-white font-semibold ${isArabic ? "font-arabic text-right" : ""}`}>
+                    {isArabic ? t.sendMessageTitle : "Send a Message"}
                   </h2>
-                  <p className={`text-sm text-slate-400 ${isArabic ? "font-arabic text-right" : ""}`}>
-                    I&apos;ll get back to you as soon as possible
+                  <p className={`text-slate-500 text-sm ${isArabic ? "font-arabic text-right" : ""}`}>
+                    {isArabic ? t.respondWithin24 : "I'll respond within 24 hours"}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Name Field */}
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField("name")}
-                      onBlur={() => setFocusedField(null)}
-                      placeholder={t.namePlaceholder}
-                      className={`w-full pl-10 pr-3 py-2.5 bg-white/5 backdrop-blur-sm border rounded-lg focus:outline-none text-sm text-slate-300 placeholder-slate-500 transition-all duration-300 ${
-                        focusedField === "name"
-                          ? "border-secondary"
-                          : "border-white/10 hover:border-white/20"
-                      } ${isArabic ? "text-right font-arabic" : ""}`}
-                      required
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder={t.namePlaceholder}
+                    className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 transition-colors ${
+                      isArabic ? "text-right font-arabic" : ""
+                    }`}
+                    required
+                  />
 
                   {/* Email Field */}
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      onFocus={() => setFocusedField("email")}
-                      onBlur={() => setFocusedField(null)}
-                      placeholder={t.emailPlaceholder}
-                      className={`w-full pl-10 pr-3 py-2.5 bg-white/5 backdrop-blur-sm border rounded-lg focus:outline-none text-sm text-slate-300 placeholder-slate-500 transition-all duration-300 ${
-                        focusedField === "email"
-                          ? "border-secondary"
-                          : "border-white/10 hover:border-white/20"
-                      } ${isArabic ? "text-right font-arabic" : ""}`}
-                      required
-                    />
-                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder={t.emailPlaceholder}
+                    className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 transition-colors ${
+                      isArabic ? "text-right font-arabic" : ""
+                    }`}
+                    required
+                  />
                 </div>
 
                 {/* Subject Field */}
-                <div className="relative">
-                  <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    onFocus={() => setFocusedField("subject")}
-                    onBlur={() => setFocusedField(null)}
-                    placeholder={t.subjectPlaceholder}
-                    className={`w-full pl-10 pr-3 py-2.5 bg-white/5 backdrop-blur-sm border rounded-lg focus:outline-none text-sm text-slate-300 placeholder-slate-500 transition-all duration-300 ${
-                      focusedField === "subject"
-                        ? "border-secondary"
-                        : "border-white/10 hover:border-white/20"
-                    } ${isArabic ? "text-right font-arabic" : ""}`}
-                    required
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder={t.subjectPlaceholder}
+                  className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 transition-colors ${
+                    isArabic ? "text-right font-arabic" : ""
+                  }`}
+                  required
+                />
 
                 {/* Message Field */}
-                <div>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleChange}
-                    onFocus={() => setFocusedField("message")}
-                    onBlur={() => setFocusedField(null)}
-                    placeholder={t.messagePlaceholder}
-                    className={`w-full px-3 py-2.5 bg-white/5 backdrop-blur-sm border rounded-lg focus:outline-none text-sm text-slate-300 placeholder-slate-500 resize-none transition-all duration-300 ${
-                      focusedField === "message"
-                        ? "border-secondary"
-                        : "border-white/10 hover:border-white/20"
-                    } ${isArabic ? "text-right font-arabic" : ""}`}
-                    required
-                  />
-                </div>
+                <textarea
+                  name="message"
+                  rows="5"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder={t.messagePlaceholder}
+                  className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 resize-none transition-colors ${
+                    isArabic ? "text-right font-arabic" : ""
+                  }`}
+                  required
+                />
 
                 {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full px-4 py-2.5 bg-gradient-to-r from-secondary to-secondary/80 text-primary rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isSubmitting
-                      ? "opacity-80 cursor-not-allowed"
-                      : "hover:from-secondary/90 hover:to-secondary/70"
-                  } ${isArabic ? "font-arabic flex-row-reverse" : ""} flex items-center justify-center gap-2`}
+                  className={`w-full px-6 py-3 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 ${
+                    isSubmitting ? "opacity-80 cursor-not-allowed" : ""
+                  } ${isArabic ? "flex-row-reverse" : ""}`}
                 >
                   <span>{isSubmitting ? t.sending : t.sendMessage}</span>
                   <Send className="w-4 h-4" />
@@ -504,13 +458,13 @@ const Contact = () => {
                 <AnimatePresence>
                   {submitStatus && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className={`p-3 rounded-lg border flex items-center gap-2 text-sm ${
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className={`p-3 border flex items-center gap-2 text-sm ${
                         submitStatus === "success"
-                          ? "bg-green-500/10 border-green-500/30 text-green-400"
-                          : "bg-red-500/10 border-red-500/30 text-red-400"
+                          ? "bg-green-900/20 border-green-500/30 text-green-400"
+                          : "bg-red-900/20 border-red-600/30 text-red-400"
                       }`}
                     >
                       {submitStatus === "success" ? (
@@ -519,16 +473,14 @@ const Contact = () => {
                         <AlertCircle className="w-4 h-4" />
                       )}
                       <span className={isArabic ? "font-arabic" : ""}>
-                        {submitStatus === "success"
-                          ? t.successMessage
-                          : t.errorMessage}
+                        {submitStatus === "success" ? t.successMessage : t.errorMessage}
                       </span>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

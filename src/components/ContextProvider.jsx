@@ -29,8 +29,23 @@ const translations = {
   ar: {
     about: "نبذة",
     me: "عني",
-    introduction: "مرحبًا! أنا محمد طلبة، مطور متخصص في تطوير البرمجيات الكاملة من فاس. أنا شغوف ببناء الأشياء للويب، سواء كان ذلك إنشاء مواقع ويب ديناميكية أو تطبيقات تفاعلية أو حلول رقمية مبتكرة.",
-    journey: "أنا خريج من مؤسسة التكوين المهني OFPPT حيث حصلت على دبلوم تقني متخصص في شعبة تطوير الرقمية. عملت على مشاريع أكاديمية وخاصة باستخدام مجموعة من التقنيات في الواجهة الأمامية مثل React وVite وTailwind CSS. أما في الواجهة الخلفية، فأنا أعمل باستخدام Express.js أو Laravel 10، وفي قواعد البيانات أتعامل مع MySQL أو MongoDB. ",
+    aboutMe: "نبذة عني",
+    introduction: "مرحبًا! أنا محمد طلبة، مطور Full-Stack متخصص من فاس. أنا شغوف ببناء تطبيقات الويب، سواء كانت مواقع ديناميكية أو تطبيقات تفاعلية أو حلول رقمية مبتكرة.",
+    journey: "أنا خريج المكتب الوطني للتكوين المهني وإنعاش الشغل (OFPPT)، حيث حصلت على دبلوم تقني متخصص في مجال التطوير الرقمي. عملت على مشاريع أكاديمية وشخصية باستخدام مجموعة متنوعة من التقنيات، مثل React وVite وTailwind CSS للواجهة الأمامية. أما الواجهة الخلفية، فأعمل باستخدام Express.js أو Laravel 10، وفي قواعد البيانات أتعامل مع MySQL أو MongoDB.",
+    innovationTitle: "الابتكار",
+    innovationDesc: "استكشاف مستمر لأحدث التقنيات",
+    precisionTitle: "الدقة",
+    precisionDesc: "اهتمام بالتفاصيل في كل مشروع",
+    performanceTitle: "الأداء",
+    performanceDesc: "حلول محسّنة وسريعة",
+    viewWork: "استكشف أعمالي",
+    location: "فاس، المغرب",
+    getInTouch: "تواصل معي",
+    expertise: "الخبرات",
+    frontendDevelopment: "تطوير الواجهة الأمامية",
+    uiuxDesignSkill: "تصميم واجهة المستخدم",
+    backendDevelopment: "تطوير الواجهة الخلفية",
+    webTechnologies: "تقنيات الويب",
 
   }
 };
@@ -99,11 +114,25 @@ const translationsHero = {
     downloadCV: "Download CV"
   },
   ar: {
-    name: "محمد طولبة",
+    name: "محمد طلبة",
     greeting: "مرحبًا، اسمي",
-    description: "أنا مطور ويب Full-Stack ذو خبرة، شغوف بتحويل الأفكار المبتكرة إلى حلول رقمية قوية.",
+    description: "مطور Full-Stack ذو خبرة، شغوف بتحويل الأفكار المبتكرة إلى حلول رقمية قوية ومبتكرة.",
     viewProjects: "عرض المشاريع",
-    downloadCV: "تحميل السيرة الذاتية"
+    downloadCV: "تحميل السيرة الذاتية",
+    availableForWork: "متاح للعمل",
+    techStackTitle: "مجموعة التقنيات",
+    developmentFlowTitle: "مراحل التطوير",
+    uiuxDesign: "تصميم واجهة المستخدم",
+    uiuxDesc: "Figma، الإطارات الهيكلية",
+    frontendBuild: "بناء الواجهة الأمامية",
+    frontendDesc: "React، Tailwind",
+    backendApi: "واجهة برمجية خلفية",
+    backendDesc: "Laravel، Node.js",
+    database: "قاعدة البيانات",
+    databaseDesc: "MySQL، MongoDB",
+    deployTest: "النشر والاختبار",
+    productionReady: "جاهز للإنتاج",
+    scroll: "مرر للأسفل"
   }
 };
 const translationsNavbar = {
@@ -116,11 +145,11 @@ const translationsNavbar = {
     resume: 'Resume',
   },
   ar: {
-    home: 'الصفحة الرئيسية',
-    about: 'حول',
+    home: 'الرئيسية',
+    about: 'نبذة عني',
     skills: 'المهارات',
     projects: 'المشاريع',
-    contact: 'اتصل',
+    contact: 'تواصل',
     resume: 'السيرة الذاتية',
   },
 };
@@ -136,11 +165,42 @@ const translationsSkills = {
   },
   ar: {
     title: "المهارات",
-    description: "هذه هي التقنيات التي أعمل بها",
-    developmentCategories: "فئات التطوير",
-    frontend: "تطوير الواجهة الأمامية",
-    backend: "تطوير الواجهة الخلفية",
-    database: "إدارة قواعد البيانات"
+    description: "مجموعة شاملة من التقنيات والمهارات التي أتقنها في تطوير الويب",
+    developmentCategories: "تصنيفات التطوير",
+    frontend: "الواجهة الأمامية",
+    backend: "الواجهة الخلفية",
+    database: "قواعد البيانات",
+    avg: "متوسط",
+    skillsCount: "مهارة",
+    technicalSkills: "المهارات التقنية",
+    allSkills: "كل المهارات",
+    tools: "الأدوات",
+    design: "التصميم",
+    skillsTitle: "المهارات",
+    technologiesTitle: "والتقنيات"
+  }
+};
+
+const translationsProjects = {
+  en: {
+    portfolio: "Portfolio",
+    projectsCount: "Projects",
+    completed: "Completed",
+    searchPlaceholder: "Search projects...",
+    noResults: "No projects found matching your search.",
+    description: "A curated collection of projects that demonstrate my skills and creativity in building modern web applications with cutting-edge technologies."
+  },
+  ar: {
+    portfolio: "معرض الأعمال",
+    projectsCount: "مشروع",
+    completed: "مكتمل",
+    searchPlaceholder: "ابحث عن مشروع...",
+    noResults: "لم يتم العثور على مشاريع مطابقة لبحثك.",
+    description: "مجموعة منتقاة من المشاريع التي توضح مهاراتي وإبداعي في بناء تطبيقات ويب حديثة باستخدام أحدث التقنيات.",
+    myTitle: "",
+    projectsTitle: "المشاريع",
+    live: "معاينة",
+    code: "الكود"
   }
 };
 
@@ -149,8 +209,9 @@ function ContextProvider({ children }) {
   const t = translations[language];
   const tNavbar = translationsNavbar[language];
   const tSkills = translationsSkills[language];
+  const tProjects = translationsProjects[language];
   return (
-    <LongContext.Provider value={{ language, setLanguage, t, projects, translationsHero, tNavbar, tSkills }}>
+    <LongContext.Provider value={{ language, setLanguage, t, projects, translationsHero, tNavbar, tSkills, tProjects }}>
       {children}
     </LongContext.Provider>
   );
