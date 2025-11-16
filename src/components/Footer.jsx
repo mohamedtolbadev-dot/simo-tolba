@@ -56,8 +56,8 @@ const Footer = () => {
           {/* Logo and Description */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-red-600 flex items-center justify-center">
-                <span className="text-white font-black text-sm">MT</span>
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img src="/logo.svg" alt="Mohamed Tolba Logo" className="w-full h-full" />
               </div>
               <h3 
                 className={`text-white text-lg font-black ${isArabic ? "font-arabic" : ""}`}

@@ -63,8 +63,8 @@ const Navbar = () => {
             offset={-100}
             className="cursor-pointer group flex items-center gap-3"
           >
-            <div className="w-8 h-8 bg-red-600 flex items-center justify-center">
-              <span className="text-white font-black text-sm">MT</span>
+            <div className="w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <img src="/logo.svg" alt="Mohamed Tolba Logo" className="w-full h-full" />
             </div>
             <div className="hidden xl:block">
               <h1 

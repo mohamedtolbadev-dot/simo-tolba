@@ -212,8 +212,8 @@ const Hero = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                href="/assets/MohamedTolbaCV.pdf"
-                download="MohamedTolbaCV.pdf"
+                href="/assets/CV_MOHAMED_TOLBA.pdf"
+                download="CV_MOHAMED_TOLBA.pdf"
                 className="inline-flex items-center gap-2 px-6 py-3 border border-red-600/30 text-slate-400 font-semibold hover:border-red-600/50 hover:text-slate-300 transition-all duration-300"
               >
                 <span>{translationsHero[language]?.downloadCV || translationsHero.en.downloadCV}</span>

@@ -37,8 +37,8 @@ const Loading = () => {
           transition={{ type: "spring", duration: 0.8 }}
           className="mx-auto"
         >
-          <div className="w-20 h-20 bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center border border-red-500/50 shadow-2xl shadow-red-600/30 mx-auto">
-            <span className="text-white font-black text-3xl">MT</span>
+          <div className="w-24 h-24 flex items-center justify-center mx-auto">
+            <img src="/logo.svg" alt="Mohamed Tolba Logo" className="w-full h-full drop-shadow-2xl" />
           </div>
         </motion.div>
 

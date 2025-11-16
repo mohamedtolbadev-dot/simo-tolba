@@ -171,8 +171,8 @@ const Contact = () => {
     {
       icon: <Download />,
       label: t.downloadCV,
-      href: "/assets/MohamedTolbaCV.pdf",
-      download: "MohamedTolbaCV.pdf",
+      href: "/assets/CV_MOHAMED_TOLBA.pdf",
+      download: "CV_MOHAMED_TOLBA.pdf",
       color: "bg-secondary text-light hover:bg-secondary/90",
     },
     {
@@ -290,8 +290,8 @@ const Contact = () => {
               {/* Quick Actions */}
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href="/assets/MohamedTolbaCV.pdf"
-                  download="MohamedTolbaCV.pdf"
+                  href="/assets/CV_MOHAMED_TOLBA.pdf"
+                  download="CV_MOHAMED_TOLBA.pdf"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors"
                 >
                   <Download className="w-4 h-4" />
