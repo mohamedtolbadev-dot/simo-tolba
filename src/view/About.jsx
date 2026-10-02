@@ -1,3 +1,4 @@
+
 "use client";
 
 import { memo, useContext, useMemo } from "react";
@@ -96,32 +97,28 @@ const About = () => {
     () => [
       {
         name: isArabic
-          ? t.frontendDevelopment ||
-            "تطوير الواجهة الأمامية"
+          ? t.frontendDevelopment || "تطوير الواجهة الأمامية"
           : "Frontend Development",
         icon: Code2,
         level: 90,
       },
       {
         name: isArabic
-          ? t.uiuxDesignSkill ||
-            "تصميم واجهة المستخدم"
+          ? t.uiuxDesignSkill || "تصميم واجهة المستخدم"
           : "UI/UX Design",
         icon: Palette,
         level: 85,
       },
       {
         name: isArabic
-          ? t.backendDevelopment ||
-            "تطوير الواجهة الخلفية"
+          ? t.backendDevelopment || "تطوير الواجهة الخلفية"
           : "Backend Development",
         icon: Database,
         level: 80,
       },
       {
         name: isArabic
-          ? t.webTechnologies ||
-            "تقنيات الويب"
+          ? t.webTechnologies || "تقنيات الويب"
           : "Web Technologies",
         icon: Globe,
         level: 88,
@@ -142,8 +139,7 @@ const About = () => {
           ? t.innovationTitle || "الابتكار"
           : "Innovation",
         description: isArabic
-          ? t.innovationDesc ||
-            "استكشاف مستمر لأحدث التقنيات"
+          ? t.innovationDesc || "استكشاف مستمر لأحدث التقنيات"
           : "Always exploring new technologies",
       },
       {
@@ -152,8 +148,7 @@ const About = () => {
           ? t.precisionTitle || "الدقة"
           : "Precision",
         description: isArabic
-          ? t.precisionDesc ||
-            "اهتمام بالتفاصيل في كل مشروع"
+          ? t.precisionDesc || "اهتمام بالتفاصيل في كل مشروع"
           : "Attention to detail in every project",
       },
       {
@@ -162,8 +157,7 @@ const About = () => {
           ? t.performanceTitle || "الأداء"
           : "Performance",
         description: isArabic
-          ? t.performanceDesc ||
-            "حلول محسّنة وسريعة"
+          ? t.performanceDesc || "حلول محسّنة وسريعة"
           : "Optimized and fast solutions",
       },
     ],
@@ -172,10 +166,7 @@ const About = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <LazyMotion
-        features={domAnimation}
-        strict
-      >
+      <LazyMotion features={domAnimation} strict>
         <section
           id="about"
           name="about"
@@ -195,55 +186,6 @@ const About = () => {
             lg:py-32
           "
         >
-          {/* =================================================
-              Background decoration
-              Lightweight — no huge blur
-              ================================================= */}
-
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-          >
-            {/* Grid */}
-            <div
-              className="
-                absolute
-                inset-0
-                opacity-[0.025]
-              "
-              style={{
-                backgroundImage:
-                  "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-                backgroundSize: "48px 48px",
-              }}
-            />
-
-            {/* Red accent */}
-            <div
-              className="
-                absolute
-                right-[-120px]
-                top-[15%]
-                h-[280px]
-                w-[280px]
-                rounded-full
-                bg-[#e4312b]/[0.035]
-              "
-            />
-
-            {/* Small red line */}
-            <div
-              className="
-                absolute
-                bottom-[12%]
-                left-0
-                h-px
-                w-32
-                bg-[#e4312b]/40
-              "
-            />
-          </div>
-
           {/* =================================================
               Main container
               ================================================= */}
@@ -272,13 +214,9 @@ const About = () => {
                   once: true,
                   amount: 0.15,
                 }}
-                className="
-                  lg:col-span-7
-                "
+                className="lg:col-span-7"
               >
-                {/* -------------------------------------------------
-                    Section label
-                    ------------------------------------------------- */}
+                {/* Section label */}
 
                 <m.div
                   variants={revealLeft}
@@ -313,9 +251,7 @@ const About = () => {
                   <span className="h-px w-10 bg-neutral-800" />
                 </m.div>
 
-                {/* -------------------------------------------------
-                    Heading
-                    ------------------------------------------------- */}
+                {/* Heading */}
 
                 <m.h2
                   variants={revealUp}
@@ -325,7 +261,6 @@ const About = () => {
                     leading-[0.9]
                     tracking-[-0.06em]
                     text-white
-
                     text-[clamp(3.5rem,11vw,7.5rem)]
 
                     ${
@@ -345,17 +280,14 @@ const About = () => {
                       text-transparent
                     "
                     style={{
-                      WebkitTextStroke:
-                        "1.5px #e4312b",
+                      WebkitTextStroke: "1.5px #e4312b",
                     }}
                   >
                     {t.me || "Me"}
                   </span>
                 </m.h2>
 
-                {/* -------------------------------------------------
-                    Location
-                    ------------------------------------------------- */}
+                {/* Location */}
 
                 <m.div
                   variants={revealUp}
@@ -377,14 +309,11 @@ const About = () => {
                   />
 
                   <span>
-                    {t.location ||
-                      "Fes, Morocco"}
+                    {t.location || "Fes, Morocco"}
                   </span>
                 </m.div>
 
-                {/* -------------------------------------------------
-                    Introduction
-                    ------------------------------------------------- */}
+                {/* Introduction */}
 
                 <m.p
                   variants={revealUp}
@@ -398,20 +327,14 @@ const About = () => {
                     sm:text-lg
                     sm:leading-8
 
-                    ${
-                      isArabic
-                        ? "font-arabic"
-                        : ""
-                    }
+                    ${isArabic ? "font-arabic" : ""}
                   `}
                 >
                   {t.introduction ||
                     "Hi! I'm Mohamed Tolba, a dedicated full-stack developer from Fes. I'm passionate about building things for the web, whether it's crafting dynamic websites, interactive applications, or innovative digital solutions."}
                 </m.p>
 
-                {/* -------------------------------------------------
-                    Journey
-                    ------------------------------------------------- */}
+                {/* Journey */}
 
                 <m.p
                   variants={revealUp}
@@ -424,20 +347,14 @@ const About = () => {
 
                     sm:text-base
 
-                    ${
-                      isArabic
-                        ? "font-arabic"
-                        : ""
-                    }
+                    ${isArabic ? "font-arabic" : ""}
                   `}
                 >
                   {t.journey ||
                     "I am a graduate of the Office of Vocational Training and Employment (OFPPT), where I obtained a specialized technician diploma in the field of digital development. I have worked on academic and personal projects using a variety of technologies."}
                 </m.p>
 
-                {/* -------------------------------------------------
-                    Values
-                    ------------------------------------------------- */}
+                {/* Values */}
 
                 <m.div
                   variants={stagger}
@@ -450,112 +367,104 @@ const About = () => {
                     sm:grid-cols-3
                   "
                 >
-                  {personalValues.map(
-                    (value) => {
-                      const Icon =
-                        value.icon;
+                  {personalValues.map((value) => {
+                    const Icon = value.icon;
 
-                      return (
-                        <m.div
-                          key={value.title}
-                          variants={
-                            revealUp
-                          }
+                    return (
+                      <m.div
+                        key={value.title}
+                        variants={revealUp}
+                        className="
+                          group
+                          relative
+                          overflow-hidden
+                          rounded-xl
+                          border
+                          border-neutral-800
+                          bg-neutral-900/30
+                          p-4
+                          transition-colors
+                          duration-300
+
+                          hover:border-[#e4312b]/40
+                          hover:bg-neutral-900/60
+                        "
+                      >
+                        {/* Accent */}
+
+                        <span
                           className="
-                            group
-                            relative
-                            overflow-hidden
-                            rounded-xl
-                            border
-                            border-neutral-800
-                            bg-neutral-900/30
-                            p-4
-                            transition-colors
+                            absolute
+                            left-0
+                            top-0
+                            h-px
+                            w-0
+                            bg-[#e4312b]
+                            transition-all
                             duration-300
+                            group-hover:w-full
+                          "
+                        />
 
-                            hover:border-[#e4312b]/40
-                            hover:bg-neutral-900/60
+                        <div
+                          className="
+                            flex
+                            items-start
+                            gap-3
                           "
                         >
-                          {/* Accent */}
-                          <span
-                            className="
-                              absolute
-                              left-0
-                              top-0
-                              h-px
-                              w-0
-                              bg-[#e4312b]
-                              transition-all
-                              duration-300
-                              group-hover:w-full
-                            "
-                          />
-
                           <div
                             className="
                               flex
-                              items-start
-                              gap-3
+                              h-9
+                              w-9
+                              shrink-0
+                              items-center
+                              justify-center
+                              rounded-lg
+                              border
+                              border-neutral-800
+                              bg-neutral-950
+                              text-[#e4312b]
+                              transition-colors
+                              group-hover:border-[#e4312b]/40
                             "
                           >
-                            <div
+                            <Icon
+                              size={17}
+                              strokeWidth={1.8}
+                            />
+                          </div>
+
+                          <div className="min-w-0">
+                            <h3
                               className="
-                                flex
-                                h-9
-                                w-9
-                                shrink-0
-                                items-center
-                                justify-center
-                                rounded-lg
-                                border
-                                border-neutral-800
-                                bg-neutral-950
-                                text-[#e4312b]
-                                transition-colors
-                                group-hover:border-[#e4312b]/40
+                                text-sm
+                                font-semibold
+                                text-white
                               "
                             >
-                              <Icon
-                                size={17}
-                                strokeWidth={1.8}
-                              />
-                            </div>
+                              {value.title}
+                            </h3>
 
-                            <div className="min-w-0">
-                              <h3
-                                className="
-                                  text-sm
-                                  font-semibold
-                                  text-white
-                                "
-                              >
-                                {value.title}
-                              </h3>
-
-                              <p
-                                className="
-                                  mt-1
-                                  text-xs
-                                  leading-5
-                                  text-neutral-500
-                                "
-                              >
-                                {
-                                  value.description
-                                }
-                              </p>
-                            </div>
+                            <p
+                              className="
+                                mt-1
+                                text-xs
+                                leading-5
+                                text-neutral-500
+                              "
+                            >
+                              {value.description}
+                            </p>
                           </div>
-                        </m.div>
-                      );
-                    }
-                  )}
+                        </div>
+                      </m.div>
+                    );
+                  })}
                 </m.div>
 
-                {/* -------------------------------------------------
-                    CTA
-                    ------------------------------------------------- */}
+                {/* CTA */}
 
                 <m.div
                   variants={revealUp}
@@ -588,8 +497,7 @@ const About = () => {
                     "
                   >
                     <span>
-                      {t.getInTouch ||
-                        "Get in Touch"}
+                      {t.getInTouch || "Get in Touch"}
                     </span>
 
                     <ArrowRight
@@ -622,9 +530,7 @@ const About = () => {
                   once: true,
                   amount: 0.15,
                 }}
-                className="
-                  lg:col-span-5
-                "
+                className="lg:col-span-5"
               >
                 <div
                   className="
@@ -640,9 +546,7 @@ const About = () => {
                     lg:p-8
                   "
                 >
-                  {/* -------------------------------------------------
-                      Header
-                      ------------------------------------------------- */}
+                  {/* Header */}
 
                   <div
                     className="
@@ -676,8 +580,7 @@ const About = () => {
                           sm:text-2xl
                         "
                       >
-                        {t.expertise ||
-                          "Expertise"}
+                        {t.expertise || "Expertise"}
                       </h3>
                     </div>
 
@@ -694,13 +597,12 @@ const About = () => {
                         text-neutral-500
                       "
                     >
-                      <Code2
-                        size={17}
-                      />
+                      <Code2 size={17} />
                     </div>
                   </div>
 
                   {/* Divider */}
+
                   <div
                     className="
                       my-7
@@ -709,152 +611,129 @@ const About = () => {
                     "
                   />
 
-                  {/* -------------------------------------------------
-                      Skills
-                      ------------------------------------------------- */}
+                  {/* Skills */}
 
                   <div className="space-y-6">
-                    {skills.map(
-                      (
-                        skill,
-                        index
-                      ) => {
-                        const Icon =
-                          skill.icon;
+                    {skills.map((skill, index) => {
+                      const Icon = skill.icon;
 
-                        return (
+                      return (
+                        <div
+                          key={skill.name}
+                          className="group"
+                        >
+                          {/* Skill header */}
+
                           <div
-                            key={
-                              skill.name
-                            }
-                            className="group"
+                            className="
+                              flex
+                              items-center
+                              justify-between
+                              gap-4
+                            "
                           >
-                            {/* Skill header */}
                             <div
                               className="
                                 flex
+                                min-w-0
                                 items-center
-                                justify-between
-                                gap-4
+                                gap-3
                               "
                             >
                               <div
                                 className="
                                   flex
-                                  min-w-0
+                                  h-8
+                                  w-8
+                                  shrink-0
                                   items-center
-                                  gap-3
+                                  justify-center
+                                  rounded-lg
+                                  border
+                                  border-neutral-800
+                                  bg-neutral-950
+                                  text-neutral-500
+                                  transition-colors
+                                  group-hover:border-[#e4312b]/40
+                                  group-hover:text-[#e4312b]
                                 "
                               >
-                                <div
-                                  className="
-                                    flex
-                                    h-8
-                                    w-8
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-lg
-                                    border
-                                    border-neutral-800
-                                    bg-neutral-950
-                                    text-neutral-500
-                                    transition-colors
-                                    group-hover:border-[#e4312b]/40
-                                    group-hover:text-[#e4312b]
-                                  "
-                                >
-                                  <Icon
-                                    size={15}
-                                    strokeWidth={
-                                      1.8
-                                    }
-                                  />
-                                </div>
-
-                                <span
-                                  className="
-                                    truncate
-                                    text-sm
-                                    font-medium
-                                    text-neutral-200
-                                  "
-                                >
-                                  {
-                                    skill.name
-                                  }
-                                </span>
+                                <Icon
+                                  size={15}
+                                  strokeWidth={1.8}
+                                />
                               </div>
 
                               <span
                                 className="
-                                  shrink-0
-                                  text-xs
-                                  tabular-nums
-                                  text-neutral-600
+                                  truncate
+                                  text-sm
+                                  font-medium
+                                  text-neutral-200
                                 "
                               >
-                                {
-                                  skill.level
-                                }
-                                %
+                                {skill.name}
                               </span>
                             </div>
 
-                            {/* Progress */}
-                            <div
+                            <span
                               className="
-                                mt-3
-                                h-1
-                                overflow-hidden
-                                rounded-full
-                                bg-neutral-800
+                                shrink-0
+                                text-xs
+                                tabular-nums
+                                text-neutral-600
                               "
                             >
-                              <m.div
-                                initial={{
-                                  scaleX: 0,
-                                }}
-                                whileInView={{
-                                  scaleX:
-                                    skill.level /
-                                    100,
-                                }}
-                                viewport={{
-                                  once: true,
-                                }}
-                                transition={{
-                                  duration:
-                                    0.7,
-                                  delay:
-                                    index *
-                                    0.06,
-                                  ease:
-                                    "easeOut",
-                                }}
-                                style={{
-                                  transformOrigin:
-                                    isArabic
-                                      ? "right"
-                                      : "left",
-                                }}
-                                className="
-                                  h-full
-                                  w-full
-                                  rounded-full
-                                  bg-[#e4312b]
-                                "
-                              />
-                            </div>
+                              {skill.level}%
+                            </span>
                           </div>
-                        );
-                      }
-                    )}
+
+                          {/* Progress */}
+
+                          <div
+                            className="
+                              mt-3
+                              h-1
+                              overflow-hidden
+                              rounded-full
+                              bg-neutral-800
+                            "
+                          >
+                            <m.div
+                              initial={{
+                                scaleX: 0,
+                              }}
+                              whileInView={{
+                                scaleX:
+                                  skill.level / 100,
+                              }}
+                              viewport={{
+                                once: true,
+                              }}
+                              transition={{
+                                duration: 0.7,
+                                delay: index * 0.06,
+                                ease: "easeOut",
+                              }}
+                              style={{
+                                transformOrigin: isArabic
+                                  ? "right"
+                                  : "left",
+                              }}
+                              className="
+                                h-full
+                                w-full
+                                rounded-full
+                                bg-[#e4312b]
+                              "
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
-                  {/* -------------------------------------------------
-                      Bottom info
-                      ------------------------------------------------- */}
+                  {/* Bottom info */}
 
                   <div
                     className="
@@ -887,42 +766,6 @@ const About = () => {
                         "Available for work"}
                     </span>
                   </div>
-                </div>
-
-                {/* -------------------------------------------------
-                    Decorative number
-                    ------------------------------------------------- */}
-
-                <div
-                  aria-hidden="true"
-                  className="
-                    mt-4
-                    hidden
-                    items-center
-                    justify-end
-                    gap-3
-                    lg:flex
-                  "
-                >
-                  <span
-                    className="
-                      text-[10px]
-                      font-medium
-                      uppercase
-                      tracking-[0.2em]
-                      text-neutral-700
-                    "
-                  >
-                    Full-Stack Developer
-                  </span>
-
-                  <span
-                    className="
-                      h-px
-                      w-12
-                      bg-[#e4312b]/40
-                    "
-                  />
                 </div>
               </m.aside>
             </div>

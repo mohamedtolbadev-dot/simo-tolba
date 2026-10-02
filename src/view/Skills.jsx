@@ -1,3 +1,4 @@
+
 "use client";
 
 import { memo, useContext, useMemo, useState } from "react";
@@ -97,8 +98,7 @@ const SKILLS = [
     iconClass: "text-orange-500",
     level: 95,
     category: "frontend",
-    description:
-      "Semantic markup & modern standards",
+    description: "Semantic markup & modern standards",
   },
   {
     id: 2,
@@ -107,8 +107,7 @@ const SKILLS = [
     iconClass: "text-blue-500",
     level: 90,
     category: "frontend",
-    description:
-      "Advanced styling & animations",
+    description: "Advanced styling & animations",
   },
   {
     id: 3,
@@ -117,8 +116,7 @@ const SKILLS = [
     iconClass: "text-yellow-400",
     level: 88,
     category: "frontend",
-    description:
-      "ES6+ & modern JS features",
+    description: "ES6+ & modern JS features",
   },
   {
     id: 4,
@@ -127,8 +125,7 @@ const SKILLS = [
     iconClass: "text-cyan-400",
     level: 90,
     category: "frontend",
-    description:
-      "Hooks, Context & modern patterns",
+    description: "Hooks, Context & modern patterns",
   },
   {
     id: 5,
@@ -137,8 +134,7 @@ const SKILLS = [
     iconClass: "text-cyan-500",
     level: 92,
     category: "frontend",
-    description:
-      "Utility-first CSS framework",
+    description: "Utility-first CSS framework",
   },
   {
     id: 6,
@@ -147,8 +143,7 @@ const SKILLS = [
     iconClass: "text-green-500",
     level: 85,
     category: "backend",
-    description:
-      "Server-side JavaScript runtime",
+    description: "Server-side JavaScript runtime",
   },
   {
     id: 7,
@@ -157,8 +152,7 @@ const SKILLS = [
     iconClass: "text-neutral-300",
     level: 85,
     category: "backend",
-    description:
-      "Fast & minimalist web framework",
+    description: "Fast & minimalist web framework",
   },
   {
     id: 8,
@@ -167,8 +161,7 @@ const SKILLS = [
     iconClass: "text-red-500",
     level: 80,
     category: "backend",
-    description:
-      "Elegant PHP web framework",
+    description: "Elegant PHP web framework",
   },
   {
     id: 9,
@@ -177,8 +170,7 @@ const SKILLS = [
     iconClass: "text-green-500",
     level: 85,
     category: "database",
-    description:
-      "NoSQL document database",
+    description: "NoSQL document database",
   },
   {
     id: 10,
@@ -187,8 +179,7 @@ const SKILLS = [
     iconClass: "text-blue-400",
     level: 80,
     category: "database",
-    description:
-      "Relational database management",
+    description: "Relational database management",
   },
   {
     id: 11,
@@ -197,8 +188,7 @@ const SKILLS = [
     iconClass: "text-orange-600",
     level: 90,
     category: "tools",
-    description:
-      "Version control system",
+    description: "Version control system",
   },
   {
     id: 12,
@@ -207,8 +197,7 @@ const SKILLS = [
     iconClass: "text-neutral-300",
     level: 90,
     category: "tools",
-    description:
-      "Code collaboration platform",
+    description: "Code collaboration platform",
   },
   {
     id: 13,
@@ -217,8 +206,7 @@ const SKILLS = [
     iconClass: "text-purple-500",
     level: 85,
     category: "frontend",
-    description:
-      "Predictable state container",
+    description: "Predictable state container",
   },
   {
     id: 14,
@@ -227,8 +215,7 @@ const SKILLS = [
     iconClass: "text-purple-400",
     level: 88,
     category: "tools",
-    description:
-      "Fast build tool & dev server",
+    description: "Fast build tool & dev server",
   },
   {
     id: 15,
@@ -237,8 +224,7 @@ const SKILLS = [
     iconClass: "text-pink-500",
     level: 75,
     category: "design",
-    description:
-      "UI/UX design & prototyping",
+    description: "UI/UX design & prototyping",
   },
 ];
 
@@ -306,6 +292,7 @@ const SkillCard = memo(function SkillCard({
       "
     >
       {/* Red top accent */}
+
       <span
         aria-hidden="true"
         className="
@@ -322,6 +309,7 @@ const SkillCard = memo(function SkillCard({
       />
 
       {/* Number */}
+
       <div
         className="
           absolute
@@ -337,6 +325,7 @@ const SkillCard = memo(function SkillCard({
       </div>
 
       {/* Icon */}
+
       <div
         className={`
           flex
@@ -362,6 +351,7 @@ const SkillCard = memo(function SkillCard({
       </div>
 
       {/* Content */}
+
       <div className="mt-4">
         <h3
           className="
@@ -388,6 +378,7 @@ const SkillCard = memo(function SkillCard({
       </div>
 
       {/* Progress */}
+
       <div className="mt-4">
         <div
           className="
@@ -432,8 +423,7 @@ const SkillCard = memo(function SkillCard({
               scaleX: 0,
             }}
             whileInView={{
-              scaleX:
-                skill.level / 100,
+              scaleX: skill.level / 100,
             }}
             viewport={{
               once: true,
@@ -472,8 +462,7 @@ const Skills = () => {
     tSkills,
   } = useContext(LongContext);
 
-  const isArabic =
-    language === "ar";
+  const isArabic = language === "ar";
 
   const [
     selectedCategory,
@@ -514,8 +503,7 @@ const Skills = () => {
     return CATEGORY_CONFIG.map(
       (category) => ({
         ...category,
-        title:
-          titles[category.id],
+        title: titles[category.id],
         count:
           category.id === "all"
             ? SKILLS.length
@@ -533,9 +521,7 @@ const Skills = () => {
   --------------------------------------------------------- */
 
   const filteredSkills = useMemo(() => {
-    if (
-      selectedCategory === "all"
-    ) {
+    if (selectedCategory === "all") {
       return SKILLS;
     }
 
@@ -573,11 +559,7 @@ const Skills = () => {
         <section
           id="skills"
           name="skills"
-          dir={
-            isArabic
-              ? "rtl"
-              : "ltr"
-          }
+          dir={isArabic ? "rtl" : "ltr"}
           className="
             relative
             min-h-screen
@@ -593,58 +575,6 @@ const Skills = () => {
             lg:py-32
           "
         >
-          {/* =================================================
-              Background
-          ================================================= */}
-
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-            "
-          >
-            {/* Lightweight grid */}
-            <div
-              className="
-                absolute
-                inset-0
-                opacity-[0.025]
-              "
-              style={{
-                backgroundImage:
-                  "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-                backgroundSize:
-                  "48px 48px",
-              }}
-            />
-
-            {/* Small accent */}
-            <div
-              className="
-                absolute
-                left-[-100px]
-                top-[25%]
-                h-[240px]
-                w-[240px]
-                rounded-full
-                bg-[#e4312b]/[0.035]
-              "
-            />
-
-            <div
-              className="
-                absolute
-                bottom-[15%]
-                right-0
-                h-px
-                w-28
-                bg-[#e4312b]/40
-              "
-            />
-          </div>
-
           {/* =================================================
               Main container
           ================================================= */}
@@ -723,7 +653,6 @@ const Skills = () => {
                   leading-[0.9]
                   tracking-[-0.06em]
                   text-white
-
                   text-[clamp(3.3rem,10vw,7rem)]
 
                   ${
@@ -816,10 +745,8 @@ const Skills = () => {
                     />
 
                     <span>
-                      {averageLevel}%
-                      {" "}
-                      {tSkills?.avg ||
-                        "Avg"}
+                      {averageLevel}%{" "}
+                      {tSkills?.avg || "Avg"}
                     </span>
                   </div>
 
@@ -848,10 +775,7 @@ const Skills = () => {
                     />
 
                     <span>
-                      {
-                        filteredSkills.length
-                      }
-                      {" "}
+                      {filteredSkills.length}{" "}
                       {tSkills?.skillsCount ||
                         "Skills"}
                     </span>
@@ -957,9 +881,7 @@ const Skills = () => {
                         />
 
                         <span>
-                          {
-                            category.title
-                          }
+                          {category.title}
                         </span>
 
                         <span
@@ -973,9 +895,7 @@ const Skills = () => {
                             }
                           `}
                         >
-                          {
-                            category.count
-                          }
+                          {category.count}
                         </span>
                       </button>
                     );
@@ -1009,8 +929,7 @@ const Skills = () => {
                     text-neutral-600
                   "
                 >
-                  {selectedCategory ===
-                  "all"
+                  {selectedCategory === "all"
                     ? "01 / ALL"
                     : `01 / ${selectedCategory.toUpperCase()}`}
                 </span>
@@ -1024,9 +943,7 @@ const Skills = () => {
                 />
               </div>
 
-              {/* =================================================
-                  Skills grid
-              ================================================= */}
+              {/* Skills grid */}
 
               <m.div
                 key={selectedCategory}
@@ -1051,9 +968,7 @@ const Skills = () => {
                       key={skill.id}
                       skill={skill}
                       index={index}
-                      isArabic={
-                        isArabic
-                      }
+                      isArabic={isArabic}
                     />
                   )
                 )}

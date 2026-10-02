@@ -64,9 +64,7 @@ const ProjectCard = memo(function ProjectCard({
         hover:border-neutral-700
       "
     >
-      {/* =====================================================
-          Top Accent
-      ===================================================== */}
+      {/* Top Accent */}
 
       <span
         aria-hidden="true"
@@ -85,9 +83,7 @@ const ProjectCard = memo(function ProjectCard({
         "
       />
 
-      {/* =====================================================
-          Number
-      ===================================================== */}
+      {/* Number */}
 
       <div
         className="
@@ -111,9 +107,7 @@ const ProjectCard = memo(function ProjectCard({
         {String(index + 1).padStart(2, "0")}
       </div>
 
-      {/* =====================================================
-          Image
-      ===================================================== */}
+      {/* Image */}
 
       <div
         className="
@@ -156,9 +150,7 @@ const ProjectCard = memo(function ProjectCard({
           "
         />
 
-        {/* ===================================================
-            Hover Actions
-        =================================================== */}
+        {/* Hover Actions */}
 
         <div
           className="
@@ -251,9 +243,7 @@ const ProjectCard = memo(function ProjectCard({
         </div>
       </div>
 
-      {/* =====================================================
-          Card Content
-      ===================================================== */}
+      {/* Card Content */}
 
       <div
         className="
@@ -370,28 +360,23 @@ const Projects = () => {
   ======================================================= */
 
   const normalizedSearch =
-    searchTerm
-      .trim()
-      .toLowerCase();
+    searchTerm.trim().toLowerCase();
 
-  const filteredProjects =
-    useMemo(() => {
-      if (!normalizedSearch) {
-        return enhancedProjects;
-      }
+  const filteredProjects = useMemo(() => {
+    if (!normalizedSearch) {
+      return enhancedProjects;
+    }
 
-      return enhancedProjects.filter(
-        (project) =>
-          project.title
-            .toLowerCase()
-            .includes(
-              normalizedSearch
-            )
-      );
-    }, [
-      enhancedProjects,
-      normalizedSearch,
-    ]);
+    return enhancedProjects.filter(
+      (project) =>
+        project.title
+          .toLowerCase()
+          .includes(normalizedSearch)
+    );
+  }, [
+    enhancedProjects,
+    normalizedSearch,
+  ]);
 
   /* =======================================================
      STATS
@@ -402,17 +387,14 @@ const Projects = () => {
       enhancedProjects.reduce(
         (count, project) =>
           count +
-          (project.status ===
-          "completed"
+          (project.status === "completed"
             ? 1
             : 0),
         0
       );
 
     return {
-      total:
-        enhancedProjects.length,
-
+      total: enhancedProjects.length,
       completed,
     };
   }, [enhancedProjects]);
@@ -425,11 +407,7 @@ const Projects = () => {
     <section
       id="projects"
       name="projects"
-      dir={
-        isArabic
-          ? "rtl"
-          : "ltr"
-      }
+      dir={isArabic ? "rtl" : "ltr"}
       className="
         relative
         min-h-screen
@@ -437,64 +415,19 @@ const Projects = () => {
         bg-neutral-950
         px-4
         py-20
+
         sm:px-6
         sm:py-24
+
         lg:px-8
         lg:py-32
       "
     >
       {/* ===================================================
-          BACKGROUND
+          CLEAN BACKGROUND
       =================================================== */}
 
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-      >
-        {/* Grid */}
-
-        <div
-          className="
-            absolute
-            inset-0
-            opacity-[0.025]
-          "
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize:
-              "48px 48px",
-          }}
-        />
-
-        {/* Red lines */}
-
-        <div
-          className="
-            absolute
-            left-0
-            top-[22%]
-            h-px
-            w-24
-            bg-[#E4312B]/50
-          "
-        />
-
-        <div
-          className="
-            absolute
-            bottom-[18%]
-            right-0
-            h-px
-            w-20
-            bg-[#E4312B]/30
-          "
-        />
-      </div>
+      {/* No grid / no decorative red lines */}
 
       {/* ===================================================
           CONTAINER
@@ -571,9 +504,7 @@ const Projects = () => {
             />
           </div>
 
-          {/* =================================================
-              TITLE
-          ================================================= */}
+          {/* TITLE */}
 
           <h2
             className={`
@@ -584,6 +515,7 @@ const Projects = () => {
               tracking-[-0.06em]
               text-white
               text-[clamp(3.4rem,10vw,7.5rem)]
+
               ${
                 isArabic
                   ? "font-arabic leading-[1.1] tracking-normal"
@@ -613,9 +545,7 @@ const Projects = () => {
             </span>
           </h2>
 
-          {/* =================================================
-              DESCRIPTION + STATS
-          ================================================= */}
+          {/* DESCRIPTION + STATS */}
 
           <div
             className="
@@ -623,6 +553,7 @@ const Projects = () => {
               flex
               flex-col
               gap-6
+
               lg:flex-row
               lg:items-end
               lg:justify-between
@@ -634,7 +565,9 @@ const Projects = () => {
                 text-sm
                 leading-7
                 text-neutral-400
+
                 sm:text-base
+
                 ${
                   isArabic
                     ? "font-arabic"
@@ -669,9 +602,7 @@ const Projects = () => {
               >
                 <Eye
                   size={15}
-                  className="
-                    text-[#E4312B]
-                  "
+                  className="text-[#E4312B]"
                   aria-hidden="true"
                 />
 
@@ -704,9 +635,7 @@ const Projects = () => {
               >
                 <Star
                   size={15}
-                  className="
-                    text-neutral-600
-                  "
+                  className="text-neutral-600"
                   aria-hidden="true"
                 />
 
@@ -730,8 +659,9 @@ const Projects = () => {
             rounded-2xl
             border
             border-neutral-800
-            bg-neutral-950/80
+            bg-neutral-950
             p-2
+
             sm:mt-14
           "
         >
@@ -740,6 +670,7 @@ const Projects = () => {
               flex
               flex-col
               gap-2
+
               sm:flex-row
               sm:items-center
               sm:justify-between
@@ -762,6 +693,7 @@ const Projects = () => {
                   top-1/2
                   -translate-y-1/2
                   text-neutral-600
+
                   ${
                     isArabic
                       ? "right-4"
@@ -800,6 +732,7 @@ const Projects = () => {
                   transition-colors
                   placeholder:text-neutral-700
                   focus:border-[#E4312B]/60
+
                   ${
                     isArabic
                       ? "pr-11 pl-4 text-right font-arabic"
@@ -875,8 +808,7 @@ const Projects = () => {
               hidden: {},
               visible: {
                 transition: {
-                  staggerChildren:
-                    0.045,
+                  staggerChildren: 0.045,
                 },
               },
             }}
@@ -884,7 +816,9 @@ const Projects = () => {
               grid
               grid-cols-1
               gap-4
+
               sm:grid-cols-2
+
               lg:grid-cols-3
             "
           >
@@ -912,18 +846,14 @@ const Projects = () => {
                   <ProjectCard
                     project={project}
                     index={index}
-                    tProjects={
-                      tProjects
-                    }
+                    tProjects={tProjects}
                   />
                 </motion.div>
               )
             )}
           </motion.div>
 
-          {/* =================================================
-              EMPTY STATE
-          ================================================= */}
+          {/* EMPTY STATE */}
 
           {filteredProjects.length ===
             0 && (
@@ -975,6 +905,7 @@ const Projects = () => {
             border-neutral-800
             px-5
             py-4
+
             sm:flex-row
             sm:items-center
             sm:justify-between

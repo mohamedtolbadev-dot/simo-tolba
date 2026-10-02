@@ -17,7 +17,13 @@ import {
 } from "lucide-react";
 
 import { motion } from "framer-motion";
-import { memo, useCallback, useContext, useMemo, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 import { LongContext } from "../components/ContextProvider";
 
@@ -106,9 +112,14 @@ const Contact = () => {
           "I'll respond within 24 hours",
 
         emailLabel: "Email",
+
         locationLabel: "Location",
-        responseTimeLabel: "Response Time",
-        availabilityLabel: "Availability",
+
+        responseTimeLabel:
+          "Response Time",
+
+        availabilityLabel:
+          "Availability",
 
         sendEmailAnytime:
           "Send me an email anytime",
@@ -132,8 +143,11 @@ const Contact = () => {
           "مستعد لتحويل أفكارك إلى واقع؟ دعنا نناقش مشروعك القادم ونصنع شيئًا استثنائيًا معًا.",
 
         name: "الاسم الكامل",
+
         email: "البريد الإلكتروني",
+
         subject: "الموضوع",
+
         message: "رسالتك",
 
         sendMessage:
@@ -212,7 +226,9 @@ const Contact = () => {
     []
   );
 
-  const t = translations[language] || translations.en;
+  const t =
+    translations[language] ||
+    translations.en;
 
   /* =======================================================
      CONTACT INFO
@@ -222,9 +238,17 @@ const Contact = () => {
     () => [
       {
         Icon: Mail,
-        label: isArabic ? t.emailLabel : "Email",
-        value: "mohamedtolba.dev@gmail.com",
-        href: "mailto:mohamedtolba.dev@gmail.com",
+
+        label: isArabic
+          ? t.emailLabel
+          : "Email",
+
+        value:
+          "mohamedtolba.dev@gmail.com",
+
+        href:
+          "mailto:mohamedtolba.dev@gmail.com",
+
         description: isArabic
           ? t.sendEmailAnytime
           : "Send me an email anytime",
@@ -232,8 +256,13 @@ const Contact = () => {
 
       {
         Icon: MapPin,
-        label: isArabic ? t.locationLabel : "Location",
+
+        label: isArabic
+          ? t.locationLabel
+          : "Location",
+
         value: t.yourLocation,
+
         description: isArabic
           ? t.remoteWorkAvailable
           : "Available for remote work worldwide",
@@ -241,24 +270,32 @@ const Contact = () => {
 
       {
         Icon: Clock,
+
         label: isArabic
           ? t.responseTimeLabel
           : "Response Time",
+
         value: isArabic
           ? t.hours24
           : "24 hours",
-        description: t.responseTime,
+
+        description:
+          t.responseTime,
       },
 
       {
         Icon: Coffee,
+
         label: isArabic
           ? t.availabilityLabel
           : "Availability",
+
         value: isArabic
           ? t.openToWork
           : "Open to work",
-        description: t.availabilityText,
+
+        description:
+          t.availabilityText,
       },
     ],
     [isArabic, t]
@@ -272,19 +309,28 @@ const Contact = () => {
     () => [
       {
         Icon: Github,
-        href: "https://github.com/Mohahamed99-by",
+
+        href:
+          "https://github.com/Mohahamed99-by",
+
         label: "GitHub",
       },
 
       {
         Icon: Linkedin,
-        href: "https://www.linkedin.com/in/mohamed-tolba-div/",
+
+        href:
+          "https://www.linkedin.com/in/mohamed-tolba-div/",
+
         label: "LinkedIn",
       },
 
       {
         Icon: Facebook,
-        href: "https://www.facebook.com/profile.php?id=61567673134521",
+
+        href:
+          "https://www.facebook.com/profile.php?id=61567673134521",
+
         label: "Facebook",
       },
     ],
@@ -292,23 +338,31 @@ const Contact = () => {
   );
 
   /* =======================================================
-     HANDLERS
+     FORM HANDLERS
   ======================================================= */
 
-  const handleChange = useCallback((event) => {
-    const { name, value } = event.target;
+  const handleChange = useCallback(
+    (event) => {
+      const {
+        name,
+        value,
+      } = event.target;
 
-    setFormData((previous) => ({
-      ...previous,
-      [name]: value,
-    }));
-  }, []);
+      setFormData((previous) => ({
+        ...previous,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
 
-      if (isSubmitting) return;
+      if (isSubmitting) {
+        return;
+      }
 
       setIsSubmitting(true);
       setSubmitStatus(null);
@@ -316,7 +370,7 @@ const Contact = () => {
       /*
         Demo submission.
 
-        Replace this section later with:
+        Replace later with:
         - API request
         - Formspree
         - EmailJS
@@ -341,7 +395,6 @@ const Contact = () => {
 
   /* =======================================================
      ANIMATION
-     Lightweight single animation configuration.
   ======================================================= */
 
   const sectionReveal = {
@@ -376,8 +429,6 @@ const Contact = () => {
       name="contact"
       dir={isArabic ? "rtl" : "ltr"}
       className="
-        relative
-        overflow-hidden
         bg-neutral-950
         px-4
         py-20
@@ -388,73 +439,11 @@ const Contact = () => {
       "
     >
       {/* =====================================================
-          BACKGROUND
-      ===================================================== */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-        "
-      >
-        {/* Subtle grid - no gradient */}
-        <div
-          className="
-            absolute
-            inset-0
-            opacity-[0.025]
-          "
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                rgba(255,255,255,0.8) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                90deg,
-                rgba(255,255,255,0.8) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize: "48px 48px",
-          }}
-        />
-
-        {/* Accent lines */}
-
-        <span
-          className="
-            absolute
-            left-0
-            top-[25%]
-            h-px
-            w-24
-            bg-[#E4312B]/40
-          "
-        />
-
-        <span
-          className="
-            absolute
-            bottom-[20%]
-            right-0
-            h-px
-            w-20
-            bg-[#E4312B]/30
-          "
-        />
-      </div>
-
-      {/* =====================================================
           MAIN CONTAINER
       ===================================================== */}
 
       <div
         className="
-          relative
-          z-10
           mx-auto
           w-full
           max-w-6xl
@@ -550,7 +539,7 @@ const Contact = () => {
             </span>
           </h1>
 
-          {/* Description */}
+          {/* Description + Actions */}
 
           <div
             className="
@@ -611,10 +600,9 @@ const Contact = () => {
                   text-sm
                   font-semibold
                   text-white
-                  transition-all
+                  transition-colors
                   duration-200
                   hover:bg-[#c92b26]
-                  hover:-translate-y-0.5
                 "
               >
                 <Download
@@ -642,9 +630,8 @@ const Contact = () => {
                   text-sm
                   font-semibold
                   text-neutral-300
-                  transition-all
+                  transition-colors
                   duration-200
-                  hover:-translate-y-0.5
                   hover:border-[#E4312B]/60
                   hover:text-white
                 "
@@ -882,9 +869,8 @@ const Contact = () => {
                           border
                           border-neutral-800
                           text-neutral-500
-                          transition-all
+                          transition-colors
                           duration-200
-                          hover:-translate-y-0.5
                           hover:border-[#E4312B]
                           hover:bg-[#E4312B]/5
                           hover:text-[#E4312B]
@@ -992,6 +978,8 @@ const Contact = () => {
                   md:grid-cols-2
                 "
               >
+                {/* Name */}
+
                 <div>
                   <label
                     htmlFor="contact-name"
@@ -1014,7 +1002,9 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder={t.namePlaceholder}
+                    placeholder={
+                      t.namePlaceholder
+                    }
                     autoComplete="name"
                     required
                     className={`
@@ -1040,6 +1030,8 @@ const Contact = () => {
                   />
                 </div>
 
+                {/* Email */}
+
                 <div>
                   <label
                     htmlFor="contact-email"
@@ -1062,7 +1054,9 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder={t.emailPlaceholder}
+                    placeholder={
+                      t.emailPlaceholder
+                    }
                     autoComplete="email"
                     required
                     className={`
@@ -1113,7 +1107,9 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  placeholder={t.subjectPlaceholder}
+                  placeholder={
+                    t.subjectPlaceholder
+                  }
                   required
                   className={`
                     w-full
@@ -1162,7 +1158,9 @@ const Contact = () => {
                   rows={6}
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder={t.messagePlaceholder}
+                  placeholder={
+                    t.messagePlaceholder
+                  }
                   required
                   className={`
                     w-full
@@ -1209,9 +1207,8 @@ const Contact = () => {
                   text-sm
                   font-semibold
                   text-white
-                  transition-all
+                  transition-colors
                   duration-200
-                  hover:-translate-y-0.5
                   hover:bg-[#c92b26]
                   disabled:cursor-not-allowed
                   disabled:opacity-60
