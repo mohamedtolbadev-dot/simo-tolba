@@ -1,5 +1,5 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Droid+Arabic+Kufi:wght@400;500;600;700&family=Josefin+Sans:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -33,10 +33,9 @@ body {
   cursor: default;
 
   font-family:
-    "Montserrat",
-    Helvetica,
-    Arial,
-    serif;
+    "Droid Arabic Kufi",
+    "Josefin Sans",
+    sans-serif;
 }
 
 /* ========================================
@@ -46,10 +45,9 @@ body {
 body.english-font,
 body.english-font * {
   font-family:
-    "Montserrat",
-    Helvetica,
-    Arial,
-    serif;
+    "Droid Arabic Kufi",
+    "Josefin Sans",
+    sans-serif;
 }
 
 /* ========================================
@@ -59,9 +57,8 @@ body.english-font * {
 body.arabic-font,
 body.arabic-font * {
   font-family:
-    "Noto Sans Arabic",
-    Tahoma,
-    Arial,
+    "Droid Arabic Kufi",
+    "Josefin Sans",
     sans-serif;
 }
 
