@@ -1,9 +1,8 @@
+
 "use client";
 
 import {
   Mail,
-  MessageCircle,
-  User,
   Send,
   CheckCircle,
   AlertCircle,
@@ -16,475 +15,1343 @@ import {
   Download,
   Calendar,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useContext, useState } from "react";
+
+import { motion } from "framer-motion";
+import { memo, useCallback, useContext, useMemo, useState } from "react";
+
 import { LongContext } from "../components/ContextProvider";
 
+/* =========================================================
+   CONTACT
+========================================================= */
+
 const Contact = () => {
+  const { language } = useContext(LongContext);
+
+  const isArabic = language === "ar";
+
+  /* =======================================================
+     FORM STATE
+  ======================================================= */
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [focusedField, setFocusedField] = useState(null);
 
-  const { language } = useContext(LongContext);
-  const isArabic = language === "ar";
+  /* =======================================================
+     TRANSLATIONS
+  ======================================================= */
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const translations = useMemo(
+    () => ({
+      en: {
+        availability: "Available for freelance work",
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+        letsWorkTogether:
+          "Let's Build Something Amazing Together",
 
-      // Clear success message after 5 seconds
-      setTimeout(() => setSubmitStatus(null), 5000);
-    }, 2000);
+        feelFree:
+          "Ready to turn your ideas into reality? Let's discuss your next project and create something extraordinary.",
+
+        name: "Full Name",
+        email: "Email Address",
+        subject: "Subject",
+        message: "Your Message",
+
+        sendMessage: "Send Message",
+        sending: "Sending...",
+
+        yourLocation: "Fes, Morocco",
+
+        connectWithMe: "Connect With Me",
+
+        responseTime:
+          "Usually responds within 24 hours",
+
+        availabilityText:
+          "Available for freelance work",
+
+        successMessage:
+          "Thank you! Your message has been sent successfully.",
+
+        errorMessage:
+          "Something went wrong. Please try again.",
+
+        namePlaceholder:
+          "Enter your full name",
+
+        emailPlaceholder:
+          "Enter your email address",
+
+        subjectPlaceholder:
+          "What's this about?",
+
+        messagePlaceholder:
+          "Tell me about your project or inquiry...",
+
+        downloadCV: "Download CV",
+
+        scheduleCall: "Schedule a Call",
+
+        sendMessageTitle:
+          "Send a Message",
+
+        respondWithin24:
+          "I'll respond within 24 hours",
+
+        emailLabel: "Email",
+        locationLabel: "Location",
+        responseTimeLabel: "Response Time",
+        availabilityLabel: "Availability",
+
+        sendEmailAnytime:
+          "Send me an email anytime",
+
+        remoteWorkAvailable:
+          "Available for remote work worldwide",
+
+        openToWork: "Open to work",
+
+        hours24: "24 hours",
+      },
+
+      ar: {
+        availability:
+          "متاح للعمل الحر",
+
+        letsWorkTogether:
+          "لنبني شيئًا مذهلاً معًا",
+
+        feelFree:
+          "مستعد لتحويل أفكارك إلى واقع؟ دعنا نناقش مشروعك القادم ونصنع شيئًا استثنائيًا معًا.",
+
+        name: "الاسم الكامل",
+        email: "البريد الإلكتروني",
+        subject: "الموضوع",
+        message: "رسالتك",
+
+        sendMessage:
+          "إرسال الرسالة",
+
+        sending:
+          "جارٍ الإرسال...",
+
+        yourLocation:
+          "فاس، المغرب",
+
+        connectWithMe:
+          "تواصل معي",
+
+        responseTime:
+          "عادةً أرد خلال 24 ساعة",
+
+        availabilityText:
+          "متاح للعمل الحر والمشاريع",
+
+        successMessage:
+          "شكرًا لك! تم إرسال رسالتك بنجاح.",
+
+        errorMessage:
+          "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+
+        namePlaceholder:
+          "أدخل اسمك الكامل",
+
+        emailPlaceholder:
+          "أدخل بريدك الإلكتروني",
+
+        subjectPlaceholder:
+          "ما هو موضوع رسالتك؟",
+
+        messagePlaceholder:
+          "أخبرني عن مشروعك أو استفسارك...",
+
+        downloadCV:
+          "تحميل السيرة الذاتية",
+
+        scheduleCall:
+          "جدولة مكالمة",
+
+        sendMessageTitle:
+          "أرسل رسالة",
+
+        respondWithin24:
+          "سأرد خلال 24 ساعة",
+
+        emailLabel:
+          "البريد الإلكتروني",
+
+        locationLabel:
+          "الموقع",
+
+        responseTimeLabel:
+          "وقت الرد",
+
+        availabilityLabel:
+          "التوفر",
+
+        sendEmailAnytime:
+          "راسلني عبر البريد في أي وقت",
+
+        remoteWorkAvailable:
+          "متاح للعمل عن بُعد في جميع أنحاء العالم",
+
+        openToWork:
+          "متاح للعمل",
+
+        hours24:
+          "24 ساعة",
+      },
+    }),
+    []
+  );
+
+  const t = translations[language] || translations.en;
+
+  /* =======================================================
+     CONTACT INFO
+  ======================================================= */
+
+  const contactInfo = useMemo(
+    () => [
+      {
+        Icon: Mail,
+        label: isArabic ? t.emailLabel : "Email",
+        value: "mohamedtolba.dev@gmail.com",
+        href: "mailto:mohamedtolba.dev@gmail.com",
+        description: isArabic
+          ? t.sendEmailAnytime
+          : "Send me an email anytime",
+      },
+
+      {
+        Icon: MapPin,
+        label: isArabic ? t.locationLabel : "Location",
+        value: t.yourLocation,
+        description: isArabic
+          ? t.remoteWorkAvailable
+          : "Available for remote work worldwide",
+      },
+
+      {
+        Icon: Clock,
+        label: isArabic
+          ? t.responseTimeLabel
+          : "Response Time",
+        value: isArabic
+          ? t.hours24
+          : "24 hours",
+        description: t.responseTime,
+      },
+
+      {
+        Icon: Coffee,
+        label: isArabic
+          ? t.availabilityLabel
+          : "Availability",
+        value: isArabic
+          ? t.openToWork
+          : "Open to work",
+        description: t.availabilityText,
+      },
+    ],
+    [isArabic, t]
+  );
+
+  /* =======================================================
+     SOCIAL LINKS
+  ======================================================= */
+
+  const socialLinks = useMemo(
+    () => [
+      {
+        Icon: Github,
+        href: "https://github.com/Mohahamed99-by",
+        label: "GitHub",
+      },
+
+      {
+        Icon: Linkedin,
+        href: "https://www.linkedin.com/in/mohamed-tolba-div/",
+        label: "LinkedIn",
+      },
+
+      {
+        Icon: Facebook,
+        href: "https://www.facebook.com/profile.php?id=61567673134521",
+        label: "Facebook",
+      },
+    ],
+    []
+  );
+
+  /* =======================================================
+     HANDLERS
+  ======================================================= */
+
+  const handleChange = useCallback((event) => {
+    const { name, value } = event.target;
+
+    setFormData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+  }, []);
+
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (isSubmitting) return;
+
+      setIsSubmitting(true);
+      setSubmitStatus(null);
+
+      /*
+        Demo submission.
+
+        Replace this section later with:
+        - API request
+        - Formspree
+        - EmailJS
+        - Resend
+        - Your own backend
+      */
+
+      window.setTimeout(() => {
+        setIsSubmitting(false);
+        setSubmitStatus("success");
+
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      }, 900);
+    },
+    [isSubmitting]
+  );
+
+  /* =======================================================
+     ANIMATION
+     Lightweight single animation configuration.
+  ======================================================= */
+
+  const sectionReveal = {
+    initial: {
+      opacity: 0,
+      y: 20,
+    },
+
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
+
+    viewport: {
+      once: true,
+      amount: 0.08,
+    },
+
+    transition: {
+      duration: 0.45,
+      ease: "easeOut",
+    },
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const translations = {
-    en: {
-      getInTouch: "Get In Touch",
-      letsWorkTogether: "Let's Build Something Amazing Together",
-      feelFree:
-        "Ready to turn your ideas into reality? Let's discuss your next project and create something extraordinary.",
-      name: "Full Name",
-      email: "Email Address",
-      subject: "Subject",
-      message: "Your Message",
-      sendMessage: "Send Message",
-      sending: "Sending...",
-      yourLocation: "Fes, Morocco",
-      connectWithMe: "Connect With Me",
-      responseTime: "Usually responds within 24 hours",
-      availability: "Available for freelance work",
-      successMessage: "Thank you! Your message has been sent successfully.",
-      errorMessage: "Something went wrong. Please try again.",
-      namePlaceholder: "Enter your full name",
-      emailPlaceholder: "Enter your email address",
-      subjectPlaceholder: "What's this about?",
-      messagePlaceholder: "Tell me about your project or inquiry...",
-      downloadCV: "Download CV",
-      scheduleCall: "Schedule a Call",
-    },
-    ar: {
-      getInTouch: "تواصل معي",
-      getInTitle: "",
-      touchTitle: "تواصل معي",
-      letsWorkTogether: "لنبني شيئًا مذهلاً معًا",
-      feelFree:
-        "مستعد لتحويل أفكارك إلى واقع؟ دعنا نناقش مشروعك القادم ونصنع شيئًا استثنائيًا معًا.",
-      name: "الاسم الكامل",
-      email: "البريد الإلكتروني",
-      emailLabel: "البريد الإلكتروني",
-      subject: "الموضوع",
-      message: "رسالتك",
-      sendMessage: "إرسال الرسالة",
-      sending: "جارٍ الإرسال...",
-      yourLocation: "فاس، المغرب",
-      connectWithMe: "تواصل معي",
-      responseTime: "عادةً أرد خلال 24 ساعة",
-      availability: "متاح للعمل الحر والمشاريع",
-      successMessage: "شكرًا لك! تم إرسال رسالتك بنجاح.",
-      errorMessage: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
-      namePlaceholder: "أدخل اسمك الكامل",
-      emailPlaceholder: "أدخل بريدك الإلكتروني",
-      subjectPlaceholder: "ما هو موضوع رسالتك؟",
-      messagePlaceholder: "أخبرني عن مشروعك أو استفسارك...",
-      downloadCV: "تحميل السيرة الذاتية",
-      scheduleCall: "جدولة مكالمة",
-      locationLabel: "الموقع",
-      responseTimeLabel: "وقت الرد",
-      availabilityLabel: "التوفر",
-      sendEmailAnytime: "راسلني عبر البريد في أي وقت",
-      remoteWorkAvailable: "متاح للعمل عن بُعد في جميع أنحاء العالم",
-      openToWork: "متاح للعمل",
-      hours24: "24 ساعة",
-      sendMessageTitle: "أرسل رسالة",
-      respondWithin24: "سأرد خلال 24 ساعة",
-    },
-  };
-
-  const t = translations[language];
-
-  const contactInfo = [
-    {
-      icon: <Mail />,
-      label: isArabic ? t.emailLabel : "Email",
-      value: "mohamedtolba.dev@gmail.com",
-      href: "mailto:mohamedtolba.dev@gmail.com",
-      description: isArabic ? t.sendEmailAnytime : "Send me an email anytime",
-    },
-    {
-      icon: <MapPin />,
-      label: isArabic ? t.locationLabel : "Location",
-      value: t.yourLocation,
-      description: isArabic ? t.remoteWorkAvailable : "Available for remote work worldwide",
-    },
-    {
-      icon: <Clock />,
-      label: isArabic ? t.responseTimeLabel : "Response Time",
-      value: isArabic ? t.hours24 : "24 hours",
-      description: t.responseTime,
-    },
-    {
-      icon: <Coffee />,
-      label: isArabic ? t.availabilityLabel : "Availability",
-      value: isArabic ? t.openToWork : "Open to work",
-      description: t.availability,
-    },
-  ];
-
-  const socialLinks = [
-    {
-      Icon: Github,
-      href: "https://github.com/Mohahamed99-by",
-      label: "GitHub",
-      color: "hover:text-white hover:bg-slate-800",
-    },
-    {
-      Icon: Linkedin,
-      href: "https://www.linkedin.com/in/mohamed-tolba-div/",
-      label: "LinkedIn",
-      color: "hover:text-blue-400 hover:bg-blue-400/10",
-    },
-    {
-      Icon: Facebook,
-      href: "https://www.facebook.com/profile.php?id=61567673134521",
-      label: "Facebook",
-      color: "hover:text-blue-500 hover:bg-blue-500/10",
-    },
-  ];
-
-  const quickActions = [
-    {
-      icon: <Download />,
-      label: t.downloadCV,
-      href: "/assets/CV_MOHAMED_TOLBA.pdf",
-      download: "CV_MOHAMED_TOLBA.pdf",
-      color: "bg-secondary text-light hover:bg-secondary/90",
-    },
-    {
-      icon: <Calendar />,
-      label: t.scheduleCall,
-      href: "mailto:mohamedtolba.dev@gmail.com?subject=Schedule a Call",
-      color: "bg-white/10 text-white hover:bg-white/20 border border-white/20",
-    },
-  ];
+  /* =======================================================
+     RENDER
+  ======================================================= */
 
   return (
     <section
       id="contact"
       name="contact"
-      className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-12 py-20 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
       dir={isArabic ? "rtl" : "ltr"}
+      className="
+        relative
+        overflow-hidden
+        bg-neutral-950
+        px-4
+        py-20
+        sm:px-6
+        sm:py-24
+        lg:px-8
+        lg:py-32
+      "
     >
-      {/* Minimal Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-slate-800/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-slate-700/15 rounded-full blur-[100px]" />
+      {/* =====================================================
+          BACKGROUND
+      ===================================================== */}
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+        "
+      >
+        {/* Subtle grid - no gradient */}
+        <div
+          className="
+            absolute
+            inset-0
+            opacity-[0.025]
+          "
+          style={{
+            backgroundImage: `
+              linear-gradient(
+                rgba(255,255,255,0.8) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                90deg,
+                rgba(255,255,255,0.8) 1px,
+                transparent 1px
+              )
+            `,
+            backgroundSize: "48px 48px",
+          }}
+        />
+
+        {/* Accent lines */}
+
+        <span
+          className="
+            absolute
+            left-0
+            top-[25%]
+            h-px
+            w-24
+            bg-[#E4312B]/40
+          "
+        />
+
+        <span
+          className="
+            absolute
+            bottom-[20%]
+            right-0
+            h-px
+            w-20
+            bg-[#E4312B]/30
+          "
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="space-y-12">
-          {/* Minimalist Header */}
-          <div className="space-y-10">
-            {/* Status */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="inline-flex items-center gap-2"
-            >
-              <div className="w-2 h-2 bg-red-600 rounded-full" />
-              <span className="text-slate-400 text-sm font-medium tracking-wider uppercase">
-                {t.availability || "Available for work"}
-              </span>
-            </motion.div>
+      {/* =====================================================
+          MAIN CONTAINER
+      ===================================================== */}
 
-            {/* Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-            >
-              <h1
-                className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight ${
-                  isArabic ? "font-arabic" : ""
-                }`}
-                style={{ perspective: "1000px" }}
-              >
-                {!isArabic && (
-                  <motion.span 
-                    initial={{ opacity: 0, x: -30, rotateX: -15 }}
-                    whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
-                    className="block text-white mb-2"
-                    style={{
-                      textShadow: `
-                        2px 2px 0px rgba(220, 38, 38, 0.3),
-                        4px 4px 0px rgba(220, 38, 38, 0.2),
-                        6px 6px 0px rgba(220, 38, 38, 0.1),
-                        8px 8px 20px rgba(0, 0, 0, 0.5)
-                      `,
-                      transform: "translateZ(50px)",
-                      transformStyle: "preserve-3d"
-                    }}
-                  >
-                    Get In
-                  </motion.span>
-                )}
-                <motion.span 
-                  initial={{ opacity: 0, x: -30, rotateX: 15 }}
-                  whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className={`block ${isArabic ? "text-white" : "text-slate-500"}`}
-                  style={{
-                    textShadow: isArabic ? `
-                      2px 2px 0px rgba(220, 38, 38, 0.3),
-                      4px 4px 0px rgba(220, 38, 38, 0.2),
-                      6px 6px 0px rgba(220, 38, 38, 0.1),
-                      8px 8px 20px rgba(0, 0, 0, 0.5)
-                    ` : `
-                      2px 2px 0px rgba(100, 116, 139, 0.4),
-                      4px 4px 0px rgba(100, 116, 139, 0.3),
-                      6px 6px 0px rgba(100, 116, 139, 0.2),
-                      8px 8px 20px rgba(0, 0, 0, 0.5)
-                    `,
-                    transform: "translateZ(30px)",
-                    transformStyle: "preserve-3d"
-                  }}
-                >
-                  {isArabic ? "تواصل معي" : "Touch"}
-                </motion.span>
-              </h1>
-            </motion.div>
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          w-full
+          max-w-6xl
+        "
+      >
+        {/* ===================================================
+            HEADER
+        =================================================== */}
 
-            {/* Description */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.7 }}
-              className="space-y-6"
-            >
-              <p className={`text-slate-400 text-lg max-w-2xl leading-relaxed ${isArabic ? "font-arabic" : ""}`}>
-                {t.feelFree}
-              </p>
+        <motion.div {...sectionReveal}>
+          {/* Label */}
 
-              {/* Quick Actions */}
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="/assets/CV_MOHAMED_TOLBA.pdf"
-                  download="CV_MOHAMED_TOLBA.pdf"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>{t.downloadCV}</span>
-                </a>
-                <a
-                  href="mailto:mohamedtolba.dev@gmail.com?subject=Schedule a Call"
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-red-600/30 text-slate-400 font-semibold hover:border-red-600/50 hover:text-slate-300 transition-all"
-                >
-                  <Calendar className="w-4 h-4" />
-                  <span>{t.scheduleCall}</span>
-                </a>
-              </div>
-            </motion.div>
+          <div
+            className={`
+              flex
+              items-center
+              gap-3
+              ${
+                isArabic
+                  ? "justify-end"
+                  : "justify-start"
+              }
+            `}
+          >
+            <span
+              className="
+                h-2
+                w-2
+                shrink-0
+                rounded-full
+                bg-[#E4312B]
+              "
+            />
+
+            <span
+              className="
+                text-xs
+                font-semibold
+                uppercase
+                tracking-[0.2em]
+                text-neutral-500
+              "
+            >
+              {t.availability}
+            </span>
+
+            <span
+              className="
+                h-px
+                w-10
+                bg-neutral-800
+              "
+            />
           </div>
 
-          {/* Main Contact Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="grid grid-cols-1 lg:grid-cols-5 gap-8"
+          {/* Title */}
+
+          <h1
+            className={`
+              mt-7
+              max-w-4xl
+              text-[clamp(3.2rem,9vw,7rem)]
+              font-black
+              leading-[0.92]
+              tracking-[-0.06em]
+              text-white
+              ${
+                isArabic
+                  ? "font-arabic text-right leading-[1.15] tracking-normal"
+                  : ""
+              }
+            `}
+          >
+            {!isArabic && (
+              <span className="block">
+                Get In
+              </span>
+            )}
+
+            <span
+              className="
+                block
+                text-transparent
+              "
+              style={{
+                WebkitTextStroke:
+                  "1.5px #E4312B",
+              }}
+            >
+              {isArabic
+                ? "تواصل معي"
+                : "Touch"}
+            </span>
+          </h1>
+
+          {/* Description */}
+
+          <div
+            className="
+              mt-8
+              flex
+              flex-col
+              gap-6
+              lg:flex-row
+              lg:items-end
+              lg:justify-between
+            "
+          >
+            <p
+              className={`
+                max-w-2xl
+                text-sm
+                leading-7
+                text-neutral-400
+                sm:text-base
+                ${
+                  isArabic
+                    ? "font-arabic text-right"
+                    : ""
+                }
+              `}
+            >
+              {t.feelFree}
+            </p>
+
+            {/* Quick Actions */}
+
+            <div
+              className={`
+                flex
+                shrink-0
+                flex-wrap
+                gap-3
+                ${
+                  isArabic
+                    ? "justify-end"
+                    : "justify-start"
+                }
+              `}
+            >
+              <a
+                href="/assets/CV_MOHAMED_TOLBA.pdf"
+                download="CV_MOHAMED_TOLBA.pdf"
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+                  rounded-xl
+                  border
+                  border-[#E4312B]
+                  bg-[#E4312B]
+                  px-5
+                  py-3
+                  text-sm
+                  font-semibold
+                  text-white
+                  transition-all
+                  duration-200
+                  hover:bg-[#c92b26]
+                  hover:-translate-y-0.5
+                "
+              >
+                <Download
+                  size={16}
+                  aria-hidden="true"
+                />
+
+                <span>
+                  {t.downloadCV}
+                </span>
+              </a>
+
+              <a
+                href="mailto:mohamedtolba.dev@gmail.com?subject=Schedule a Call"
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+                  rounded-xl
+                  border
+                  border-neutral-800
+                  bg-neutral-900
+                  px-5
+                  py-3
+                  text-sm
+                  font-semibold
+                  text-neutral-300
+                  transition-all
+                  duration-200
+                  hover:-translate-y-0.5
+                  hover:border-[#E4312B]/60
+                  hover:text-white
+                "
+              >
+                <Calendar
+                  size={16}
+                  aria-hidden="true"
+                />
+
+                <span>
+                  {t.scheduleCall}
+                </span>
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ===================================================
+            MAIN CONTENT
+        =================================================== */}
+
+        <motion.div
+          {...sectionReveal}
+          className="
+            mt-14
+            grid
+            grid-cols-1
+            gap-5
+            lg:grid-cols-5
+          "
+        >
+          {/* =================================================
+              LEFT
+          ================================================= */}
+
+          <div
+            className="
+              space-y-5
+              lg:col-span-2
+            "
           >
             {/* Contact Info */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Contact Information Cards */}
-              <div className="space-y-4">
-                {contactInfo.map((info, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-                    whileHover={{ x: 4 }}
-                    className={`p-4 border border-slate-800 hover:border-slate-700 transition-all cursor-default ${
-                      info.href ? "cursor-pointer" : ""
-                    }`}
-                    onClick={
-                      info.href
-                        ? () => window.open(info.href, "_blank")
-                        : undefined
-                    }
-                  >
-                    <div className={`space-y-1 ${isArabic ? "text-right" : ""}`}>
-                      <div className="flex items-center gap-2 text-slate-600">
-                        {info.icon}
-                        <span className="text-xs uppercase tracking-wider">{info.label}</span>
-                      </div>
-                      <p className="text-white text-sm font-medium">{info.value}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
 
-              {/* Social Links */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.7, duration: 0.5 }}
-                className="border-t border-slate-800 pt-6"
-              >
-                <h4 className={`text-slate-500 text-xs uppercase tracking-wider mb-4 ${isArabic ? "text-right" : ""}`}>
-                  {t.connectWithMe}
-                </h4>
-                <div className={`flex ${isArabic ? "justify-end" : "justify-start"} gap-3`}>
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 border border-slate-800 flex items-center justify-center text-slate-600 hover:text-white hover:border-red-600 transition-all"
-                      aria-label={social.label}
+            <div
+              className="
+                overflow-hidden
+                rounded-2xl
+                border
+                border-neutral-800
+                bg-neutral-950
+              "
+            >
+              {contactInfo.map(
+                (
+                  {
+                    Icon,
+                    label,
+                    value,
+                    href,
+                    description,
+                  },
+                  index
+                ) => {
+                  const content = (
+                    <div
+                      className={`
+                        group
+                        flex
+                        gap-4
+                        px-5
+                        py-5
+                        transition-colors
+                        duration-200
+                        hover:bg-neutral-900
+                        ${
+                          index !==
+                          contactInfo.length - 1
+                            ? "border-b border-neutral-800"
+                            : ""
+                        }
+                        ${
+                          isArabic
+                            ? "text-right"
+                            : ""
+                        }
+                      `}
                     >
-                      <social.Icon size={18} />
+                      <div
+                        className="
+                          flex
+                          h-10
+                          w-10
+                          shrink-0
+                          items-center
+                          justify-center
+                          rounded-xl
+                          border
+                          border-neutral-800
+                          text-neutral-500
+                          transition-colors
+                          group-hover:border-[#E4312B]/50
+                          group-hover:text-[#E4312B]
+                        "
+                      >
+                        <Icon
+                          size={17}
+                          aria-hidden="true"
+                        />
+                      </div>
+
+                      <div className="min-w-0">
+                        <p
+                          className="
+                            text-[10px]
+                            font-semibold
+                            uppercase
+                            tracking-[0.16em]
+                            text-neutral-600
+                          "
+                        >
+                          {label}
+                        </p>
+
+                        <p
+                          className="
+                            mt-1
+                            truncate
+                            text-sm
+                            font-semibold
+                            text-white
+                          "
+                        >
+                          {value}
+                        </p>
+
+                        <p
+                          className="
+                            mt-1
+                            text-xs
+                            leading-5
+                            text-neutral-600
+                          "
+                        >
+                          {description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+
+                  if (!href) {
+                    return (
+                      <div key={label}>
+                        {content}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <a
+                      key={label}
+                      href={href}
+                    >
+                      {content}
                     </a>
-                  ))}
-                </div>
-              </motion.div>
+                  );
+                }
+              )}
             </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-3">
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-1">
-                  <h2 className={`text-white font-semibold ${isArabic ? "font-arabic text-right" : ""}`}>
-                    {isArabic ? t.sendMessageTitle : "Send a Message"}
-                  </h2>
-                  <p className={`text-slate-500 text-sm ${isArabic ? "font-arabic text-right" : ""}`}>
-                    {isArabic ? t.respondWithin24 : "I'll respond within 24 hours"}
+            {/* Social */}
+
+            <div
+              className="
+                rounded-2xl
+                border
+                border-neutral-800
+                bg-neutral-950
+                p-5
+              "
+            >
+              <div
+                className="
+                  flex
+                  items-center
+                  justify-between
+                  gap-4
+                "
+              >
+                <div>
+                  <p
+                    className="
+                      text-[10px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.18em]
+                      text-neutral-600
+                    "
+                  >
+                    {t.connectWithMe}
+                  </p>
+
+                  <p
+                    className="
+                      mt-1
+                      text-xs
+                      text-neutral-500
+                    "
+                  >
+                    {isArabic
+                      ? "تابعني على المنصات"
+                      : "Find me online"}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Name Field */}
+                <div className="flex gap-2">
+                  {socialLinks.map(
+                    ({
+                      Icon,
+                      href,
+                      label,
+                    }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={label}
+                        className="
+                          flex
+                          h-10
+                          w-10
+                          items-center
+                          justify-center
+                          rounded-xl
+                          border
+                          border-neutral-800
+                          text-neutral-500
+                          transition-all
+                          duration-200
+                          hover:-translate-y-0.5
+                          hover:border-[#E4312B]
+                          hover:bg-[#E4312B]/5
+                          hover:text-[#E4312B]
+                        "
+                      >
+                        <Icon
+                          size={17}
+                          aria-hidden="true"
+                        />
+                      </a>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* =================================================
+              FORM
+          ================================================= */}
+
+          <div
+            className="
+              rounded-2xl
+              border
+              border-neutral-800
+              bg-neutral-950
+              p-5
+              sm:p-6
+              lg:col-span-3
+            "
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+              {/* Form Header */}
+
+              <div
+                className={
+                  isArabic
+                    ? "text-right"
+                    : ""
+                }
+              >
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-3
+                  "
+                >
+                  <span
+                    className="
+                      h-2
+                      w-2
+                      rounded-full
+                      bg-[#E4312B]
+                    "
+                  />
+
+                  <h2
+                    className={`
+                      text-lg
+                      font-bold
+                      text-white
+                      ${
+                        isArabic
+                          ? "font-arabic"
+                          : ""
+                      }
+                    `}
+                  >
+                    {isArabic
+                      ? t.sendMessageTitle
+                      : "Send a Message"}
+                  </h2>
+                </div>
+
+                <p
+                  className={`
+                    mt-2
+                    text-sm
+                    text-neutral-600
+                    ${
+                      isArabic
+                        ? "font-arabic"
+                        : ""
+                    }
+                  `}
+                >
+                  {isArabic
+                    ? t.respondWithin24
+                    : "I'll respond within 24 hours"}
+                </p>
+              </div>
+
+              {/* Name + Email */}
+
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-4
+                  md:grid-cols-2
+                "
+              >
+                <div>
+                  <label
+                    htmlFor="contact-name"
+                    className="
+                      mb-2
+                      block
+                      text-[10px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.16em]
+                      text-neutral-600
+                    "
+                  >
+                    {t.name}
+                  </label>
+
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     placeholder={t.namePlaceholder}
-                    className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 transition-colors ${
-                      isArabic ? "text-right font-arabic" : ""
-                    }`}
+                    autoComplete="name"
                     required
+                    className={`
+                      w-full
+                      rounded-xl
+                      border
+                      border-neutral-800
+                      bg-neutral-900
+                      px-4
+                      py-3
+                      text-sm
+                      text-white
+                      outline-none
+                      transition-colors
+                      placeholder:text-neutral-700
+                      focus:border-[#E4312B]
+                      ${
+                        isArabic
+                          ? "font-arabic text-right"
+                          : ""
+                      }
+                    `}
                   />
+                </div>
 
-                  {/* Email Field */}
+                <div>
+                  <label
+                    htmlFor="contact-email"
+                    className="
+                      mb-2
+                      block
+                      text-[10px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.16em]
+                      text-neutral-600
+                    "
+                  >
+                    {t.email}
+                  </label>
+
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder={t.emailPlaceholder}
-                    className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 transition-colors ${
-                      isArabic ? "text-right font-arabic" : ""
-                    }`}
+                    autoComplete="email"
                     required
+                    className={`
+                      w-full
+                      rounded-xl
+                      border
+                      border-neutral-800
+                      bg-neutral-900
+                      px-4
+                      py-3
+                      text-sm
+                      text-white
+                      outline-none
+                      transition-colors
+                      placeholder:text-neutral-700
+                      focus:border-[#E4312B]
+                      ${
+                        isArabic
+                          ? "font-arabic text-right"
+                          : ""
+                      }
+                    `}
                   />
                 </div>
+              </div>
 
-                {/* Subject Field */}
+              {/* Subject */}
+
+              <div>
+                <label
+                  htmlFor="contact-subject"
+                  className="
+                    mb-2
+                    block
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.16em]
+                    text-neutral-600
+                  "
+                >
+                  {t.subject}
+                </label>
+
                 <input
+                  id="contact-subject"
                   type="text"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder={t.subjectPlaceholder}
-                  className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 transition-colors ${
-                    isArabic ? "text-right font-arabic" : ""
-                  }`}
                   required
+                  className={`
+                    w-full
+                    rounded-xl
+                    border
+                    border-neutral-800
+                    bg-neutral-900
+                    px-4
+                    py-3
+                    text-sm
+                    text-white
+                    outline-none
+                    transition-colors
+                    placeholder:text-neutral-700
+                    focus:border-[#E4312B]
+                    ${
+                      isArabic
+                        ? "font-arabic text-right"
+                        : ""
+                    }
+                  `}
                 />
+              </div>
 
-                {/* Message Field */}
+              {/* Message */}
+
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="
+                    mb-2
+                    block
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.16em]
+                    text-neutral-600
+                  "
+                >
+                  {t.message}
+                </label>
+
                 <textarea
+                  id="contact-message"
                   name="message"
-                  rows="5"
+                  rows={6}
                   value={formData.message}
                   onChange={handleChange}
                   placeholder={t.messagePlaceholder}
-                  className={`w-full px-4 py-2.5 bg-transparent border border-slate-700 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-red-600 resize-none transition-colors ${
-                    isArabic ? "text-right font-arabic" : ""
-                  }`}
                   required
+                  className={`
+                    w-full
+                    resize-none
+                    rounded-xl
+                    border
+                    border-neutral-800
+                    bg-neutral-900
+                    px-4
+                    py-3
+                    text-sm
+                    leading-6
+                    text-white
+                    outline-none
+                    transition-colors
+                    placeholder:text-neutral-700
+                    focus:border-[#E4312B]
+                    ${
+                      isArabic
+                        ? "font-arabic text-right"
+                        : ""
+                    }
+                  `}
                 />
+              </div>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full px-6 py-3 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 ${
-                    isSubmitting ? "opacity-80 cursor-not-allowed" : ""
-                  } ${isArabic ? "flex-row-reverse" : ""}`}
+              {/* Submit */}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`
+                  flex
+                  w-full
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-xl
+                  border
+                  border-[#E4312B]
+                  bg-[#E4312B]
+                  px-6
+                  py-3.5
+                  text-sm
+                  font-semibold
+                  text-white
+                  transition-all
+                  duration-200
+                  hover:-translate-y-0.5
+                  hover:bg-[#c92b26]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-60
+                  ${
+                    isArabic
+                      ? "flex-row-reverse font-arabic"
+                      : ""
+                  }
+                `}
+              >
+                <span>
+                  {isSubmitting
+                    ? t.sending
+                    : t.sendMessage}
+                </span>
+
+                <Send
+                  size={16}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {/* Status */}
+
+              {submitStatus && (
+                <div
+                  className={`
+                    flex
+                    items-center
+                    gap-2
+                    rounded-xl
+                    border
+                    px-4
+                    py-3
+                    text-sm
+                    ${
+                      submitStatus ===
+                      "success"
+                        ? "border-emerald-500/30 bg-emerald-500/5 text-emerald-400"
+                        : "border-[#E4312B]/30 bg-[#E4312B]/5 text-[#E4312B]"
+                    }
+                    ${
+                      isArabic
+                        ? "font-arabic"
+                        : ""
+                    }
+                  `}
                 >
-                  <span>{isSubmitting ? t.sending : t.sendMessage}</span>
-                  <Send className="w-4 h-4" />
-                </button>
-
-                {/* Success/Error Messages */}
-                <AnimatePresence>
-                  {submitStatus && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className={`p-3 border flex items-center gap-2 text-sm ${
-                        submitStatus === "success"
-                          ? "bg-green-900/20 border-green-500/30 text-green-400"
-                          : "bg-red-900/20 border-red-600/30 text-red-400"
-                      }`}
-                    >
-                      {submitStatus === "success" ? (
-                        <CheckCircle className="w-4 h-4" />
-                      ) : (
-                        <AlertCircle className="w-4 h-4" />
-                      )}
-                      <span className={isArabic ? "font-arabic" : ""}>
-                        {submitStatus === "success" ? t.successMessage : t.errorMessage}
-                      </span>
-                    </motion.div>
+                  {submitStatus ===
+                  "success" ? (
+                    <CheckCircle
+                      size={16}
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <AlertCircle
+                      size={16}
+                      aria-hidden="true"
+                    />
                   )}
-                </AnimatePresence>
-              </form>
-            </div>
-          </motion.div>
-        </div>
+
+                  <span>
+                    {submitStatus ===
+                    "success"
+                      ? t.successMessage
+                      : t.errorMessage}
+                  </span>
+                </div>
+              )}
+            </form>
+          </div>
+        </motion.div>
+
+        {/* ===================================================
+            FOOTER STATUS
+        =================================================== */}
+
+        <motion.div
+          {...sectionReveal}
+          className="
+            mt-5
+            flex
+            flex-col
+            gap-3
+            rounded-2xl
+            border
+            border-neutral-800
+            px-5
+            py-4
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+          "
+        >
+          <div
+            className="
+              flex
+              items-center
+              gap-2
+            "
+          >
+            <span
+              className="
+                h-2
+                w-2
+                rounded-full
+                bg-emerald-500
+              "
+            />
+
+            <span
+              className={`
+                text-xs
+                text-neutral-500
+                ${
+                  isArabic
+                    ? "font-arabic"
+                    : ""
+                }
+              `}
+            >
+              {t.availabilityText}
+            </span>
+          </div>
+
+          <span
+            className="
+              text-[10px]
+              font-semibold
+              uppercase
+              tracking-[0.2em]
+              text-neutral-700
+            "
+          >
+            Web Development
+          </span>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default Contact;
+export default memo(Contact);

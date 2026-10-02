@@ -1,445 +1,723 @@
+
 "use client";
 
-import { motion } from "framer-motion";
+import { memo, useContext, useMemo } from "react";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  MotionConfig,
+} from "framer-motion";
 import {
   ArrowRight,
   ArrowLeft,
   Download,
-  Code2,
-  Terminal,
-  Github,
-  Linkedin,
-  Cpu,
-  Database,
-  Globe,
-  Zap,
-  Sparkles,
   ChevronDown,
 } from "lucide-react";
-import { useContext } from "react";
-import { LongContext } from "./ContextProvider";
 import { Link } from "react-router-dom";
-import { BsBrowserChrome } from "react-icons/bs";
-import { SiReact, SiTailwindcss, SiLaravel, SiMysql } from "react-icons/si";
-import PalestinianFlag from "./PalestinianFlag";
+import { LongContext } from "./ContextProvider";
 
-const Hero = () => {
-  const { language, translationsHero } = useContext(LongContext);
-  const isArabic = language === "ar";
+/* =========================================================
+   ANIMATION
+========================================================= */
 
-  const { greeting, description, viewProjects, downloadCV, name } =
-    translationsHero[language];
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
 
-  // Tech stack icons with modern colors
-  const techStack = [
-    { Icon: SiReact, color: "#61DAFB", name: "React" },
-    { Icon: SiTailwindcss, color: "#06B6D4", name: "Tailwindcss" },
-    { Icon: SiLaravel, color: "#FF2D20", name: "Laravel" },
-    { Icon: SiMysql, color: "#00758F", name: "MySQL" },
-  ];
+const item = {
+  hidden: {
+    opacity: 0,
+    y: 14,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
+
+const fade = {
+  hidden: {
+    opacity: 0,
+    scale: 0.97,
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+};
+
+/* =========================================================
+   PROCESS STEPS
+========================================================= */
+
+const STEPS = [
+  {
+    key: "uiuxDesign",
+    fallback: "Design",
+    descKey: "uiuxDesc",
+  },
+  {
+    key: "frontendBuild",
+    fallback: "Build the interface",
+    descKey: "frontendDesc",
+  },
+  {
+    key: "backendApi",
+    fallback: "Build the API",
+    descKey: "backendDesc",
+  },
+  {
+    key: "database",
+    fallback: "Model the data",
+    descKey: "databaseDesc",
+  },
+  {
+    key: "deployTest",
+    fallback: "Test & launch",
+    descKey: "productionReady",
+  },
+];
+
+/* =========================================================
+   RING GEOMETRY
+========================================================= */
+
+const STEP_DEG = 360 / STEPS.length;
+
+const toRad = (d) => (d * Math.PI) / 180;
+
+function buildRing(sign) {
+  const point = (deg) => ({
+    x: 50 + 50 * sign * Math.cos(toRad(deg)),
+    y: 50 + 50 * Math.sin(toRad(deg)),
+  });
+
+  const nodes = STEPS.map((_, i) =>
+    point(-90 + i * STEP_DEG)
+  );
+
+  const arrows = STEPS.map((_, i) => {
+    const deg =
+      -90 + i * STEP_DEG + STEP_DEG / 2;
+
+    const r = toRad(deg);
+
+    const rot =
+      (Math.atan2(
+        Math.cos(r),
+        -sign * Math.sin(r)
+      ) *
+        180) /
+      Math.PI;
+
+    return {
+      ...point(deg),
+      rot,
+    };
+  });
+
+  return {
+    nodes,
+    arrows,
+  };
+}
+
+const RING_LTR = buildRing(1);
+const RING_RTL = buildRing(-1);
+
+/* =========================================================
+   FLAG
+========================================================= */
+
+const FlagMark = () => (
+  <span
+    aria-hidden="true"
+    className="relative inline-block h-3.5 w-5 overflow-hidden rounded-[2px]"
+    style={{
+      background:
+        "linear-gradient(to bottom, #000 0 33.3%, #fff 33.3% 66.6%, #149954 66.6% 100%)",
+    }}
+  >
+    <span
+      className="absolute inset-y-0 start-0 w-[45%] bg-[#e4312b]"
+      style={{
+        clipPath:
+          "polygon(0 0, 100% 50%, 0 100%)",
+      }}
+    />
+  </span>
+);
+
+/* =========================================================
+   DESKTOP RING
+========================================================= */
+
+const Ring = memo(function Ring({
+  t,
+  isArabic,
+}) {
+  const { nodes, arrows } = isArabic
+    ? RING_RTL
+    : RING_LTR;
 
   return (
-    <section
-      id="home"
-      name="home"
-      className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-12 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
-      dir={isArabic ? "rtl" : "ltr"}
+    <m.div
+      variants={fade}
+      aria-hidden="false"
+      className="pointer-events-none absolute inset-0 hidden lg:block"
     >
-      {/* Minimal Background Accent */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-slate-800/30 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-700/20 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4" />
-      </div>
+      <svg
+        viewBox="0 0 100 100"
+        className="absolute inset-0 h-full w-full overflow-visible"
+        aria-hidden="true"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          r="50"
+          fill="none"
+          stroke="#262626"
+          strokeWidth="1.5"
+          strokeDasharray="3 7"
+          vectorEffect="non-scaling-stroke"
+        />
 
-      <div className="max-w-7xl mx-auto w-full py-20">
-        {/* Asymmetric Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Main Content - 7 columns */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className={`lg:col-span-7 space-y-10 ${isArabic ? "text-right" : "text-left"}`}
-          >
-            {/* Minimalist Status */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="inline-flex items-center gap-2"
-            >
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-2 h-2 bg-red-600 rounded-full"
-              />
-              <span className="text-slate-400 text-sm font-medium tracking-wider uppercase">
-                {translationsHero[language]?.availableForWork || "Available for work"}
-              </span>
-            </motion.div>
+        {arrows.map((a, i) => (
+          <polygon
+            key={i}
+            points="-1.3,-1.3 1.5,0 -1.3,1.3"
+            fill="#737373"
+            transform={`translate(${a.x} ${a.y}) rotate(${a.rot})`}
+          />
+        ))}
+      </svg>
 
-            {/* Strong Typography Header */}
-            <div className="space-y-8">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-              >
-                <h1
-                  className={`text-5xl sm:text-6xl lg:text-8xl font-black leading-[1.1] tracking-tight ${isArabic ? "font-arabic" : ""}`}
-                  style={{ perspective: "1000px" }}
-                >
-                  <motion.span 
-                    initial={{ opacity: 0, x: -20, rotateX: -15 }}
-                    animate={{ opacity: 1, x: 0, rotateX: 0 }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
-                    className="block text-white mb-2"
-                    style={{
-                      textShadow: `
-                        2px 2px 0px rgba(220, 38, 38, 0.3),
-                        4px 4px 0px rgba(220, 38, 38, 0.2),
-                        6px 6px 0px rgba(220, 38, 38, 0.1),
-                        8px 8px 20px rgba(0, 0, 0, 0.5)
-                      `,
-                      transform: "translateZ(50px)",
-                      transformStyle: "preserve-3d"
-                    }}
-                  >
-                    {name.split(" ")[0]}
-                  </motion.span>
-                  <motion.span 
-                    initial={{ opacity: 0, x: -20, rotateX: 15 }}
-                    animate={{ opacity: 1, x: 0, rotateX: 0 }}
-                    transition={{ delay: 0.5, duration: 0.8 }}
-                    className="block text-slate-500"
-                    style={{
-                      textShadow: `
-                        2px 2px 0px rgba(100, 116, 139, 0.4),
-                        4px 4px 0px rgba(100, 116, 139, 0.3),
-                        6px 6px 0px rgba(100, 116, 139, 0.2),
-                        8px 8px 20px rgba(0, 0, 0, 0.5)
-                      `,
-                      transform: "translateZ(30px)",
-                      transformStyle: "preserve-3d"
-                    }}
-                  >
-                    {name.split(" ")[1]}
-                  </motion.span>
-                </h1>
-              </motion.div>
+      <ol>
+        {STEPS.map((s, i) => {
+          const isLast =
+            i === STEPS.length - 1;
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.7 }}
-                className="space-y-6"
-              >
-                <p 
-                  className="text-slate-400 text-sm font-bold tracking-[0.2em] uppercase"
-                  style={{
-                    textShadow: `
-                      0.5px 0.5px 0px rgba(220, 38, 38, 0.2),
-                      1px 1px 0px rgba(220, 38, 38, 0.15),
-                      1.5px 1.5px 0px rgba(220, 38, 38, 0.1),
-                      2px 2px 5px rgba(0, 0, 0, 0.3)
-                    `
-                  }}
-                >
-                  Full-Stack Developer
-                </p>
-                
-                <p
-                  className={`text-slate-400 text-lg sm:text-xl max-w-xl leading-relaxed ${isArabic ? "font-arabic" : ""}`}
-                >
-                  {description}
-                </p>
-
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8, duration: 0.5 }}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 border border-green-500/30 rounded-md"
-                >
-                  <span className="text-xs text-green-400 font-medium tracking-wide">
-                    🇵🇸 FREE PALESTINE
-                  </span>
-                </motion.div>
-              </motion.div>
-            </div>
-
-            {/* Minimal Tech Stack */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="flex flex-wrap items-center gap-4"
-            >
-              {techStack.map(({ Icon, color, name }, index) => (
-                <motion.div 
-                  key={name}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 + index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -2 }}
-                  className="flex items-center gap-2 group cursor-pointer"
-                >
-                  <Icon className="w-5 h-5 text-slate-600 group-hover:text-slate-400 transition-colors" style={{ color }} />
-                  <span className="text-sm text-slate-600 group-hover:text-slate-400 transition-colors">{name}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Clean CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3, duration: 0.6 }}
-              className={`flex flex-wrap items-center gap-4 pt-4 ${isArabic ? "flex-row-reverse" : ""}`}
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  to="/projects"
-                  className="group inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors"
-                >
-                  <span>{viewProjects}</span>
-                  {isArabic ? 
-                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> : 
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  }
-                </Link>
-              </motion.div>
-
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                href="/assets/CV_MOHAMED_TOLBA.pdf"
-                download="CV_MOHAMED_TOLBA.pdf"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-red-600/30 text-slate-400 font-semibold hover:border-red-600/50 hover:text-slate-300 transition-all duration-300"
-              >
-                <span>{translationsHero[language]?.downloadCV || translationsHero.en.downloadCV}</span>
-                <Download className="w-4 h-4" />
-              </motion.a>
-            </motion.div>
-          </motion.div>
-
-          {/* Side Info Panel - 5 columns */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
-            className="lg:col-span-5 hidden lg:block"
-          >
-            <div className="space-y-8 border-l border-slate-800 pl-8">
-              {/* Animated Tech Icons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="space-y-4"
-              >
-                <div 
-                  className="text-xs text-slate-400 tracking-wider uppercase font-bold"
-                  style={{
-                    textShadow: `
-                      0.5px 0.5px 0px rgba(220, 38, 38, 0.2),
-                      1px 1px 0px rgba(220, 38, 38, 0.15),
-                      1.5px 1.5px 5px rgba(0, 0, 0, 0.3)
-                    `
-                  }}
-                >
-                  {translationsHero[language]?.techStackTitle || "Tech Stack"}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  {/* React */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.7, duration: 0.5 }}
-                    whileHover={{ y: -4, scale: 1.05 }}
-                    className="flex flex-col items-center gap-2 p-3 border border-slate-800 hover:border-slate-700 transition-all cursor-pointer group"
-                  >
-                    <SiReact className="w-8 h-8 text-[#61DAFB]" />
-                    <span className="text-xs text-slate-600 group-hover:text-slate-400">React</span>
-                  </motion.div>
-
-                  {/* Tailwind */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.9, duration: 0.5 }}
-                    whileHover={{ y: -4, scale: 1.05 }}
-                    className="flex flex-col items-center gap-2 p-3 border border-slate-800 hover:border-slate-700 transition-all cursor-pointer group"
-                  >
-                    <SiTailwindcss className="w-8 h-8 text-[#06B6D4]" />
-                    <span className="text-xs text-slate-600 group-hover:text-slate-400">Tailwind</span>
-                  </motion.div>
-
-                  {/* Laravel */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.1, duration: 0.5 }}
-                    whileHover={{ y: -4, scale: 1.05 }}
-                    className="flex flex-col items-center gap-2 p-3 border border-slate-800 hover:border-slate-700 transition-all cursor-pointer group"
-                  >
-                    <SiLaravel className="w-8 h-8 text-[#FF2D20]" />
-                    <span className="text-xs text-slate-600 group-hover:text-slate-400">Laravel</span>
-                  </motion.div>
-
-                  {/* MySQL */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.3, duration: 0.5 }}
-                    whileHover={{ y: -4, scale: 1.05 }}
-                    className="flex flex-col items-center gap-2 p-3 border border-slate-800 hover:border-slate-700 transition-all cursor-pointer group"
-                  >
-                    <SiMysql className="w-8 h-8 text-[#00758F]" />
-                    <span className="text-xs text-slate-600 group-hover:text-slate-400">MySQL</span>
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              {/* Development Flow */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2, duration: 0.6 }}
-                className="space-y-4 pt-6 border-t border-slate-800"
-              >
-                <div 
-                  className="text-xs text-slate-400 tracking-wider uppercase font-bold"
-                  style={{
-                    textShadow: `
-                      0.5px 0.5px 0px rgba(220, 38, 38, 0.2),
-                      1px 1px 0px rgba(220, 38, 38, 0.15),
-                      1.5px 1.5px 5px rgba(0, 0, 0, 0.3)
-                    `
-                  }}
-                >
-                  {translationsHero[language]?.developmentFlowTitle || "Development Flow"}
-                </div>
-                <div className="relative space-y-3">
-                  {/* Flow Line */}
-                  <div className="absolute left-2 top-2 bottom-2 w-px bg-gradient-to-b from-red-600 via-red-600 to-transparent" />
-                  
-                  {/* Step 1: Frontend */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.3, duration: 0.5 }}
-                    className="relative pl-8"
-                  >
-                    <div className="absolute left-0 top-1 w-4 h-4 border-2 border-red-600 bg-slate-950 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
-                    </div>
-                    <div>
-                      <div className="text-white text-sm font-semibold">{translationsHero[language]?.uiuxDesign || "UI/UX Design"}</div>
-                      <div className="text-slate-600 text-xs">{translationsHero[language]?.uiuxDesc || "Figma, Wireframes"}</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Step 2: Frontend Dev */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.5, duration: 0.5 }}
-                    className="relative pl-8"
-                  >
-                    <div className="absolute left-0 top-1 w-4 h-4 border-2 border-red-600 bg-slate-950 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
-                    </div>
-                    <div>
-                      <div className="text-white text-sm font-semibold">{translationsHero[language]?.frontendBuild || "Frontend Build"}</div>
-                      <div className="text-slate-600 text-xs">{translationsHero[language]?.frontendDesc || "React, Tailwind"}</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Step 3: Backend */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.7, duration: 0.5 }}
-                    className="relative pl-8"
-                  >
-                    <div className="absolute left-0 top-1 w-4 h-4 border-2 border-red-600 bg-slate-950 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
-                    </div>
-                    <div>
-                      <div className="text-white text-sm font-semibold">{translationsHero[language]?.backendApi || "Backend API"}</div>
-                      <div className="text-slate-600 text-xs">{translationsHero[language]?.backendDesc || "Laravel, Node.js"}</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Step 4: Database */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.9, duration: 0.5 }}
-                    className="relative pl-8"
-                  >
-                    <div className="absolute left-0 top-1 w-4 h-4 border-2 border-red-600 bg-slate-950 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
-                    </div>
-                    <div>
-                      <div className="text-white text-sm font-semibold">{translationsHero[language]?.database || "Database"}</div>
-                      <div className="text-slate-600 text-xs">{translationsHero[language]?.databaseDesc || "MySQL, MongoDB"}</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Step 5: Deploy */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 2.1, duration: 0.5 }}
-                    className="relative pl-8"
-                  >
-                    <div className="absolute left-0 top-1 w-4 h-4 border-2 border-red-600 bg-red-600 rounded-full" />
-                    <div>
-                      <div className="text-white text-sm font-semibold">{translationsHero[language]?.deployTest || "Deploy & Test"}</div>
-                      <div className="text-slate-600 text-xs">{translationsHero[language]?.productionReady || "Production Ready"}</div>
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Minimal Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-            className="flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity cursor-pointer"
-          >
-            <ChevronDown className="w-5 h-5 text-slate-400" />
-            <span 
-              className="text-xs text-slate-600 tracking-widest uppercase font-bold"
+          return (
+            <li
+              key={s.key}
+              className={`
+                absolute
+                flex
+                -translate-x-1/2
+                -translate-y-1/2
+                items-center
+                gap-2
+                whitespace-nowrap
+                rounded-xl
+                border
+                bg-neutral-950
+                px-3
+                py-2
+                ${
+                  isLast
+                    ? "border-[#e4312b]/70"
+                    : "border-neutral-800"
+                }
+              `}
               style={{
-                textShadow: `
-                  0.5px 0.5px 0px rgba(220, 38, 38, 0.2),
-                  1px 1px 0px rgba(220, 38, 38, 0.15),
-                  1.5px 1.5px 3px rgba(0, 0, 0, 0.3)
-                `
+                left: `${nodes[i].x}%`,
+                top: `${nodes[i].y}%`,
               }}
             >
-              {translationsHero[language]?.scroll || "Scroll"}
-            </span>
-          </motion.div>
-        </motion.div>
+              <span
+                className={`
+                  inline-flex
+                  h-6
+                  w-6
+                  shrink-0
+                  items-center
+                  justify-center
+                  rounded-full
+                  text-xs
+                  font-semibold
+                  tabular-nums
+                  ${
+                    isLast
+                      ? "bg-[#e4312b] text-white"
+                      : "bg-neutral-800 text-neutral-300"
+                  }
+                `}
+              >
+                {i + 1}
+              </span>
+
+              <span className="text-sm font-semibold text-neutral-100">
+                {t[s.key] || s.fallback}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </m.div>
+  );
+});
+
+/* =========================================================
+   MOBILE / TABLET TIMELINE
+========================================================= */
+
+const Flowchart = memo(function Flowchart({
+  t,
+  isArabic,
+}) {
+  return (
+    <div className="mx-auto w-full max-w-md">
+      <div className="relative">
+        {/* Vertical timeline */}
+        <div
+          aria-hidden="true"
+          className={`
+            absolute
+            top-4
+            bottom-4
+            w-px
+            bg-neutral-800
+            ${
+              isArabic
+                ? "right-[19px]"
+                : "left-[19px]"
+            }
+          `}
+        />
+
+        <ol className="relative space-y-4">
+          {STEPS.map((step, index) => {
+            const isLast =
+              index === STEPS.length - 1;
+
+            const title =
+              t[step.key] || step.fallback;
+
+            const description =
+              t[step.descKey];
+
+            return (
+              <li
+                key={step.key}
+                className="relative flex items-start gap-4"
+              >
+                {/* Number */}
+                <div
+                  className={`
+                    relative
+                    z-10
+                    flex
+                    h-10
+                    w-10
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-full
+                    border
+                    text-xs
+                    font-bold
+                    tabular-nums
+                    ${
+                      isLast
+                        ? "border-[#e4312b] bg-[#e4312b] text-white"
+                        : "border-neutral-700 bg-neutral-950 text-neutral-400"
+                    }
+                  `}
+                >
+                  {index + 1}
+                </div>
+
+                {/* Content */}
+                <div
+                  className={`
+                    min-w-0
+                    flex-1
+                    rounded-xl
+                    border
+                    px-4
+                    py-3.5
+                    ${
+                      isLast
+                        ? "border-[#e4312b]/50 bg-[#e4312b]/5"
+                        : "border-neutral-800 bg-neutral-900/50"
+                    }
+                  `}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm font-semibold leading-snug text-neutral-100">
+                      {title}
+                    </p>
+
+                    {isLast ? (
+                      <span className="shrink-0 text-[9px] font-bold uppercase tracking-wider text-[#e4312b]">
+                        Ready
+                      </span>
+                    ) : (
+                      <span className="shrink-0 text-[10px] font-medium tabular-nums text-neutral-600">
+                        0{index + 1}
+                      </span>
+                    )}
+                  </div>
+
+                  {description && (
+                    <p
+                      className={`
+                        mt-1.5
+                        text-xs
+                        leading-relaxed
+                        text-neutral-500
+                        ${
+                          isArabic
+                            ? "font-arabic"
+                            : ""
+                        }
+                      `}
+                    >
+                      {description}
+                    </p>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
-    </section>
+
+      {/* Flow indicator */}
+      <div className="mt-5 flex items-center justify-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-600">
+        <span className="h-px w-8 bg-neutral-800" />
+
+        <ChevronDown
+          className="h-3.5 w-3.5 text-[#e4312b]"
+          strokeWidth={1.8}
+        />
+
+        <span>
+          {isArabic
+            ? "من الفكرة إلى الإطلاق"
+            : "From idea to launch"}
+        </span>
+
+        <span className="h-px w-8 bg-neutral-800" />
+      </div>
+    </div>
+  );
+});
+
+/* =========================================================
+   HERO
+========================================================= */
+
+const Hero = () => {
+  const {
+    language,
+    translationsHero,
+  } = useContext(LongContext);
+
+  const isArabic = language === "ar";
+
+  const t =
+    translationsHero[language] ||
+    translationsHero.en;
+
+  const [firstName, ...rest] = useMemo(
+    () => (t.name || "").split(" "),
+    [t.name]
+  );
+
+  const lastName = rest.join(" ");
+
+  const ArrowIcon = isArabic
+    ? ArrowLeft
+    : ArrowRight;
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <LazyMotion
+        features={domAnimation}
+        strict
+      >
+        <section
+          id="home"
+          name="home"
+          dir={isArabic ? "rtl" : "ltr"}
+          className="
+            relative
+            flex
+            min-h-screen
+            items-center
+            justify-center
+            overflow-hidden
+            bg-neutral-950
+            px-5
+            pb-16
+            pt-32
+            sm:px-8
+            lg:pb-12
+            lg:pt-32
+          "
+        >
+          <m.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="
+              relative
+              mx-auto
+              w-full
+              max-w-5xl
+              lg:aspect-square
+              lg:w-[min(calc(100vh-11rem),960px)]
+              lg:max-w-none
+            "
+          >
+            {/* Desktop ring */}
+            <Ring
+              t={t}
+              isArabic={isArabic}
+            />
+
+            {/* Central content */}
+            <div
+              className="
+                flex
+                flex-col
+                items-center
+                text-center
+                lg:absolute
+                lg:inset-[12%]
+                lg:justify-center
+              "
+            >
+              {/* Availability */}
+              <m.p
+                variants={item}
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+                  rounded-full
+                  border
+                  border-neutral-800
+                  px-4
+                  py-1.5
+                  text-sm
+                  text-neutral-300
+                "
+              >
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+
+                {t.availableForWork ||
+                  "Available for work"}
+              </m.p>
+
+              {/* Name */}
+              <m.h1
+                variants={item}
+                className={`
+                  mt-8
+                  text-6xl
+                  font-black
+                  leading-[0.95]
+                  tracking-tighter
+                  text-white
+                  sm:text-8xl
+                  lg:mt-5
+                  lg:text-7xl
+                  [@media(min-height:860px)]:lg:text-8xl
+                  ${
+                    isArabic
+                      ? "font-arabic leading-[1.15]"
+                      : ""
+                  }
+                `}
+              >
+                <span className="block">
+                  {firstName}
+                </span>
+
+                {lastName && (
+                  <span
+                    className="block text-transparent"
+                    style={{
+                      WebkitTextStroke:
+                        "2px #e4312b",
+                    }}
+                  >
+                    {lastName}
+                  </span>
+                )}
+              </m.h1>
+
+              {/* Description */}
+              <m.div
+                variants={item}
+                className="
+                  mt-8
+                  max-w-2xl
+                  space-y-3
+                  lg:mt-5
+                  lg:max-w-sm
+                  lg:space-y-2
+                "
+              >
+                <p className="text-xl font-semibold text-white sm:text-2xl lg:text-lg">
+                  Full-Stack Developer
+                </p>
+
+                <p
+                  className={`
+                    text-base
+                    leading-relaxed
+                    text-neutral-400
+                    sm:text-lg
+                    lg:text-sm
+                    [@media(min-height:860px)]:lg:text-base
+                    ${
+                      isArabic
+                        ? "font-arabic"
+                        : ""
+                    }
+                  `}
+                >
+                  {t.description}
+                </p>
+              </m.div>
+
+              {/* Actions */}
+              <m.div
+                variants={item}
+                className="
+                  mt-8
+                  flex
+                  flex-wrap
+                  items-center
+                  justify-center
+                  gap-x-6
+                  gap-y-3
+                  lg:mt-6
+                "
+              >
+                <Link
+                  to="/projects"
+                  className="
+                    group
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    bg-white
+                    px-6
+                    py-3
+                    font-semibold
+                    text-neutral-950
+                    transition-colors
+                    hover:bg-neutral-200
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-2
+                    focus-visible:outline-white
+                  "
+                >
+                  {t.viewProjects}
+
+                  <ArrowIcon
+                    className={`
+                      h-4
+                      w-4
+                      transition-transform
+                      ${
+                        isArabic
+                          ? "group-hover:-translate-x-1"
+                          : "group-hover:translate-x-1"
+                      }
+                    `}
+                  />
+                </Link>
+
+                <a
+                  href="/assets/CV_MOHAMED_TOLBA.pdf"
+                  download="CV_MOHAMED_TOLBA.pdf"
+                  className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    font-semibold
+                    text-neutral-300
+                    underline
+                    decoration-neutral-700
+                    underline-offset-8
+                    transition-colors
+                    hover:text-white
+                    hover:decoration-[#e4312b]
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-4
+                    focus-visible:outline-white
+                  "
+                >
+                  {t.downloadCV ||
+                    translationsHero.en.downloadCV}
+
+                  <Download className="h-4 w-4" />
+                </a>
+              </m.div>
+
+              {/* Palestine */}
+              <m.p
+                variants={item}
+                className="
+                  mt-10
+                  inline-flex
+                  items-center
+                  gap-2.5
+                  text-sm
+                  text-neutral-400
+                  lg:mt-6
+                "
+              >
+                <FlagMark />
+                Free Palestine
+              </m.p>
+            </div>
+
+            {/* =================================================
+                MOBILE / TABLET FLOWCHART
+            ================================================= */}
+
+            <m.div
+              variants={item}
+              className="
+                mt-14
+                w-full
+                lg:hidden
+              "
+            >
+              <Flowchart
+                t={t}
+                isArabic={isArabic}
+              />
+            </m.div>
+          </m.div>
+        </section>
+      </LazyMotion>
+    </MotionConfig>
   );
 };
 
-export default Hero;
+export default memo(Hero);

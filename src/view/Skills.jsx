@@ -1,23 +1,24 @@
 "use client";
 
-import { motion } from "framer-motion";
-import React, { useContext, useState } from "react";
-import { LongContext } from "../components/ContextProvider";
+import { memo, useContext, useMemo, useState } from "react";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  MotionConfig,
+} from "framer-motion";
+
 import {
   Database,
-  FileCode2,
   LayoutGrid,
   Server,
-  Sparkles,
   Code2,
   Palette,
-  Globe,
-  Zap,
-  Star,
   TrendingUp,
   CheckCircle,
-  Award,
+  Star,
 } from "lucide-react";
+
 import {
   DiReact,
   DiGit,
@@ -28,6 +29,7 @@ import {
   DiJavascript,
   DiNodejs,
 } from "react-icons/di";
+
 import {
   SiExpress,
   SiMongodb,
@@ -35,420 +37,1104 @@ import {
   SiGithub,
   SiTailwindcss,
   SiVite,
-  SiPostman,
   SiFigma,
 } from "react-icons/si";
 
-const Skills = () => {
-  const { language, tSkills } = useContext(LongContext);
-  const isArabic = language === "ar";
-  const [hoveredSkill, setHoveredSkill] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+import { LongContext } from "../components/ContextProvider";
 
-  const skills = [
-    {
-      id: 1,
-      title: "HTML5",
-      icon: <DiHtml5 size={40} />,
-      style: "text-orange-500",
-      level: 95,
-      category: "frontend",
-      description: "Semantic markup & modern standards",
-    },
-    {
-      id: 2,
-      title: "CSS3",
-      icon: <DiCss3 size={40} />,
-      style: "text-blue-500",
-      level: 90,
-      category: "frontend",
-      description: "Advanced styling & animations",
-    },
-    {
-      id: 3,
-      title: "JavaScript",
-      icon: <DiJavascript size={40} />,
-      style: "text-yellow-500",
-      level: 88,
-      category: "frontend",
-      description: "ES6+ & modern JS features",
-    },
-    {
-      id: 4,
-      title: "React",
-      icon: <DiReact size={40} />,
-      style: "text-cyan-500",
-      level: 90,
-      category: "frontend",
-      description: "Hooks, Context & modern patterns",
-    },
-    {
-      id: 5,
-      title: "Tailwind CSS",
-      icon: <SiTailwindcss size={40} />,
-      style: "text-teal-500",
-      level: 92,
-      category: "frontend",
-      description: "Utility-first CSS framework",
-    },
-    {
-      id: 6,
-      title: "Node.js",
-      icon: <DiNodejs size={40} />,
-      style: "text-green-500",
-      level: 85,
-      category: "backend",
-      description: "Server-side JavaScript runtime",
-    },
-    {
-      id: 7,
-      title: "Express.js",
-      icon: <SiExpress size={40} />,
-      style: "text-gray-300",
-      level: 85,
-      category: "backend",
-      description: "Fast & minimalist web framework",
-    },
-    {
-      id: 8,
-      title: "Laravel",
-      icon: <DiLaravel size={40} />,
-      style: "text-red-600",
-      level: 80,
-      category: "backend",
-      description: "Elegant PHP web framework",
-    },
-    {
-      id: 9,
-      title: "MongoDB",
-      icon: <SiMongodb size={40} />,
-      style: "text-green-600",
-      level: 85,
-      category: "database",
-      description: "NoSQL document database",
-    },
-    {
-      id: 10,
-      title: "MySQL",
-      icon: <DiMysql size={40} />,
-      style: "text-blue-400",
-      level: 80,
-      category: "database",
-      description: "Relational database management",
-    },
-    {
-      id: 11,
-      title: "Git",
-      icon: <DiGit size={40} />,
-      style: "text-red-600",
-      level: 90,
-      category: "tools",
-      description: "Version control system",
-    },
-    {
-      id: 12,
-      title: "GitHub",
-      icon: <SiGithub size={40} />,
-      style: "text-gray-300",
-      level: 90,
-      category: "tools",
-      description: "Code collaboration platform",
-    },
-    {
-      id: 13,
-      title: "Redux",
-      icon: <SiRedux size={40} />,
-      style: "text-purple-500",
-      level: 85,
-      category: "frontend",
-      description: "Predictable state container",
-    },
-    {
-      id: 14,
-      title: "Vite",
-      icon: <SiVite size={40} />,
-      style: "text-purple-400",
-      level: 88,
-      category: "tools",
-      description: "Fast build tool & dev server",
-    },
-    {
-      id: 15,
-      title: "Figma",
-      icon: <SiFigma size={40} />,
-      style: "text-pink-500",
-      level: 75,
-      category: "design",
-      description: "UI/UX design & prototyping",
-    },
-  ];
+/* =========================================================
+   Animation
+========================================================= */
 
-  const categories = [
-    {
-      id: "all",
-      title: tSkills?.allSkills || "All Skills",
-      icon: <Star className="w-6 h-6" />,
-      count: skills.length,
-      color: "from-white to-slate-300",
+const revealUp = {
+  hidden: {
+    opacity: 0,
+    y: 16,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: "easeOut",
     },
-    {
-      id: "frontend",
-      title: tSkills?.frontend || "Frontend",
-      icon: <LayoutGrid className="w-6 h-6" />,
-      count: skills.filter((s) => s.category === "frontend").length,
-      color: "from-blue-400 to-cyan-400",
-    },
-    {
-      id: "backend",
-      title: tSkills?.backend || "Backend",
-      icon: <Server className="w-6 h-6" />,
-      count: skills.filter((s) => s.category === "backend").length,
-      color: "from-green-400 to-emerald-400",
-    },
-    {
-      id: "database",
-      title: tSkills?.database || "Database",
-      icon: <Database className="w-6 h-6" />,
-      count: skills.filter((s) => s.category === "database").length,
-      color: "from-orange-400 to-yellow-400",
-    },
-    {
-      id: "tools",
-      title: tSkills?.tools || "Tools",
-      icon: <Code2 className="w-6 h-6" />,
-      count: skills.filter((s) => s.category === "tools").length,
-      color: "from-purple-400 to-pink-400",
-    },
-    {
-      id: "design",
-      title: tSkills?.design || "Design",
-      icon: <Palette className="w-6 h-6" />,
-      count: skills.filter((s) => s.category === "design").length,
-      color: "from-pink-400 to-rose-400",
-    },
-  ];
+  },
+};
 
-  const filteredSkills =
-    selectedCategory === "all"
-      ? skills
-      : skills.filter((skill) => skill.category === selectedCategory);
+const revealLeft = {
+  hidden: {
+    opacity: 0,
+    x: -18,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
-  const averageLevel = Math.round(
-    filteredSkills.reduce((acc, skill) => acc + skill.level, 0) /
-      filteredSkills.length,
-  );
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.06,
+    },
+  },
+};
+
+/* =========================================================
+   Skills data
+========================================================= */
+
+const SKILLS = [
+  {
+    id: 1,
+    title: "HTML5",
+    icon: DiHtml5,
+    iconClass: "text-orange-500",
+    level: 95,
+    category: "frontend",
+    description:
+      "Semantic markup & modern standards",
+  },
+  {
+    id: 2,
+    title: "CSS3",
+    icon: DiCss3,
+    iconClass: "text-blue-500",
+    level: 90,
+    category: "frontend",
+    description:
+      "Advanced styling & animations",
+  },
+  {
+    id: 3,
+    title: "JavaScript",
+    icon: DiJavascript,
+    iconClass: "text-yellow-400",
+    level: 88,
+    category: "frontend",
+    description:
+      "ES6+ & modern JS features",
+  },
+  {
+    id: 4,
+    title: "React",
+    icon: DiReact,
+    iconClass: "text-cyan-400",
+    level: 90,
+    category: "frontend",
+    description:
+      "Hooks, Context & modern patterns",
+  },
+  {
+    id: 5,
+    title: "Tailwind CSS",
+    icon: SiTailwindcss,
+    iconClass: "text-cyan-500",
+    level: 92,
+    category: "frontend",
+    description:
+      "Utility-first CSS framework",
+  },
+  {
+    id: 6,
+    title: "Node.js",
+    icon: DiNodejs,
+    iconClass: "text-green-500",
+    level: 85,
+    category: "backend",
+    description:
+      "Server-side JavaScript runtime",
+  },
+  {
+    id: 7,
+    title: "Express.js",
+    icon: SiExpress,
+    iconClass: "text-neutral-300",
+    level: 85,
+    category: "backend",
+    description:
+      "Fast & minimalist web framework",
+  },
+  {
+    id: 8,
+    title: "Laravel",
+    icon: DiLaravel,
+    iconClass: "text-red-500",
+    level: 80,
+    category: "backend",
+    description:
+      "Elegant PHP web framework",
+  },
+  {
+    id: 9,
+    title: "MongoDB",
+    icon: SiMongodb,
+    iconClass: "text-green-500",
+    level: 85,
+    category: "database",
+    description:
+      "NoSQL document database",
+  },
+  {
+    id: 10,
+    title: "MySQL",
+    icon: DiMysql,
+    iconClass: "text-blue-400",
+    level: 80,
+    category: "database",
+    description:
+      "Relational database management",
+  },
+  {
+    id: 11,
+    title: "Git",
+    icon: DiGit,
+    iconClass: "text-orange-600",
+    level: 90,
+    category: "tools",
+    description:
+      "Version control system",
+  },
+  {
+    id: 12,
+    title: "GitHub",
+    icon: SiGithub,
+    iconClass: "text-neutral-300",
+    level: 90,
+    category: "tools",
+    description:
+      "Code collaboration platform",
+  },
+  {
+    id: 13,
+    title: "Redux",
+    icon: SiRedux,
+    iconClass: "text-purple-500",
+    level: 85,
+    category: "frontend",
+    description:
+      "Predictable state container",
+  },
+  {
+    id: 14,
+    title: "Vite",
+    icon: SiVite,
+    iconClass: "text-purple-400",
+    level: 88,
+    category: "tools",
+    description:
+      "Fast build tool & dev server",
+  },
+  {
+    id: 15,
+    title: "Figma",
+    icon: SiFigma,
+    iconClass: "text-pink-500",
+    level: 75,
+    category: "design",
+    description:
+      "UI/UX design & prototyping",
+  },
+];
+
+/* =========================================================
+   Categories
+========================================================= */
+
+const CATEGORY_CONFIG = [
+  {
+    id: "all",
+    icon: Star,
+  },
+  {
+    id: "frontend",
+    icon: LayoutGrid,
+  },
+  {
+    id: "backend",
+    icon: Server,
+  },
+  {
+    id: "database",
+    icon: Database,
+  },
+  {
+    id: "tools",
+    icon: Code2,
+  },
+  {
+    id: "design",
+    icon: Palette,
+  },
+];
+
+/* =========================================================
+   Skill Card
+========================================================= */
+
+const SkillCard = memo(function SkillCard({
+  skill,
+  index,
+  isArabic,
+}) {
+  const Icon = skill.icon;
 
   return (
-    <section
-      id="skills"
-      name="skills"
-      className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-12 py-20 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
-      dir={isArabic ? "rtl" : "ltr"}
+    <m.article
+      variants={revealUp}
+      className="
+        group
+        relative
+        overflow-hidden
+        rounded-xl
+        border
+        border-neutral-800
+        bg-neutral-900/30
+        p-4
+        transition-colors
+        duration-300
+
+        hover:border-neutral-700
+        hover:bg-neutral-900/60
+
+        sm:p-5
+      "
     >
-      {/* Minimal Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-slate-800/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-slate-700/15 rounded-full blur-[100px]" />
+      {/* Red top accent */}
+      <span
+        aria-hidden="true"
+        className="
+          absolute
+          left-0
+          top-0
+          h-px
+          w-0
+          bg-[#e4312b]
+          transition-all
+          duration-300
+          group-hover:w-full
+        "
+      />
+
+      {/* Number */}
+      <div
+        className="
+          absolute
+          right-3
+          top-3
+          text-[10px]
+          font-medium
+          tabular-nums
+          text-neutral-700
+        "
+      >
+        {String(index + 1).padStart(2, "0")}
       </div>
 
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="space-y-12">
-          {/* Minimalist Header */}
-          <div className="space-y-10">
-            {/* Status */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="inline-flex items-center gap-2"
-            >
-              <div className="w-2 h-2 bg-red-600 rounded-full" />
-              <span className="text-slate-400 text-sm font-medium tracking-wider uppercase">
-                {tSkills?.technicalSkills || "Technical Skills"}
-              </span>
-            </motion.div>
+      {/* Icon */}
+      <div
+        className={`
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
+          rounded-lg
+          border
+          border-neutral-800
+          bg-neutral-950
+          transition-transform
+          duration-300
+          group-hover:scale-105
 
-            {/* Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-            >
-              <h1
-                className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight ${isArabic ? "font-arabic" : ""}`}
-                style={{ perspective: "1000px" }}
-              >
-                <motion.span 
-                  initial={{ opacity: 0, x: -30, rotateX: -15 }}
-                  whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                  className="block text-white mb-2"
-                  style={{
-                    textShadow: `
-                      2px 2px 0px rgba(220, 38, 38, 0.3),
-                      4px 4px 0px rgba(220, 38, 38, 0.2),
-                      6px 6px 0px rgba(220, 38, 38, 0.1),
-                      8px 8px 20px rgba(0, 0, 0, 0.5)
-                    `,
-                    transform: "translateZ(50px)",
-                    transformStyle: "preserve-3d"
-                  }}
-                >
-                  {tSkills?.skillsTitle || "Skills &"}
-                </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, x: -30, rotateX: 15 }}
-                  whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="block text-slate-500"
-                  style={{
-                    textShadow: `
-                      2px 2px 0px rgba(100, 116, 139, 0.4),
-                      4px 4px 0px rgba(100, 116, 139, 0.3),
-                      6px 6px 0px rgba(100, 116, 139, 0.2),
-                      8px 8px 20px rgba(0, 0, 0, 0.5)
-                    `,
-                    transform: "translateZ(30px)",
-                    transformStyle: "preserve-3d"
-                  }}
-                >
-                  {tSkills?.technologiesTitle || "Technologies"}
-                </motion.span>
-              </h1>
-            </motion.div>
+          ${skill.iconClass}
+        `}
+      >
+        <Icon
+          size={24}
+          aria-hidden="true"
+        />
+      </div>
 
-            {/* Stats & Description */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.7 }}
-              className="space-y-4"
-            >
-              <div className="flex items-center gap-6 flex-wrap text-sm">
-                <div className="flex items-center gap-2 text-slate-500">
-                  <TrendingUp className="w-4 h-4" />
-                  <span>{averageLevel}% {tSkills?.avg || "Avg"}</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-500">
-                  <CheckCircle className="w-4 h-4" />
-                  <span>{filteredSkills.length} {tSkills?.skillsCount || "Skills"}</span>
-                </div>
-              </div>
+      {/* Content */}
+      <div className="mt-4">
+        <h3
+          className="
+            pr-5
+            text-sm
+            font-semibold
+            text-white
+          "
+        >
+          {skill.title}
+        </h3>
 
-              <p className={`text-slate-400 text-lg max-w-2xl leading-relaxed ${isArabic ? "font-arabic" : ""}`}>
-                {tSkills?.description ||
-                  "A comprehensive showcase of my technical expertise across frontend, backend, databases, and development tools."}
-              </p>
-            </motion.div>
-          </div>
+        <p
+          className="
+            mt-1.5
+            min-h-[32px]
+            text-[11px]
+            leading-4
+            text-neutral-500
+          "
+        >
+          {skill.description}
+        </p>
+      </div>
 
-          {/* Clean Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="border-t border-slate-800 pt-8"
+      {/* Progress */}
+      <div className="mt-4">
+        <div
+          className="
+            mb-2
+            flex
+            items-center
+            justify-between
+            text-[10px]
+          "
+        >
+          <span
+            className="
+              uppercase
+              tracking-wider
+              text-neutral-600
+            "
           >
-            <div className="flex flex-wrap items-center gap-3">
-              {categories.map((category, index) => (
-                <motion.button
-                  key={category.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.05, duration: 0.4 }}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`inline-flex items-center gap-2 px-4 py-2 border transition-all duration-300 ${
-                    selectedCategory === category.id
-                      ? "border-red-600 bg-red-600 text-white"
-                      : "border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300"
-                  }`}
-                >
-                  {React.cloneElement(category.icon, { size: 16 })}
-                  <span className="text-sm font-medium">{category.title}</span>
-                  <span className="text-xs opacity-60">({category.count})</span>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
+            Level
+          </span>
 
-          {/* Clean Skills Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+          <span
+            className="
+              font-medium
+              tabular-nums
+              text-neutral-400
+            "
           >
-            {filteredSkills.map((skill, index) => (
-              <motion.div
-                key={skill.id}
-                layout
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: index * 0.02, duration: 0.4 }}
-                whileHover={{ y: -4 }}
-                onHoverStart={() => setHoveredSkill(skill)}
-                onHoverEnd={() => setHoveredSkill(null)}
-                className="group space-y-3 p-4 border border-slate-800 hover:border-slate-700 transition-all duration-300 cursor-default"
-              >
-                {/* Icon */}
-                <div className={`${skill.style} transition-all duration-300 group-hover:scale-110`}>
-                  {React.cloneElement(skill.icon, { size: 32 })}
-                </div>
+            {skill.level}%
+          </span>
+        </div>
 
-                {/* Title */}
-                <h3 className="text-white font-semibold text-sm">
-                  {skill.title}
-                </h3>
-
-                {/* Progress Bar */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-slate-600">Level</span>
-                    <span className="text-slate-400 font-medium">{skill.level}%</span>
-                  </div>
-                  <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: 0.2 + index * 0.02, ease: "easeOut" }}
-                      className="h-full bg-red-600"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Simple Tooltip */}
-          {hoveredSkill && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="fixed bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 bg-slate-900/95 backdrop-blur-xl border border-slate-700 z-50"
-            >
-              <p className="text-white text-sm font-medium">
-                {hoveredSkill.description}
-              </p>
-            </motion.div>
-          )}
+        <div
+          className="
+            h-1
+            overflow-hidden
+            rounded-full
+            bg-neutral-800
+          "
+        >
+          <m.div
+            initial={{
+              scaleX: 0,
+            }}
+            whileInView={{
+              scaleX:
+                skill.level / 100,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.5,
+            }}
+            transition={{
+              duration: 0.65,
+              delay: Math.min(index * 0.025, 0.3),
+              ease: "easeOut",
+            }}
+            style={{
+              transformOrigin: isArabic
+                ? "right"
+                : "left",
+            }}
+            className="
+              h-full
+              w-full
+              rounded-full
+              bg-[#e4312b]
+            "
+          />
         </div>
       </div>
-    </section>
+    </m.article>
+  );
+});
+
+/* =========================================================
+   Skills
+========================================================= */
+
+const Skills = () => {
+  const {
+    language,
+    tSkills,
+  } = useContext(LongContext);
+
+  const isArabic =
+    language === "ar";
+
+  const [
+    selectedCategory,
+    setSelectedCategory,
+  ] = useState("all");
+
+  /* ---------------------------------------------------------
+     Categories with translations
+  --------------------------------------------------------- */
+
+  const categories = useMemo(() => {
+    const titles = {
+      all:
+        tSkills?.allSkills ||
+        "All Skills",
+
+      frontend:
+        tSkills?.frontend ||
+        "Frontend",
+
+      backend:
+        tSkills?.backend ||
+        "Backend",
+
+      database:
+        tSkills?.database ||
+        "Database",
+
+      tools:
+        tSkills?.tools ||
+        "Tools",
+
+      design:
+        tSkills?.design ||
+        "Design",
+    };
+
+    return CATEGORY_CONFIG.map(
+      (category) => ({
+        ...category,
+        title:
+          titles[category.id],
+        count:
+          category.id === "all"
+            ? SKILLS.length
+            : SKILLS.filter(
+                (skill) =>
+                  skill.category ===
+                  category.id
+              ).length,
+      })
+    );
+  }, [tSkills]);
+
+  /* ---------------------------------------------------------
+     Filtered skills
+  --------------------------------------------------------- */
+
+  const filteredSkills = useMemo(() => {
+    if (
+      selectedCategory === "all"
+    ) {
+      return SKILLS;
+    }
+
+    return SKILLS.filter(
+      (skill) =>
+        skill.category ===
+        selectedCategory
+    );
+  }, [selectedCategory]);
+
+  /* ---------------------------------------------------------
+     Average level
+  --------------------------------------------------------- */
+
+  const averageLevel = useMemo(() => {
+    if (!filteredSkills.length) {
+      return 0;
+    }
+
+    return Math.round(
+      filteredSkills.reduce(
+        (total, skill) =>
+          total + skill.level,
+        0
+      ) / filteredSkills.length
+    );
+  }, [filteredSkills]);
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <LazyMotion
+        features={domAnimation}
+        strict
+      >
+        <section
+          id="skills"
+          name="skills"
+          dir={
+            isArabic
+              ? "rtl"
+              : "ltr"
+          }
+          className="
+            relative
+            min-h-screen
+            overflow-hidden
+            bg-neutral-950
+            px-4
+            py-20
+
+            sm:px-6
+            sm:py-24
+
+            lg:px-8
+            lg:py-32
+          "
+        >
+          {/* =================================================
+              Background
+          ================================================= */}
+
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute
+              inset-0
+            "
+          >
+            {/* Lightweight grid */}
+            <div
+              className="
+                absolute
+                inset-0
+                opacity-[0.025]
+              "
+              style={{
+                backgroundImage:
+                  "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+                backgroundSize:
+                  "48px 48px",
+              }}
+            />
+
+            {/* Small accent */}
+            <div
+              className="
+                absolute
+                left-[-100px]
+                top-[25%]
+                h-[240px]
+                w-[240px]
+                rounded-full
+                bg-[#e4312b]/[0.035]
+              "
+            />
+
+            <div
+              className="
+                absolute
+                bottom-[15%]
+                right-0
+                h-px
+                w-28
+                bg-[#e4312b]/40
+              "
+            />
+          </div>
+
+          {/* =================================================
+              Main container
+          ================================================= */}
+
+          <div
+            className="
+              relative
+              z-10
+              mx-auto
+              w-full
+              max-w-6xl
+            "
+          >
+            {/* =================================================
+                Header
+            ================================================= */}
+
+            <m.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.15,
+              }}
+            >
+              {/* Section label */}
+
+              <m.div
+                variants={revealLeft}
+                className="
+                  flex
+                  items-center
+                  gap-3
+                "
+              >
+                <span
+                  className="
+                    h-2
+                    w-2
+                    rounded-full
+                    bg-[#e4312b]
+                  "
+                />
+
+                <span
+                  className="
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-[0.2em]
+                    text-neutral-500
+                  "
+                >
+                  {tSkills?.technicalSkills ||
+                    "Technical Skills"}
+                </span>
+
+                <span
+                  className="
+                    h-px
+                    w-10
+                    bg-neutral-800
+                  "
+                />
+              </m.div>
+
+              {/* Heading */}
+
+              <m.h2
+                variants={revealUp}
+                className={`
+                  mt-7
+                  max-w-4xl
+                  font-black
+                  leading-[0.9]
+                  tracking-[-0.06em]
+                  text-white
+
+                  text-[clamp(3.3rem,10vw,7rem)]
+
+                  ${
+                    isArabic
+                      ? "font-arabic leading-[1.1] tracking-normal"
+                      : ""
+                  }
+                `}
+              >
+                <span className="block">
+                  {tSkills?.skillsTitle ||
+                    "Skills &"}
+                </span>
+
+                <span
+                  className="
+                    block
+                    text-transparent
+                  "
+                  style={{
+                    WebkitTextStroke:
+                      "1.5px #e4312b",
+                  }}
+                >
+                  {tSkills?.technologiesTitle ||
+                    "Technologies"}
+                </span>
+              </m.h2>
+
+              {/* Description + stats */}
+
+              <m.div
+                variants={revealUp}
+                className="
+                  mt-7
+                  flex
+                  flex-col
+                  gap-5
+
+                  lg:flex-row
+                  lg:items-end
+                  lg:justify-between
+                "
+              >
+                <p
+                  className={`
+                    max-w-2xl
+                    text-sm
+                    leading-7
+                    text-neutral-400
+
+                    sm:text-base
+
+                    ${
+                      isArabic
+                        ? "font-arabic"
+                        : ""
+                    }
+                  `}
+                >
+                  {tSkills?.description ||
+                    "A comprehensive showcase of my technical expertise across frontend, backend, databases, and development tools."}
+                </p>
+
+                {/* Stats */}
+
+                <div
+                  className="
+                    flex
+                    shrink-0
+                    items-center
+                    gap-5
+                    text-xs
+                  "
+                >
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-2
+                      text-neutral-500
+                    "
+                  >
+                    <TrendingUp
+                      className="
+                        h-4
+                        w-4
+                        text-[#e4312b]
+                      "
+                    />
+
+                    <span>
+                      {averageLevel}%
+                      {" "}
+                      {tSkills?.avg ||
+                        "Avg"}
+                    </span>
+                  </div>
+
+                  <span
+                    className="
+                      h-4
+                      w-px
+                      bg-neutral-800
+                    "
+                  />
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-2
+                      text-neutral-500
+                    "
+                  >
+                    <CheckCircle
+                      className="
+                        h-4
+                        w-4
+                        text-neutral-600
+                      "
+                    />
+
+                    <span>
+                      {
+                        filteredSkills.length
+                      }
+                      {" "}
+                      {tSkills?.skillsCount ||
+                        "Skills"}
+                    </span>
+                  </div>
+                </div>
+              </m.div>
+            </m.div>
+
+            {/* =================================================
+                Category filter
+            ================================================= */}
+
+            <m.div
+              initial={{
+                opacity: 0,
+                y: 12,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.2,
+              }}
+              transition={{
+                duration: 0.4,
+                ease: "easeOut",
+              }}
+              className="
+                mt-10
+                border-y
+                border-neutral-800
+                py-4
+
+                sm:mt-12
+              "
+            >
+              <div
+                className="
+                  flex
+                  gap-2
+                  overflow-x-auto
+                  pb-1
+                  scrollbar-none
+
+                  sm:flex-wrap
+                  sm:overflow-visible
+                "
+              >
+                {categories.map(
+                  (category) => {
+                    const Icon =
+                      category.icon;
+
+                    const isActive =
+                      selectedCategory ===
+                      category.id;
+
+                    return (
+                      <button
+                        key={
+                          category.id
+                        }
+                        type="button"
+                        onClick={() =>
+                          setSelectedCategory(
+                            category.id
+                          )
+                        }
+                        aria-pressed={
+                          isActive
+                        }
+                        className={`
+                          inline-flex
+                          shrink-0
+                          items-center
+                          gap-2
+                          rounded-full
+                          border
+                          px-3.5
+                          py-2
+                          text-xs
+                          font-medium
+                          transition-colors
+                          duration-200
+
+                          focus-visible:outline
+                          focus-visible:outline-2
+                          focus-visible:outline-offset-2
+                          focus-visible:outline-[#e4312b]
+
+                          ${
+                            isActive
+                              ? "border-[#e4312b] bg-[#e4312b] text-white"
+                              : "border-neutral-800 bg-neutral-900/30 text-neutral-500 hover:border-neutral-700 hover:text-neutral-300"
+                          }
+                        `}
+                      >
+                        <Icon
+                          className="h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+
+                        <span>
+                          {
+                            category.title
+                          }
+                        </span>
+
+                        <span
+                          className={`
+                            text-[10px]
+
+                            ${
+                              isActive
+                                ? "text-white/60"
+                                : "text-neutral-700"
+                            }
+                          `}
+                        >
+                          {
+                            category.count
+                          }
+                        </span>
+                      </button>
+                    );
+                  }
+                )}
+              </div>
+            </m.div>
+
+            {/* =================================================
+                Skills section
+            ================================================= */}
+
+            <div className="mt-8">
+              {/* Section heading */}
+
+              <div
+                className="
+                  mb-5
+                  flex
+                  items-center
+                  justify-between
+                  gap-4
+                "
+              >
+                <span
+                  className="
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.2em]
+                    text-neutral-600
+                  "
+                >
+                  {selectedCategory ===
+                  "all"
+                    ? "01 / ALL"
+                    : `01 / ${selectedCategory.toUpperCase()}`}
+                </span>
+
+                <span
+                  className="
+                    h-px
+                    flex-1
+                    bg-neutral-900
+                  "
+                />
+              </div>
+
+              {/* =================================================
+                  Skills grid
+              ================================================= */}
+
+              <m.div
+                key={selectedCategory}
+                variants={stagger}
+                initial="hidden"
+                animate="visible"
+                className="
+                  grid
+                  grid-cols-1
+                  gap-3
+
+                  sm:grid-cols-2
+
+                  md:grid-cols-3
+
+                  lg:grid-cols-4
+                "
+              >
+                {filteredSkills.map(
+                  (skill, index) => (
+                    <SkillCard
+                      key={skill.id}
+                      skill={skill}
+                      index={index}
+                      isArabic={
+                        isArabic
+                      }
+                    />
+                  )
+                )}
+              </m.div>
+            </div>
+
+            {/* =================================================
+                Bottom status
+            ================================================= */}
+
+            <m.div
+              initial={{
+                opacity: 0,
+              }}
+              whileInView={{
+                opacity: 1,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 0.5,
+              }}
+              className="
+                mt-8
+                flex
+                flex-col
+                gap-3
+                border-t
+                border-neutral-800
+                pt-5
+
+                sm:flex-row
+                sm:items-center
+                sm:justify-between
+              "
+            >
+              <div
+                className="
+                  flex
+                  items-center
+                  gap-2
+                "
+              >
+                <span
+                  className="
+                    h-2
+                    w-2
+                    animate-pulse
+                    rounded-full
+                    bg-emerald-500
+                  "
+                />
+
+                <span
+                  className="
+                    text-xs
+                    text-neutral-500
+                  "
+                >
+                  {tSkills?.availableForWork ||
+                    "Continuously learning & improving"}
+                </span>
+              </div>
+
+              <span
+                className="
+                  text-[10px]
+                  uppercase
+                  tracking-[0.2em]
+                  text-neutral-700
+                "
+              >
+                Full-Stack Development
+              </span>
+            </m.div>
+          </div>
+        </section>
+      </LazyMotion>
+    </MotionConfig>
   );
 };
 
-export default Skills;
+export default memo(Skills);

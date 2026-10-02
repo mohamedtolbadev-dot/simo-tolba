@@ -1,13 +1,127 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom animations for advanced hero */
+/* ========================================
+   Global
+======================================== */
+
+* {
+  box-sizing: border-box;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #ffffff;
+  cursor: default;
+
+  font-family:
+    "Montserrat",
+    Helvetica,
+    Arial,
+    serif;
+}
+
+/* ========================================
+   English
+======================================== */
+
+body.english-font,
+body.english-font * {
+  font-family:
+    "Montserrat",
+    Helvetica,
+    Arial,
+    serif;
+}
+
+/* ========================================
+   Arabic
+======================================== */
+
+body.arabic-font,
+body.arabic-font * {
+  font-family:
+    "Noto Sans Arabic",
+    Tahoma,
+    Arial,
+    sans-serif;
+}
+
+/* ========================================
+   Cursor
+======================================== */
+
+button,
+a,
+select,
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+input,
+textarea {
+  cursor: text;
+}
+
+/* ========================================
+   Scrollbar
+======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E4312B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b82420;
+}
+
+/* ========================================
+   Selection
+======================================== */
+
+::selection {
+  background: #E4312B;
+  color: #ffffff;
+}
+
+/* ========================================
+   Gradient Animation
+======================================== */
+
 @keyframes gradient {
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -20,34 +134,4 @@
 
 .bg-size-200 {
   background-size: 200% 200%;
-}
-
-/* Font smoothing */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Custom cursor */
-body,
-body * {
-  cursor: none !important;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0f172a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #ce1126;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #007a3d;
 }
