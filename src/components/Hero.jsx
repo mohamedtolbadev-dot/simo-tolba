@@ -283,7 +283,6 @@ const Flowchart = memo(function Flowchart({
   return (
     <div className="mx-auto w-full max-w-md">
       <div className="relative">
-        {/* Vertical timeline */}
         <div
           aria-hidden="true"
           className={`
@@ -316,7 +315,6 @@ const Flowchart = memo(function Flowchart({
                 key={step.key}
                 className="relative flex items-start gap-4"
               >
-                {/* Number */}
                 <div
                   className={`
                     relative
@@ -342,7 +340,6 @@ const Flowchart = memo(function Flowchart({
                   {index + 1}
                 </div>
 
-                {/* Content */}
                 <div
                   className={`
                     min-w-0
@@ -398,7 +395,6 @@ const Flowchart = memo(function Flowchart({
         </ol>
       </div>
 
-      {/* Flow indicator */}
       <div className="mt-5 flex items-center justify-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-600">
         <span className="h-px w-8 bg-neutral-800" />
 
@@ -418,6 +414,33 @@ const Flowchart = memo(function Flowchart({
     </div>
   );
 });
+
+/* =========================================================
+   3D NAME STYLES
+========================================================= */
+
+const name3D = {
+  textShadow: `
+    1px 1px 0 #d4d4d4,
+    2px 2px 0 #a3a3a3,
+    3px 3px 0 #737373,
+    4px 4px 0 #525252,
+    5px 5px 0 #262626,
+    6px 6px 10px rgba(0,0,0,0.45)
+  `,
+};
+
+const name3DRed = {
+  WebkitTextStroke: "2px #e4312b",
+  textShadow: `
+    1px 1px 0 #b82420,
+    2px 2px 0 #991b1b,
+    3px 3px 0 #7f1d1d,
+    4px 4px 0 #450a0a,
+    5px 5px 0 #1c0505,
+    6px 6px 10px rgba(0,0,0,0.5)
+  `,
+};
 
 /* =========================================================
    HERO
@@ -486,13 +509,15 @@ const Hero = () => {
               lg:max-w-none
             "
           >
-            {/* Desktop ring */}
             <Ring
               t={t}
               isArabic={isArabic}
             />
 
-            {/* Central content */}
+            {/* =================================================
+                CENTRAL CONTENT
+            ================================================= */}
+
             <div
               className="
                 flex
@@ -526,7 +551,10 @@ const Hero = () => {
                   "Available for work"}
               </m.p>
 
-              {/* Name */}
+              {/* =================================================
+                  3D NAME
+              ================================================= */}
+
               <m.h1
                 variants={item}
                 className={`
@@ -546,18 +574,32 @@ const Hero = () => {
                       : ""
                   }
                 `}
+                style={{
+                  perspective: "800px",
+                }}
               >
-                <span className="block">
+                {/* First name */}
+                <span
+                  className="
+                    block
+                    relative
+                    select-none
+                  "
+                  style={name3D}
+                >
                   {firstName}
                 </span>
 
+                {/* Last name */}
                 {lastName && (
                   <span
-                    className="block text-transparent"
-                    style={{
-                      WebkitTextStroke:
-                        "2px #e4312b",
-                    }}
+                    className="
+                      block
+                      relative
+                      select-none
+                      text-transparent
+                    "
+                    style={name3DRed}
                   >
                     {lastName}
                   </span>
